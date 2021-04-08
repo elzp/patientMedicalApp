@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import Leftboard from './comp/Leftboard';
 import Rightboard from './comp/Rightboard';
@@ -19,12 +18,15 @@ function App() {
 
   return (
     <div className= "App">
-      <Header />
+      <header>
+          <Header />
+      </header>
       <main>
         <Leftboard />
         <Rightboard />
+        <Footer />
       </main>
-      <Footer />
+      
     </div>
   );
 }

@@ -1,22 +1,41 @@
 .App {
-  flex-direction: column;
+  grid-auto-flow: column;
   display: grid;
   grid-template-areas: "head" "bottom";
   }
 
+header {
+ max-height: 8em;
+ grid-area: "head";
+ display: grid;
+ grid-auto-flow: row;
+ grid-template-areas: "logo" "header" ;
+ border: 3px solid rgb(202, 27, 158);
+}
+
 main {
   display: grid;
   grid-area: "bottom";
-  grid-template-areas: "left right";
+  grid-template-areas: "left right" "foot foot" ;
 }
 
-  .App-logo {
+.App-logo {
+  grid-area: "logo";
+  height: 4em;
+}
+
+.img-logo {
+  height: 4em;
+  width:auto;
+     border: 3px solid rgb(11, 168, 63);
+}
+ /* .App-logo {
     height: 40vmin;
     pointer-events: none;
     display: flexbox;
     flex-flow: column;
   }
-
+*/
 /*@media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
@@ -29,12 +48,12 @@ main {
     position: relative;
     max-height: 15vh;*/
     background-color: white;
-   /* border: 3px solid rgb(202, 132, 27);*/
+    border: 3px solid rgb(202, 132, 27);
     font-size: 1.2em;
     display:grid;
-    grid-auto-flow: row;
+    grid-auto-flow: column;
     margin-bottom: 10px;
-    grid-area: "head";
+    grid-area: "header";
 
   }
 
@@ -89,13 +108,19 @@ main {
     font-size: 80%;
   }
 
-.navbar-wrapper {
-  /*border: 3px solid rgb(21, 75, 24);*/
-  position: relative;
-  display: grid;
-  grid-template-areas: "a1 a2";
-  grid-auto-flow: column;
-  max-width: 4em;
+  .navbar-wrapper {
+    /*border: 3px solid rgb(21, 75, 24);*/
+    position: absolute;
+    display: grid;
+    grid-template-areas: "a2 a2";
+    grid-auto-flow: column;
+    max-width: 4em;
+    display: none;
+    }
+
+  .navbar-wrapper-1 {
+    /*border: 3px solid rgb(49, 16, 112);*/
+    height: 1.75em;
   }
 
   button{
@@ -104,11 +129,12 @@ main {
     background-color: beige;
   }
 
-.navbar-button {
+.navbar-button-1 {
     /*border: 3px dotted black;*/
     grid-area: "a1";
     position: relative;
     padding: 5px 0 0 5px;  
+    display: none;
   }
 
 .button-img {
@@ -143,28 +169,27 @@ main {
  text-decoration: none;
 }
 
-
+.App-footer {
+  grid-area: "foot";
+  font-size: 0.5em;
+}
 
 
 @media (max-width: 800px) {
   .App {
-    flex-direction: column;
+    grid-auto-flow: column;
     display: grid;
-    grid-template-areas: "head" "left" "right";
+    grid-template-areas: "head"  "bottom";
   }
 
 
-  .App-logo {
-    height: 40vmin;
-    pointer-events: none;
-    display: flexbox;
-    flex-flow: column;
-  }
+
 
   main {
     display: grid;
     grid-area: "bottom";
-    grid-template-areas: "left" "right";
+    grid-auto-flow: column;
+    grid-template-areas: "left" "right" "foot";
   }
 /*@media (prefers-reduced-motion: no-preference) {
   .App-logo {
@@ -180,15 +205,34 @@ main {
 */
 
 }
+.navbar-wrapper {
+  /*border: 3px solid rgb(21, 75, 24);*/
+  position: relative;
+  display: grid;
+  grid-template-areas: "a2 a2";
+  grid-auto-flow: column;
+  max-width: 4em;
+  }
 
-
+.navbar-wrapper-1 {
+    /*border: 3px solid rgb(21, 75, 24);*/
+    position: relative;
+    display: grid;
+    grid-template-areas: "a2 a2";
+    grid-auto-flow: column;
+    max-width: 4em;
+    display:none;
+    }
 .menu-link {
   text-align: left;
 }
-  .App-header {
+ 
 
-    flex-direction: row;;
-
+.navbar-button {
+    /*border: 3px dotted black;*/
+    grid-area: "a1";
+    position: relative;
+    padding: 5px 0 0 5px;  
   }
 
   .menu-elements{

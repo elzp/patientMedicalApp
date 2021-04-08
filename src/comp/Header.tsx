@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import './../App.css';
 import menuLogo from './../ic-menu.png';
+import logo from './../ic-logo.png';
 import data from './../somedata.json';
 function Header(styles: Styletype) {
  //const logo : string = './../public/ic-menu.png';
@@ -13,13 +14,13 @@ function changeMenuVisibility () {
 
   return (
     <div className="App-header">
-      <header >
-      {menuVisible ? (
-        <div className="navbar-wrapper">
-          <div className="navbar-button">
+      
+      <div className="navbar-wrapper-1"> 
+      {/* in css this class has property to be hidden when screen is bigger than 1024px */}
+          <div className="navbar-button-1">
             <button  onClick={changeMenuVisibility}><img src={menuLogo} alt="menu" className="button-img" /></button>
           </div>
-          <div className="menu-elements-wrapper">
+          <div className="menu-elements-wrapper-1">
             <div  className="menu-elements">
               {menu.map(item=>(
               <div className="menu-link">
@@ -28,13 +29,32 @@ function changeMenuVisibility () {
               }
             </div>
           </div>
-        </div>) :
+      </div>
+      <div className="navbar-wrapper">
+        {/* in css this class has property to be hidden when screen is smaller than 1024px */}
 
-        (<div className="navbar-button">
+          <div className="navbar-button">
+            <button  onClick={changeMenuVisibility}><img src={menuLogo} alt="menu" className="button-img" /></button>
+          </div>
+          {menuVisible && (
+          <div className="menu-elements-wrapper">
+            <div  className="menu-elements">
+              {menu.map(item=>(
+              <div className="menu-link">
+                <a className= "menu-a" href="/"  onClick={changeMenuVisibility}>{item}</a>
+              </div>))}
+              
+            </div>
+          </div>)}
+        </div>
+{
+       /*: (<div className="navbar-button">
           <button  onClick={changeMenuVisibility}><img src={menuLogo} alt="menu" className="button-img"/></button>
-          </div >)
+          </div >)*/
       }
-      </header>
+      <div className="App-logo">        
+            <img src={logo} alt="logoOfApp"  className="img-logo"/>
+      </div>
     </div>
   );
 }
