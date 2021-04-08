@@ -1,0 +1,15 @@
+{
+"menu": ["New Appointment","Refferals", "Result", "Receipts", "Account"],
+"foot": {
+    "adress":{
+        "street-type": "Al.",
+        "street": "Kościuszki",
+        "buildingNr": 35,
+        "localNr": "50S",
+        "postCode": "15-753",
+        "city": "Wronówek"
+    },
+    "phone": "354 328 996",
+    "email": "somebrand@brand.com"
+    }
+}
