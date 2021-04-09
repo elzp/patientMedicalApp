@@ -1,16 +1,30 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import Appointment from './Appointment';
 import './../App.css';
+import data from './../somedata.json';
 
-function Rightboard(styles: Styletype) {
-   const stylediv:object = styles.rightdiv;
+function Rightboard(props: any) {
+   
+  const [type, setType] =useState("start");
+
+  function changeType(){
+    setType(props.type);
+  }
    const numberOfApp: Array<number> = [1,2,3,4,5,6];
+
+   useEffect(()=>{
+     setType(props.type);
+  },[type] )
+
+  
   return (
     <div className='rightdiv'>
       
-      This is box on the right.
+      {JSON.stringify(props.type)}
+      {
+      }
 
-      <div>Appointments
+      <div>
         {numberOfApp.map((item, id)=>
           (<Appointment key = {item} value={item} /> )
         

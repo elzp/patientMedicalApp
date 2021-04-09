@@ -5,30 +5,25 @@
   }
 
 header {
- max-height: 8em;
+ height: 7.5em;
  grid-area: "head";
  display: grid;
- grid-auto-flow: row;
+ grid-auto-flow: column;
  grid-template-areas: "logo" "header" ;
- border: 3px solid rgb(202, 27, 158);
+ /*border: 3px solid rgb(202, 27, 158);*/
+ margin-bottom: 5px;
+ /*border: 1px solid rgb(119, 7, 95);*/
 }
 
 main {
   display: grid;
   grid-area: "bottom";
+
   grid-template-areas: "left right" "foot foot" ;
 }
 
-.App-logo {
-  grid-area: "logo";
-  height: 4em;
-}
 
-.img-logo {
-  height: 4em;
-  width:auto;
-     border: 3px solid rgb(11, 168, 63);
-}
+
  /* .App-logo {
     height: 40vmin;
     pointer-events: none;
@@ -45,10 +40,10 @@ main {
   .App-header  {
 
     /*max-width: 90vw;
-    position: relative;
-    max-height: 15vh;*/
+    position: relative;*/
+    height: auto;
     background-color: white;
-    border: 3px solid rgb(202, 132, 27);
+    /*border: 3px solid rgb(202, 132, 27);*/
     font-size: 1.2em;
     display:grid;
     grid-auto-flow: column;
@@ -75,11 +70,18 @@ main {
 
   
   .leftdiv {
-      background-image: linear-gradient(to right, lightgrey 90%, white);
+      background-image: linear-gradient(to left, lightgrey 90%, white);
       font-size: 0.4em;   
       padding-right: 20px;
       min-width: 30vw; 
       grid-area: "left";
+      border-right: 1px solid brown;
+      padding-left:  10%;
+     /* border-width: 3px;
+  border-style: solid;
+  border-image: 
+  linear-gradient(to left, grey 90%, white) ;*/
+
     }
     
   .rightdiv {
@@ -109,29 +111,48 @@ main {
   }
 
   .navbar-wrapper {
-    /*border: 3px solid rgb(21, 75, 24);*/
-    position: absolute;
-    display: grid;
-    grid-template-areas: "a2 a2";
-    grid-auto-flow: column;
-    max-width: 4em;
     display: none;
     }
 
   .navbar-wrapper-1 {
-    /*border: 3px solid rgb(49, 16, 112);*/
-    height: 1.75em;
+    /*border: 3px solid rgb(49, 16, 112);
+    */height: 1.75em;
+    display: grid;
+    grid-auto-flow: column;
+    /*grid-template-columns:  4em ;*/
+    grid-template-areas: "brand-nav" "menu-el";
+    
+  }
+
+
+  .brand-nav {
+    display: grid;
+    grid-auto-flow: row;
+    grid-area: "brand-nav";
+    grid-template-areas: "logo title ";
+    justify-content: center;
+  }
+  
+  .App-logo {
+    grid-area: "logo";
+    height: 4em;
+  }
+  
+  .img-logo {
+    height: 4em;
+    width: auto;
+    /*border: 3px solid rgb(11, 168, 63);*/
   }
 
   button{
-    border-radius:  25%;
+    border-radius: 25%;
     /*border: 1px solid rgb(206, 0, 69);*/
     background-color: beige;
   }
 
 .navbar-button-1 {
     /*border: 3px dotted black;*/
-    grid-area: "a1";
+    grid-area: "menu-button";
     position: relative;
     padding: 5px 0 0 5px;  
     display: none;
@@ -142,16 +163,35 @@ main {
     width:auto;
 }
 
-.menu-elements-wrapper {
-    grid-area: "a2";
-}
+.menu-elements-wrapper-1 {
+  grid-area: "menu-el";
+ /* border: 2px solid green;*/
+  width: 100%;
   
-.menu-elements{
-  border-bottom: 0.5px solid rgb(143, 140, 140);
-  position: absolute;
+}
+
+.menu-elements-1 {
   display:grid;
   grid-auto-flow: column;
-  margin-left: 5px;
+  margin-left: 0px;
+  background-color: white;
+  width: 100%;
+  border-bottom: 2px solid lightslategrey;
+}
+
+.menu-elements-wrapper {
+  display:  none;
+}
+  
+
+.menu-elements{
+  /*border-bottom: 0.5px solid rgb(143, 140, 140);
+  position: absolute;*/
+  display:grid;
+  grid-auto-flow: column;
+  margin-left: 0px;
+  background-color: white;
+  width: 100%;
 
 }
 .menu-link{
@@ -161,18 +201,25 @@ main {
   width: 10em;
   height: 1.5em;
   text-align: center;
- 
-  border-bottom: 1px solid rgb(143, 140, 140);
 }
 
 .menu-a {
  text-decoration: none;
 }
 
+.title {
+  /*border: 3px solid rgb(218, 113, 15);*/
+  min-width:max-content;
+  grid-area: "title";
+  
+  
+}
+
 .App-footer {
   grid-area: "foot";
   font-size: 0.5em;
 }
+
 
 
 @media (max-width: 800px) {
@@ -183,7 +230,9 @@ main {
   }
 
 
-
+  /*.App-header {
+    grid-template-areas: "menu-button" "logo";
+  }*/
 
   main {
     display: grid;
@@ -206,23 +255,28 @@ main {
 
 }
 .navbar-wrapper {
-  /*border: 3px solid rgb(21, 75, 24);*/
+  /*border: 3px solid rgb(42, 212, 50);*/
   position: relative;
   display: grid;
-  grid-template-areas: "a2 a2";
-  grid-auto-flow: column;
-  max-width: 4em;
+  grid-auto-flow: row;
+  grid-template-areas: "menu-button logo title";
+  /*max-width: 4em;*/
+  }
+
+  .navbar-wrapper-1 {
+    /*border: 3px solid rgb(49, 16, 112);
+    */height: 1.75em;
+    display: grid;
+    grid-auto-flow: row;
+    grid-template-columns:  4em max-content;
+    grid-template-areas: "logo title" " menu-el menu-el ";
+    
   }
 
 .navbar-wrapper-1 {
-    /*border: 3px solid rgb(21, 75, 24);*/
-    position: relative;
-    display: grid;
-    grid-template-areas: "a2 a2";
-    grid-auto-flow: column;
-    max-width: 4em;
     display:none;
-    }
+}
+
 .menu-link {
   text-align: left;
 }
@@ -230,13 +284,13 @@ main {
 
 .navbar-button {
     /*border: 3px dotted black;*/
-    grid-area: "a1";
+    grid-area: "menu-button";
     position: relative;
     padding: 5px 0 0 5px;  
   }
 
   .menu-elements{
-
+    
     grid-auto-flow: row;
   }
 
@@ -250,9 +304,10 @@ main {
   
   
   .leftdiv {
-      width: 90vw;  
-      background-image:  none;
+      /*width: 90vw; */ 
+      background: initial;/*https://stackoverflow.com/questions/45523879/cannot-remove-gradient*/
       background-color: lightgrey;
+      /*background-color: lightgrey;*/
       padding-right: 0px;
       min-width: 100vw; 
     }
