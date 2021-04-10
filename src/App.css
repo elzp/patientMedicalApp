@@ -43,6 +43,8 @@
     grid-area: "brand-nav";
     grid-template-areas: "logo title ";
     justify-content: center;
+    grid-gap: 0;
+    
   }
 
   .App-logo {
@@ -84,13 +86,14 @@
   height: 1.5em;
   text-align: center;
 }
-
+a {
+  color: darkslategrey;
+}
 .menu-a {
  text-decoration: none;
 }
 
 .navbar-button-1 {
-  /*border: 3px dotted black;*/
   grid-area: "menu-button";
   position: relative;
   padding: 5px 0 0 5px;  
@@ -103,7 +106,74 @@
 }
 /*end of header styling*/
 
+
+
+
+
+.leftdiv {
+  background-image: linear-gradient(to right, lightgrey 90%, white);
+  font-size: 0.8em;   
+  padding-right: 20px;
+  min-width: 30vw; 
+  grid-area: "left";
+  /* border-right: 1px solid grey; */
+  margin-left:  10px;
+  padding:  1em ;
+  border-top-left-radius: 3%;
+  border-top-right-radius: 0%;
+  border-top: 1px solid grey;
+  border-left: 1px solid grey;
+  border-bottom: 1px solid grey;  
+  /* border-top-width: 3px;
+border-top-style: solid;
+ */
+
+}
+
+.rightdiv {
+  /*padding: 10px;*/
+    background-image: linear-gradient(to left, lightgrey 95%, white);
+
+  font-size: 0.8em;
+  display:flexbox;
+  flex-direction: column;
+  min-width: 60vw; 
+  min-height: 200px;
+  background-color: lightgrey;  
+  border-top-left-radius: 0%;
+  border-top-right-radius: 3%;
+  border-top: 1px solid grey;
+  /* border-left: 1px solid grey; */
+  border-bottom: 1px solid grey;  
+  padding: 15px 25px 15px 25px;
+  /* margin-left: 10px; */
+  grid-area: "right";
+}
+
+
+.appointment {
+background-color: white;
+border-bottom: 0.7px dotted grey;
+padding-left: 5px;
+margin: 15px;
+font-size: 80%;
+}
+
+
+
+.App-footer {
+  grid-area: "foot";
+  font-size: 0.7em;
+}
+
+
 @media (max-width: 800px) {
+  .brand-nav {
+    justify-content: left;
+   }
+  
+  
+  
   .navbar-wrapper-1 {
     display: none;
     }
@@ -114,20 +184,26 @@
     grid-auto-flow: row;
     grid-template-rows: fit-content 0px auto;
     grid-template-areas: "menu-button menu-el brand-nav";
-    justify-items: center;
+    align-items: center;
+    /* justify-content: center; */
     }
 
   .navbar-button {
     grid-area: "menu-button";
     position: relative;
-    padding: 5px 0 0 5px;  
+    padding: 5px 30px 0 15px; 
+    justify-self: left; 
+    justify-self: left;
   }
 
   .menu-elements-wrapper {
     position: relative;
     grid-area: "menu-el";
-     border: 2px solid green; 
+     /* border: 2px solid green;  */
     width: 0%;
+    /* background-color: yellow; */
+
+    margin:0;
   }
 
 
@@ -137,4 +213,50 @@
   }
 
   /*end of header styling*/
+
+
+  main {
+    display: grid;
+    grid-area: "bottom";
+    grid-auto-flow: column;
+    grid-template-areas: "left" "right" "foot";
+  }
+
+  .leftdiv {
+    /*width: 90vw; */ 
+    background: initial;/*https://stackoverflow.com/questions/45523879/cannot-remove-gradient*/
+    background-color: lightgrey;
+    border-bottom: 1px solid grey;  
+    border-top-left-radius: 0%;
+    border-top-right-radius: 0%;
+    margin: 0px;
+    min-width: 0; 
+  }
+  
+
+.rightdiv {
+    background: initial;
+    background-color: lightgrey;
+    flex-direction: row;
+    min-width: 0; 
+    border-top-left-radius: 0%;
+    border-top-right-radius: 0%;
+    border-top: 1px solid grey;
+    border-left: 0px solid grey;
+    border-bottom: 1px solid grey;  
+    padding: 15px 25px 15px 25px;
+    margin-left: 0px;
+  }
+
+
+
+
+.appointment {
+  background-color: white;
+  border-top: 3px dotted darkgrey;
+  border-bottom: 3px dotted darkgrey;
+  }
+
+
+
 }

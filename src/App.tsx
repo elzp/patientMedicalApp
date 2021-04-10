@@ -28,7 +28,7 @@ function App(props: any) {
           <Header />
       </header>
       <main>
-        {/* <Leftboard /> */}
+          <Leftboard /> 
 
         
               
@@ -44,8 +44,8 @@ function App(props: any) {
         </Switch>
         </Router> */}
         
-        {/* <Rightboard type={""} /> */}
-        {/* <Footer />  */}
+        <Rightboard type={""} /> 
+        <Footer />  
       
       </main>
       

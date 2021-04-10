@@ -5,7 +5,7 @@ import logo from './../ic-logo.png';
 import data from './../somedata.json';
 function Header(styles: Styletype) {
  //const logo : string = './../public/ic-menu.png';
-const [menuVisible, setVisibility] = useState(true);
+const [menuVisible, setVisibility] = useState(false);
 
 const {menu}:{menu: Array<Array<string>>} = data;
 function changeMenuVisibility () {
