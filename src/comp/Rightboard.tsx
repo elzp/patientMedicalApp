@@ -33,32 +33,35 @@ function Rightboard(props: any) {
   const { pathname } = useLocation();
   const match = pathname.match(/[^\/]/g)?.join("");
   //const type = match?.[1];
-  const comps = [<Start/>, <Appointments />,<Refferals />,<Result />, <Receipts />, <Account />]
+  const comps = [<Start />, <Appointments />,<Refferals />,<Result />, <Receipts />, <Account />]
 
+      
+      const combo = [comps, data.menu];
   return (
     <div className='rightdiv'>
       
       {
-      JSON.stringify(match)
+      JSON.stringify(pathname)
       }
       {
-       //JSON.stringify(pathname) 
+       JSON.stringify("/"+ data.menu[0][1]) 
       }
 
       <div>
-        
-      {match === data.menu[0][1] && <Start/>}
-      {match === data.menu[1][1] && comps[0] //<Appointments />
+      {//data.menu.map((item, id) => {(pathname === "/" + item[1] ) && (comps[id])})
+      
+      
+      // comps.map(item => {
+      //   data.menu.map(item2=>pathname === "/"+ item2[1] && item )
+      // })
+      } 
+      {pathname === "/"+ data.menu[0][1] && comps[0]}
+      {pathname === "/"+ data.menu[1][1] &&  comps[1]
       }
-      {match === data.menu[2][1] && comps[1]  }
-      {match === data.menu[3][1] && <Result />}
-      {match === data.menu[4][1] && <Receipts />}
-      {match === data.menu[5][1] && <Account />}
-
-    
-       
-       
-
+      {pathname === data.menu[2][1] && comps[2] }
+      {pathname === data.menu[3][1] && comps[3] }
+      {pathname === data.menu[4][1] && comps[4] }
+      {pathname === data.menu[5][1] && comps[5] }
 
       </div>
        
