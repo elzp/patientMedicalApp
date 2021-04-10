@@ -28,24 +28,24 @@ function App(props: any) {
           <Header />
       </header>
       <main>
-        <Leftboard />
+        {/* <Leftboard /> */}
 
         
               
         
-        {
-        }  <Router forceRefresh={true}>
+          {/* <Router forceRefresh={true}>
             <Switch>
-        {menu.map(item=>( 
-            <Route exact path={`/${item[1]}`} component = {()=> <Rightboard type={item[0]} /> }> </Route>
-        ))}
+              {menu.map(item=>( 
+                  <Route exact path={`/${item[1]}`} ><Rightboard type={item[0]} /> </Route>
+              ))
+              }
         { //<Link  className= "menu-a" to={`/${item}`}  onClick={changeMenuVisibility}>{item}</Link>
         }
         </Switch>
-        </Router>
+        </Router> */}
         
-        <Rightboard type={""} />
-        <Footer /> 
+        {/* <Rightboard type={""} /> */}
+        {/* <Footer />  */}
       
       </main>
       
