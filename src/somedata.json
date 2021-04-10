@@ -1,10 +1,10 @@
 {
-"menu": [["Start",""],
-        ["New Appointment","new"],
-        ["Refferals","refferals" ],
-        ["Result","result"],
-        ["Receipts","receipts" ],
-        ["Account","account"]],
+"menu": [["Start","","Start" ],
+        ["New Appointment","new", "Appointments"],
+        ["Refferals","refferals","Refferals" ],
+        ["Result","result", "Result"],
+        ["Receipts","receipts", "Receipts" ],
+        ["Account","account", "Account"]],
 "foot": {
     "adress":{
         "street-type": "Al.",

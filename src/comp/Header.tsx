@@ -3,6 +3,8 @@ import './../App.css';
 import menuLogo from './../ic-menu.png';
 import logo from './../ic-logo.png';
 import data from './../somedata.json';
+import { BrowserRouter as Router, Link } from 'react-router-dom';
+
 function Header(styles: Styletype) {
  //const logo : string = './../public/ic-menu.png';
 const [menuVisible, setVisibility] = useState(false);
@@ -34,7 +36,10 @@ function changeMenuVisibility () {
             <div  className="menu-elements-1">
               {menu.map(item=>(
               <div className="menu-link">
-                <a className= "menu-a" href="/"  onClick={changeMenuVisibility}>{item[0]}</a>
+              <Router forceRefresh={true} > {/* forces refresh of page and loading nee type of content in rightboard */} 
+                <Link to={`/${item[1]}`} className= "menu-a" onClick={changeMenuVisibility} >{item[0]}</Link>
+              </Router>
+                {/* <a className= "menu-a" href="/"  onClick={changeMenuVisibility}>{item[0]}</a> */}
               </div>))
               }
             </div>
@@ -54,8 +59,12 @@ function changeMenuVisibility () {
             <div  className="menu-elements">
               {menu.map(item=>(
               <div className="menu-link">
-                <a className= "menu-a" href="/"  onClick={changeMenuVisibility}>{item[0]}</a>
-              </div>))}
+              <Router forceRefresh={true} > {/* forces refresh of page and loading nee type of content in rightboard */} 
+                <Link to={`/${item[1]}`} className= "menu-a" onClick={changeMenuVisibility} >{item[0]}</Link>
+              </Router>
+                {/* <a className= "menu-a" href="/"  onClick={changeMenuVisibility}>{item[0]}</a> */}
+              </div>))
+              }
               
             </div>
           )}
