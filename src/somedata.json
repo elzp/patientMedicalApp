@@ -16,5 +16,17 @@
     },
     "phone": "354 328 996",
     "email": "somebrand@brand.com"
-    }
+    },
+"doctors": [{"id": 0,
+            "option": "doc1",
+            "value": "Pediatrician"},
+            {"id1": 1,
+            "option": "doc2",
+            "value": "Gynecologist"},
+            {"id2": 2,
+            "option": "doc3",
+            "value": "Kardiologist"}
+]
+
+
 }

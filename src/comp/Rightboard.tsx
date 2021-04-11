@@ -35,16 +35,33 @@ function Rightboard(props: any) {
   //const type = match?.[1];
   const comps = [<Start />, <Appointments />,<Refferals />,<Result />, <Receipts />, <Account />]
 
-      
-      const combo = [comps, data.menu];
+      // case "/"+ data.menu[2][1]:
+      //  comps[2];
+      //  break; 
+      // case "/"+ data.menu[3][1]:
+      //  comps[3];
+      //  break;
+      // case "/"+ data.menu[4][1]:
+      //  comps[4];
+      //  break; 
+      // case "/"+ data.menu[5][1]:
+      //  comps[5];
+      //  break;
+      // default:
+      //   comps[0];
+      // }
+    
+
+
+     // const combo = [comps, data.menu];
   return (
     <div className='rightdiv'>
       
       {
-      JSON.stringify(pathname)
+     // JSON.stringify(pathname)
       }
       {
-       JSON.stringify("/"+ data.menu[0][1]) 
+       //JSON.stringify("/"+ data.menu[0][1]) 
       }
 
       <div>
@@ -55,13 +72,12 @@ function Rightboard(props: any) {
       //   data.menu.map(item2=>pathname === "/"+ item2[1] && item )
       // })
       } 
-      {pathname === "/"+ data.menu[0][1] && comps[0]}
-      {pathname === "/"+ data.menu[1][1] &&  comps[1]
-      }
-      {pathname === data.menu[2][1] && comps[2] }
-      {pathname === data.menu[3][1] && comps[3] }
-      {pathname === data.menu[4][1] && comps[4] }
-      {pathname === data.menu[5][1] && comps[5] }
+      {pathname === "/"+ data.menu[0][1] && comps[0] }
+      {pathname === "/"+ data.menu[1][1] && comps[1] }
+      {pathname === "/"+ data.menu[2][1] && comps[2] }
+      {pathname === "/"+ data.menu[3][1] && comps[3] }
+      {pathname === "/"+ data.menu[4][1] && comps[4] }
+      {pathname === "/"+ data.menu[5][1] && comps[5] }
 
       </div>
        
