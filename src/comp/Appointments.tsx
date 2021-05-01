@@ -1,7 +1,9 @@
 import React, {useState} from 'react';
 import Appointment from './Appointment';
 import Select from 'react-select';//npm install --save @types/react-select
+import DatePicker from "react-datepicker";// npm i react-datepicker  ;  npm i @types/react-datepicker
 import './../App.css';
+import "react-datepicker/dist/react-datepicker.css";
 import data from './../somedata.json';
 
 function Appointments(props: any ) {
@@ -9,6 +11,7 @@ function Appointments(props: any ) {
 
 const [selectedOption, setSelectedOption] = useState(["none"]);
 const [selectedOption2, setSelectedOption2] = useState(["none"]);
+const [startDate, setStartDate] = useState(new Date());
 
 const newDoctors =
   data.doctors.map(item => { 
@@ -57,9 +60,9 @@ function handleTypeDoctorSelect(){ //sets array of doctor's names depending on c
         
          <Appointment noOfAppointment = {value}/>
        
-         {/* {selectedOption}  
-
-         {JSON.stringify(newDoctors)}    */}
+    <DatePicker selected={startDate} onChange={(date: Date) => {setStartDate(date);}
+    }  showTimeSelect   dateFormat="Pp"
+    />
     <div id="welcome-section">
         
         <div><h1 id="title">Help us inprove!</h1></div>
