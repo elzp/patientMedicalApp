@@ -1,23 +1,14 @@
-import React, {useState}  from 'react';
+import React, {useState} from 'react';
 import Appointment from './Appointment';
 import Select from 'react-select';//npm install --save @types/react-select
 import './../App.css';
 import data from './../somedata.json';
-// import DatePicker from 'react-datepicker';
-//  //npm i @types/react-datepicker   -for types
-
-// //https://blog.bitsrc.io/13-react-time-and-date-pickers-for-2020-d52d88d1ca0b
-// import "react-datepicker/dist/react-datepicker.css";
-
-
 
 function Appointments(props: any ) {
  const {value}: {value: number} = props;
 
 const [selectedOption, setSelectedOption] = useState(["none"]);
 const [selectedOption2, setSelectedOption2] = useState(["none"]);
-// const [startDate, setStartDate] = useState(new Date());
-
 
 const newDoctors =
   data.doctors.map(item => { 
@@ -55,8 +46,8 @@ function handleTypeDoctorSelect(){ //sets array of doctor's names depending on c
     Object.values(newnamesOfDoctorsInGroup1).map((it, ind) =>{ 
       let value = `${ind}`; 
       let label =`${it}`;
-      return { value, label };}); //create array with values type: {value, label}.
-
+      return { value, label };}) //create array with values type: {value, label}.
+      ||namesOfDoctorsInGroup;//fix bug: not handling undefined or null
   setNamesOfDoctorsInGroup(namesOfDoctorsInGroup=> newnamesOfDoctorsInGroup2);
 }
   return (
@@ -66,14 +57,10 @@ function handleTypeDoctorSelect(){ //sets array of doctor's names depending on c
         
          <Appointment noOfAppointment = {value}/>
        
-         {/* <DatePicker
-            selected={startDate}
-            onChange={setStartDate}
-            showTimeSelect
-            dateFormat="Pp"
-          /> */}
+         {/* {selectedOption}  
 
-  <div id="welcome-section">
+         {JSON.stringify(newDoctors)}    */}
+    <div id="welcome-section">
         
         <div><h1 id="title">Help us inprove!</h1></div>
  
@@ -120,7 +107,7 @@ function handleTypeDoctorSelect(){ //sets array of doctor's names depending on c
         label="Single select"
       />
      </div><br/>
-    
+      
           
          <div id="button"> <button  id="submit" type="submit">Submit</button></div>
       </form>
