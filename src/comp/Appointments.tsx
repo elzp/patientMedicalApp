@@ -1,17 +1,64 @@
-import React, {useState} from 'react';
+import React, {useState}  from 'react';
 import Appointment from './Appointment';
 import Select from 'react-select';//npm install --save @types/react-select
 import './../App.css';
 import data from './../somedata.json';
+// import DatePicker from 'react-datepicker';
+//  //npm i @types/react-datepicker   -for types
+
+// //https://blog.bitsrc.io/13-react-time-and-date-pickers-for-2020-d52d88d1ca0b
+// import "react-datepicker/dist/react-datepicker.css";
+
+
 
 function Appointments(props: any ) {
  const {value}: {value: number} = props;
- //const {appointment} : {appointment: object} = props.styles;
- const [selectedOption, setSelectedOption] = useState("none");
- const handleTypeSelect = (el: React.ChangeEvent<HTMLInputElement>) => {
-  //setSelectedOption(el.value);
+
+const [selectedOption, setSelectedOption] = useState(["none"]);
+const [selectedOption2, setSelectedOption2] = useState(["none"]);
+// const [startDate, setStartDate] = useState(new Date());
+
+
+const newDoctors =
+  data.doctors.map(item => { 
+    let {option: value, value:label} = item;
+    return {value, label};
+});
+
+const NamesOfDoctors = //prepare data in format {value label}.
+  data.doctors.map(item => { 
+    let {option: value, value:label} = item;
+    return {value, label};
+});
+
+const [namesOfDoctorsInGroup, setNamesOfDoctorsInGroup] = useState([{value:"choose Type of doctor", label:"choose Type of doctor2"}]);
+
+const handleDoctorSelect = (e:  any | null | void ) => {//sets selected value of doctors' type
+    setSelectedOption([ e?.label]);
+  //  handleTypeDoctorSelect(JSON.stringify(e));
+  };
+
+  
+const handleExactDoctorSelect = (e: any| null | void) => {//sets selected value of doctor's name and surname
+  setSelectedOption2([e?.label]);
 };
 
+function handleTypeDoctorSelect(){ //sets array of doctor's names depending on chosen type of doctor
+  let newnamesOfDoctorsInGroup =
+  data.doctors
+  //getting object with value = value2
+    .filter(item => item.value === selectedOption[0])
+    //retreving array allDoctors
+    .map(item=>item.allDoctors);
+ let newnamesOfDoctorsInGroup1= newnamesOfDoctorsInGroup[0];  
+ let newnamesOfDoctorsInGroup2=
+    Object.values(newnamesOfDoctorsInGroup1).map((it, ind) =>{ 
+      let value = `${ind}`; 
+      let label =`${it}`;
+      return { value, label };}); //create array with values type: {value, label}.
+
+  setNamesOfDoctorsInGroup(namesOfDoctorsInGroup=> newnamesOfDoctorsInGroup2);
+}
   return (
     <div className="appointment">
 
@@ -19,8 +66,14 @@ function Appointments(props: any ) {
         
          <Appointment noOfAppointment = {value}/>
        
-           
-    <div id="welcome-section">
+         {/* <DatePicker
+            selected={startDate}
+            onChange={setStartDate}
+            showTimeSelect
+            dateFormat="Pp"
+          /> */}
+
+  <div id="welcome-section">
         
         <div><h1 id="title">Help us inprove!</h1></div>
  
@@ -29,120 +82,45 @@ function Appointments(props: any ) {
     </div>
     
        
-    <form id="survey-form" action="/submit-data">      
-     <label id="name-label"> Your name:</label><br/>
-        <input  id="name" type="text" placeholder="your name" required />
-        <br/>
-     <label id="email-label"> Your email adress: </label> 
-        <br/>
-        <input id="email" type="email" placeholder="your email adress" required /><br/>
-     <label id="number-label"> Your age (optional):</label>
-        <br/>
-        <input  id="number" type="number"  min="10" max="99" placeholder="your age" />
-        <br/>
-
-        
-     <div className="div">Choose your educational status:<br/></div>
+    <form id="survey-form" action="/submit-data">   
+    wybrana opcja w 1: {JSON.stringify(selectedOption)} ------  <br /> 
+         grupa lekarzy: {JSON.stringify(namesOfDoctorsInGroup)} -----<br /> 
+          wybrana opcja w 2: {JSON.stringify(selectedOption2)}
+     <div className="div">Choose type of doctor:<br/></div>
        <div>
-       <Select
+       {/* <Select
         options={data.doctors}
         //onChange={handleTypeSelect}
       //   value={data.doctors.filter(function(option) {
       //     return option.value === selectedOption;})
       // }
         //label="Single select"
-        />
+        /> */}
          
-         {/* <select  id="dropdown" name="mostLike" className="form-control" required>
-        <option disabled selected value>Select an option</option>
-        
-        <option value="collage">Collage student</option>
-        <option value="university">Univesity student</option>
-        <option value="openSworkource">Working</option>
-        <option value="nowork">Unemployed</option>
-      </select> */}
+         <Select /*https://stackoverflow.com/questions/43250854/react-select-does-not-show-the-selected-value-in-the-field*/
+        options={newDoctors}
+        onChange={(e)=>{//https://stackoverflow.com/questions/26069238/call-multiple-functions-onclick-reactjs (multiple action functions)
+          handleDoctorSelect(e);
+          handleTypeDoctorSelect();}
+        }
+        value={newDoctors.find(function(option) {
+          return option.value === selectedOption[0];
+        })}
+        label="Single select"
+      />
     </div>
      
-     <div className="div"> Choose, which course you would like to take part:<br/>
-          <label
-        ><input
-          name="prefer"
-          value="Chineese"
-          type="checkbox"
-          className="input-checkbox"
-        />Chineese</label
-      >
-      <br/>
-     <label
-        ><input
-          name="prefer"
-          value="Russian"
-          type="checkbox"
-          className="input-checkbox"
-        />Russian</label
-      ><br/>
-          <label
-        ><input
-          name="prefer"
-          value="Swedish"
-          type="checkbox"
-          className="input-checkbox"
-        />Swedish</label
-      ><br/>
-         
-         
-         <label
-        ><input
-          name="prefer"
-          value="Polish"
-          type="checkbox"
-          className="input-checkbox"
-        />Polish</label
-      > 
+     <div className="div"> Choose your doctor/s:<br/>
+     <Select /*https://stackoverflow.com/questions/43250854/react-select-does-not-show-the-selected-value-in-the-field*/
+        options={namesOfDoctorsInGroup}
+        onChange={e=>handleExactDoctorSelect(e)}
+        value={namesOfDoctorsInGroup.find(function(option) {
+          return option.value === selectedOption2[0];
+        })}
+        label="Single select"
+      />
      </div><br/>
-         
-     <div className="div">Please, write down your suggestion of laguages, which you want to learn. </div>  
-      <div>  
-              <textarea
-                  id="comments"
-                  className="input-textarea"
-                  placeholder="Write down your opinions here...">
-          </textarea>
-      </div>  
-         
-          
-          
-      <div className="form-group">
-        <div className="div">Would you recommend our courses to a friend?</div>
-        <label>
-          <input
-            name="user-recommend"
-            value="definitely"
-            type="radio"
-            className="input-radio"
-            checked
-          />Definitely</label
-        ><br/>
-        <label>
-          <input
-            name="user-recommend"
-            value="maybe"
-            type="radio"
-            className="input-radio"
-          />Maybe</label
-        ><br/>
-
-        <label
-          ><input
-            name="user-recommend"
-            value="not-sure"
-            type="radio"
-            className="input-radio"
-          />Not sure</label
-        >
-      </div>
-
-        <br/>
+    
           
          <div id="button"> <button  id="submit" type="submit">Submit</button></div>
       </form>

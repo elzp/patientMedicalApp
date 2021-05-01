@@ -19,14 +19,25 @@
     },
 "doctors": [{"id": 0,
             "option": "doc1",
-            "value": "Pediatrician"},
-            {"id1": 1,
+            "value": "Pediatrician",
+            "allDoctors": {
+                "0": "dr Brown Pediatrician",
+                "1": "dr Grey Pediatrician"
+            }},
+            {"id": 1,
             "option": "doc2",
-            "value": "Gynecologist"},
-            {"id2": 2,
+            "value": "Gynecologist",
+            "allDoctors": {
+                "0":"dr yellow Gynecologist",
+                "1":"dr green Gynecologist"
+                }},
+            {"id": 2,
             "option": "doc3",
-            "value": "Kardiologist"}
+            "value": "Kardiologist",
+            "allDoctors": {
+                "0":"dr orange Kardiologist",
+                "1": "dr blue Kardiologist"
+            }}
 ]
-
 
 }

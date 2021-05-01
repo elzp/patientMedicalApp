@@ -11,7 +11,8 @@
     grid-auto-flow: column;
     grid-template-areas: "brand-nav" "header" ;
     /*border: 3px solid rgb(202, 27, 158);*/
-    margin-bottom: 5px;
+    margin-bottom: 15px;
+    margin-top: 10px;
     /*border: 1px solid rgb(119, 7, 95);*/
    }
    
@@ -86,6 +87,15 @@
   height: 1.5em;
   text-align: center;
 }
+
+.menu-link-clicked{
+  /*border: 3px solid rgb(94, 7, 21);*/
+  position: relative;
+  background-color: red;
+  width: 10em;
+  height: 1.5em;
+  text-align: center;
+}
 a {
   color: darkslategrey;
 }
@@ -98,6 +108,7 @@ a {
   position: relative;
   padding: 5px 0 0 5px;  
   display: none;
+  background-color: yellow;
 }
 
 .button-img {
