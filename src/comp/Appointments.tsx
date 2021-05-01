@@ -61,7 +61,10 @@ function handleTypeDoctorSelect(){ //sets array of doctor's names depending on c
          <Appointment noOfAppointment = {value}/>
        
     <DatePicker selected={startDate} onChange={(date: Date) => {setStartDate(date);}
-    }  showTimeSelect   dateFormat="Pp"
+    }  showTimeSelect   timeFormat="HH:mm"
+      timeIntervals={20}
+      timeCaption="time"
+      dateFormat="dd MMMM yyyy h:mm"
     />
     <div id="welcome-section">
         
