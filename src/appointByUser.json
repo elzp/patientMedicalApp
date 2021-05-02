@@ -1,0 +1,14 @@
+[
+   { "id": 0,
+    "visits": [
+        {"vizId": 0,
+        "type" : "Gynecologist",
+        "name": "dr yellow Gynecologist",
+        "time": "time0"},
+        {"vizId": 1,
+            "type" : "Pediatrician",
+            "name": "dr Grey Pediatrician",
+            "time": "time1"}
+    ]
+}
+]
