@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import Appointment from './Appointment';
 import Select from 'react-select';//npm install --save @types/react-select
 import DatePicker from "react-datepicker";// npm i react-datepicker  ;  npm i @types/react-datepicker
+import { updateAppoinments } from '../dist/functions';
 import './../App.css';
 import "react-datepicker/dist/react-datepicker.css";
 import data from './../somedata.json';
@@ -13,7 +14,7 @@ const [selectedOption, setSelectedOption] = useState(["none"]);
 const [selectedOption2, setSelectedOption2] = useState(["none"]);
 const [startDate, setStartDate] = useState(new Date());
 const [selectNameofDocVis, setVisNameOfDoc] = useState(false);
-
+const pacientid = 1;
 const newDoctors =
   data.doctors.map(item => { 
     let {option: value, value:label} = item;
@@ -133,10 +134,12 @@ function handleVisOfDocSel (){
       dateFormat="MMMM d, yyyy h:mm aa"
     />
           
-         <div id="button"> <button  id="submit" type="submit">Submit</button></div>
+          <div id="button"> <button  id="submit" type="submit"
+         onClick = {()=>updateAppoinments(pacientid, selectedOption[0], selectedOption2[0], startDate)}
+         >Submit</button></div> 
       </form>
      
-    
+      
    
     </div>
   );
