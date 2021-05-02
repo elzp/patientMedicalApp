@@ -12,6 +12,7 @@ function Appointments(props: any ) {
 const [selectedOption, setSelectedOption] = useState(["none"]);
 const [selectedOption2, setSelectedOption2] = useState(["none"]);
 const [startDate, setStartDate] = useState(new Date());
+const [selectNameofDocVis, setVisNameOfDoc] = useState(false);
 
 const newDoctors =
   data.doctors.map(item => { 
@@ -24,8 +25,8 @@ const NamesOfDoctors = //prepare data in format {value label}.
     let {option: value, value:label} = item;
     return {value, label};
 });
-
-const [namesOfDoctorsInGroup, setNamesOfDoctorsInGroup] = useState([{value:"choose Type of doctor", label:"choose Type of doctor2"}]);
+const defaultValueDoctorsGroup = [{value:"choose Type of doctor", label:"choose Type of doctor2"}];
+const [namesOfDoctorsInGroup, setNamesOfDoctorsInGroup] = useState(defaultValueDoctorsGroup);
 
 const handleDoctorSelect = (e:  any | null | void ) => {//sets selected value of doctors' type
     setSelectedOption([ e?.label]);
@@ -37,11 +38,12 @@ const handleExactDoctorSelect = (e: any| null | void) => {//sets selected value 
   setSelectedOption2([e?.label]);
 };
 
-function handleTypeDoctorSelect(){ //sets array of doctor's names depending on chosen type of doctor
-  let newnamesOfDoctorsInGroup =
+function  handleTypeDoctorSelect(e:any| null | void){ //asynchronous function
+  //sets array of doctor's names depending on chosen type of doctor
+  let newnamesOfDoctorsInGroup = 
   data.doctors
   //getting object with value = value2
-    .filter(item => item.value === selectedOption[0])
+    .filter(item => item.value === e?.label || selectedOption[0])
     //retreving array allDoctors
     .map(item=>item.allDoctors);
  let newnamesOfDoctorsInGroup1= newnamesOfDoctorsInGroup[0];  
@@ -53,6 +55,15 @@ function handleTypeDoctorSelect(){ //sets array of doctor's names depending on c
       ||namesOfDoctorsInGroup;//fix bug: not handling undefined or null
   setNamesOfDoctorsInGroup(namesOfDoctorsInGroup=> newnamesOfDoctorsInGroup2);
 }
+
+function handleVisOfDocSel (){
+  setVisNameOfDoc(selectNameofDocVis=> 
+    { 
+      let newselectNameofDocVis = selectNameofDocVis===false ? true:  true;
+      return newselectNameofDocVis
+    })
+}
+
   return (
     <div className="appointment">
 
@@ -60,12 +71,6 @@ function handleTypeDoctorSelect(){ //sets array of doctor's names depending on c
         
          <Appointment noOfAppointment = {value}/>
        
-    <DatePicker selected={startDate} onChange={(date: Date) => {setStartDate(date);}
-    }  showTimeSelect   timeFormat="HH:mm"
-      timeIntervals={20}
-      timeCaption="time"
-      dateFormat="dd MMMM yyyy h:mm"
-    />
     <div id="welcome-section">
         
         <div><h1 id="title">Help us inprove!</h1></div>
@@ -75,7 +80,8 @@ function handleTypeDoctorSelect(){ //sets array of doctor's names depending on c
     </div>
     
        
-    <form id="survey-form" action="/submit-data">   
+    <form id="survey-form" //action="/submit-data"
+    >   
     wybrana opcja w 1: {JSON.stringify(selectedOption)} ------  <br /> 
          grupa lekarzy: {JSON.stringify(namesOfDoctorsInGroup)} -----<br /> 
           wybrana opcja w 2: {JSON.stringify(selectedOption2)}
@@ -93,9 +99,10 @@ function handleTypeDoctorSelect(){ //sets array of doctor's names depending on c
          <Select /*https://stackoverflow.com/questions/43250854/react-select-does-not-show-the-selected-value-in-the-field*/
         options={newDoctors}
         onChange={(e)=>{//https://stackoverflow.com/questions/26069238/call-multiple-functions-onclick-reactjs (multiple action functions)
-          handleDoctorSelect(e);
-          handleTypeDoctorSelect();}
+          handleDoctorSelect(e);//set value of first select
+          handleTypeDoctorSelect(e);} //set array of doctors
         }
+        onMenuClose ={handleVisOfDocSel}
         value={newDoctors.find(function(option) {
           return option.value === selectedOption[0];
         })}
@@ -103,7 +110,8 @@ function handleTypeDoctorSelect(){ //sets array of doctor's names depending on c
       />
     </div>
      
-     <div className="div"> Choose your doctor/s:<br/>
+   { selectNameofDocVis && (
+   <div className="div"> Choose your doctor/s:<br/>
      <Select /*https://stackoverflow.com/questions/43250854/react-select-does-not-show-the-selected-value-in-the-field*/
         options={namesOfDoctorsInGroup}
         onChange={e=>handleExactDoctorSelect(e)}
@@ -112,8 +120,18 @@ function handleTypeDoctorSelect(){ //sets array of doctor's names depending on c
         })}
         label="Single select"
       />
-     </div><br/>
-      
+     </div>
+     )} 
+
+
+     <br/>
+     <DatePicker selected={startDate} onChange={(date: Date) => {setStartDate(date);}
+    }  showTimeSelect   
+    timeFormat="HH:mm"
+      timeIntervals={15}
+      timeCaption="time"
+      dateFormat="MMMM d, yyyy h:mm aa"
+    />
           
          <div id="button"> <button  id="submit" type="submit">Submit</button></div>
       </form>
