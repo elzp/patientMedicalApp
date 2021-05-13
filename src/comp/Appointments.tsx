@@ -65,7 +65,7 @@ function handleVisOfDocSel (){
     })
 }
 
-const visitApiAdress ="http://localhost:3000/newVisit";
+const visitApiAdress ="http://localhost:3001/newVisit";
 
 function onSubmit(e: any| null | void) {
   e.preventDefault();
@@ -84,7 +84,7 @@ function onSubmit(e: any| null | void) {
 // })
       axios
       .post(`${visitApiAdress}`, {id:pacientid, type: selectedOption[0],name: selectedOption2[0], time:startDate})
-      .then(() => console.log('data was send'))
+      .then((res:any) => console.log('data was send', res))
       .catch((err: any) => {
         console.error(err);
       });

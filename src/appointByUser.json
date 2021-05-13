@@ -1,14 +1,94 @@
 [
-   { "id": 0,
+  {
+    "id": 0,
     "visits": [
-        {"vizId": 0,
-        "type" : "Gynecologist",
+      {
+        "vizId": 0,
+        "type": "Gynecologist",
         "name": "dr yellow Gynecologist",
-        "time": "time0"},
-        {"vizId": 1,
-            "type" : "Pediatrician",
-            "name": "dr Grey Pediatrician",
-            "time": "time1"}
+        "time": "time0"
+      },
+      {
+        "vizId": 1,
+        "type": "Pediatrician",
+        "name": "dr Grey Pediatrician",
+        "time": "time1"
+      },
+      {
+        "vizId": 2,
+        "type": "type",
+        "name": "name",
+        "time": "2021-05-02T16:06:09.280Z"
+      },
+      {
+        "vizId": 3,
+        "type": "type",
+        "name": "name",
+        "time": "2021-05-02T16:27:34.824Z"
+      },
+      {
+        "vizId": 4,
+        "type": "type",
+        "name": "name",
+        "time": "2021-05-02T16:27:50.907Z"
+      }
     ]
-}
+  },
+  {
+    "id": 1,
+    "visits": [
+      {
+        "vizId": 0,
+        "type": "type",
+        "name": "name",
+        "time": "2021-05-02T16:06:09.083Z"
+      },
+      {
+        "vizId": 1,
+        "type": "type",
+        "name": "name",
+        "time": "2021-05-02T16:19:30.874Z"
+      },
+      {
+        "vizId": 2,
+        "type": "type",
+        "name": "name",
+        "time": "2021-05-02T16:20:33.771Z"
+      },
+      {
+        "vizId": 3,
+        "type": "type",
+        "name": "name",
+        "time": "2021-05-02T16:21:47.180Z"
+      },
+      {
+        "vizId": 4,
+        "type": "type",
+        "name": "name",
+        "time": "2021-05-02T16:22:20.350Z"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "visits": [
+      {
+        "vizId": 0,
+        "type": "type",
+        "name": "name",
+        "time": "2021-05-02T16:28:51.775Z"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "visits": [
+      {
+        "vizId": 0,
+        "type": "type",
+        "name": "name",
+        "time": "2021-05-02T16:36:30.071Z"
+      }
+    ]
+  }
 ]

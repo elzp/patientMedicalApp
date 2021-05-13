@@ -1,0 +1,37 @@
+"match-default-export-name": true
+
+
+,
+		"match-default-export-name": true,
+		"ignoreImports": false
+
+
+,
+		"variable-name": {
+			"options": [
+			  "ban-keywords",
+			  "check-format",
+			  "allow-leading-underscore",
+			  "allow-pascal-case"
+			]
+		  }
+
+Deleted 
+'  "no-unused-expression": true, '
+from rules in tslint.main.json.
+And deleted 
+'   "extends": [
+		"tslint:recommended" 
+] '
+from tslint.main.json.
+
+Changed '"module": "esnext" 'to
+'"module": "amd"'
+in file tsconfig.json
+in part  "compilerOptions".
+
+
+Changed  '"moduleResolution": "node",' to 
+'"moduleResolution": "classic",'
+in file tsconfig.json
+in part  "compilerOptions". nd deleted '    "resolveJsonModule": true,'.

@@ -2,7 +2,6 @@
   "name": "patient-doctor-app",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:3001/",
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.10",
     "@testing-library/react": "^11.2.6",
@@ -28,7 +27,11 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "start-dev": "nodemon --config \"./server/nodemon.json\"/",
+    "startserver": "./src/server/dist/server.js",
     "server": "tsc-watch ./server/server.ts  --outDir ./server/ --onSuccess \"node ./server/server.js\"",
+    "serv": "nodemon ./server/server.ts",
+    "watch-and-run": "tsc -w & nodemon  -w server server/server.js",
     "buildts": "tsc --project ./",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -70,6 +73,8 @@
     "@types/express": "^4.17.11",
     "@types/node": "^12.20.12",
     "@types/react-router-dom": "^5.1.7",
+    "nodemon": "^2.0.7",
+    "ts-node-dev": "^1.1.6",
     "tslint": "^6.1.3"
   }
 }
