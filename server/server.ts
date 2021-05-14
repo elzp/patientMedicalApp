@@ -2,6 +2,7 @@
 import {} from './server1'
 // tslint:disable-next-line: no-var-requires
 const express = require('express');
+const functions = require('./functions');
 //  import express from 'express';
 /*install :
 npm install --save-dev @types/node
@@ -13,6 +14,8 @@ const cors = require('cors');
 
 /* import cors from 'cors';
 import * as fs from 'fs';
+import { writeFile } from 'fs';
+import { updateAppoinments } from '../src/functions';
 npm i cors ; npm i @types/cors
 bug with express_1[default](): https://stackoverflow.com/questions/
 34520288/node-js-typescript-unclear-syntax-with-type-script-compiled-code - replace import with require();
@@ -92,30 +95,28 @@ app.get('/', (req:any, res:any) => {
    // console.log({name: name , type: type, time: time});
     //res.send({name: name , type: type, time: time})
     app.post(   '/newVisit', (req, res) => {
-      console.log(req.body, 'posted on newvisit');
+      
       // res.send(
       //   `I received your POST request. This is what you sent me:`  
       //  // ${req.body.post}`
       //   )
         const {pacientid, type, name, time } = req.body;
-        res.json(
-          {name, pacientid, type, time }
-         // ${req.body.post}`
-          )
-      
+        functions.updateAppoinments(pacientid, type, name, time)
+          console.log(req.body, 'posted on newvisit');
   });
 
-//   app.get('/newVisit', (req, res) => {
-//     const {pacientid, type, name, time } = req.body;
+   app.get('/newVisit', (req, res) => {
+     const {pacientid, type, name, time } = req.body;
+functions.updateAppoinments("./appointByUser.json",pacientid, type, name, time)
 //     //id:pacientid, type: selectedOption[0],name: selectedOption2[0], time:startDate
 //     //books.push(newBook);
 //     //updateAppoinments({pacientid, type, name, time})
-//       console.log(name, pacientid, type, time);
+       console.log(name, pacientid, type, time);
 //       res.json(
 //         {name, pacientid, type, time }
 //        // ${req.body.post}`
 //         )
-// })
+ })
 
 
 
