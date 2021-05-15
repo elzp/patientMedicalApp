@@ -14,7 +14,7 @@ const [selectedOption, setSelectedOption] = useState(["none"]);
 const [selectedOption2, setSelectedOption2] = useState(["none"]);
 const [startDate, setStartDate] = useState(new Date());
 const [selectNameofDocVis, setVisNameOfDoc] = useState(false);
-const pacientid = 1;
+const pacientid = 4;
 const newDoctors =
   data.doctors.map((item:any )=> { 
     let {option: value, value:label} = item;
@@ -68,7 +68,7 @@ function handleVisOfDocSel (){
 const visitApiAdress ="http://localhost:3001/newVisit";
 
 function onSubmit(e: any| null | void) {
-  e.preventDefault();
+  //e.preventDefault();
   // get form data out of state
   //const { first_name, last_name, password, email, phone } = this.state;
 //   fetch(`${visitApiAdress}`, {
