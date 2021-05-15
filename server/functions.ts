@@ -14,19 +14,23 @@ interface in1{
 }
 
 
-function modify (pacientid: number,obj:{type: string; name: string; time: Date;}, data: Array<in1>){
-    const {type, name, time} = obj;
+function modify (obj:{pacient_id: number,type: string; name: string; time: Date;}, data: Array<in1>){
+    const {pacient_id, type, name, time} = obj;
+    console.log(pacient_id)
     let nData =[...data];
     let data3;
     console.log(nData)
-    const data1 = nData.filter(it=> it.id === pacientid)[0];
-    if( data1 === undefined) {
-        data3 = {id: pacientid, visits: [{vizId: 0, type: type, name: name, time: time}]};
+    const data1 = nData.filter(it=> it.id === pacient_id)[0];
+    console.log('id_pacient type of data:', typeof data1,"; data1 :", data1)
+    if(data1 === undefined) {
+        data3 = {id: pacient_id, visits: [{vizId: 0, type: type, name: name, time: time}]};
         nData.push(data3);
-        }else {
+        }
+    if (data1 !== undefined) {
             data3 = {vizId: data1.visits.length,  type: type, name: name, time: time};
             data1.visits.push(data3);
- }
+        }
+ console.log('data was modified.')
  return nData;
 }
 
@@ -58,15 +62,16 @@ https://stackoverflow.com/questions/45466848/fs-readfilesync-is-not-a-function-m
 // }
 
  export function updateAppoinments(path:string, pacient_id:number, type: string, name: string, time: Date) {
-     let obj = { type, name, time};
+     let obj = { pacient_id, type, name, time};
+     console.log('path:', path)
     //read file
-    let data0 =fs.readFileSync(path,'utf8');
-    console.log(typeof data0)
+    let data0 =fs.readFileSync(__dirname +`/${path}`,'utf8');
+    //console.log(typeof data0)
     let data = JSON.parse(data0);
-    console.log( "data",data)
+   //  console.log( "data",data)
    // console.log('data', data0,  data);
     //modyfy data
-    let data2 = modify(pacient_id,obj, data )//.toString();
+    let data2 = modify(obj, data )//.toString();
   //  console.log('data2', data2);
     //let data4 = JSON.stringify(data2);
     //write data
@@ -74,7 +79,9 @@ https://stackoverflow.com/questions/45466848/fs-readfilesync-is-not-a-function-m
     // console.log("is ok" //,data2, typeof data2.toString()
     
     // , d)
-    write(d, path );
+    write(d,  __dirname +`/${path}` );
+    console.log(data2)
+    console.log("finish updating appinintments")
 }
 
 

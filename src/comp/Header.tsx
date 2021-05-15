@@ -58,7 +58,7 @@ function changeMenuItemView(indexOfItem: number) {
               {menu.map((item,index)=>(
               <div className={buttonStyle[index]}>
               <Router forceRefresh={true} > {/* forces refresh of page and loading nee type of content in rightboard */} 
-                <Link to={`/${item[1]}`} className= "menu-a" onClick={()=>changeMenuItemView(index)} >{item[0]}</Link>
+                <Link to={`/${item[1]}`} className= "menu-a" key = {item[0]} onClick={()=>changeMenuItemView(index)} >{item[0]}</Link>
               </Router>
                 {/* <a className= "menu-a" href="/"  onClick={changeMenuVisibility}>{item[0]}</a> */}
               </div>))
@@ -81,7 +81,7 @@ function changeMenuItemView(indexOfItem: number) {
               {menu.map(item=>(
               <div className="menu-link">
               <Router forceRefresh={true} > {/* forces refresh of page and loading nee type of content in rightboard */} 
-                <Link to={`/${item[1]}`} className= "menu-a" onClick={changeMenuVisibility} >{item[0]}</Link>
+                <Link to={`/${item[1]}`} className= "menu-a" key = {item[0]} onClick={changeMenuVisibility} >{item[0]}</Link>
               </Router>
                 {/* <a className= "menu-a" href="/"  onClick={changeMenuVisibility}>{item[0]}</a> */}
               </div>))

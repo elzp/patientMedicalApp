@@ -88,6 +88,29 @@
         "type": "type",
         "name": "name",
         "time": "2021-05-02T16:36:30.071Z"
+      },
+      {
+        "vizId": 1,
+        "type": "Gynecologist",
+        "name": "dr green Gynecologist",
+        "time": "2021-05-15T06:45:33.711Z"
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "visits": [
+      {
+        "vizId": 0,
+        "type": "Kardiologist",
+        "name": "dr orange Kardiologist",
+        "time": "2021-06-03T07:00:00.000Z"
+      },
+      {
+        "vizId": 1,
+        "type": "Gynecologist",
+        "name": "dr green Gynecologist",
+        "time": "2021-05-30T09:30:00.000Z"
       }
     ]
   }

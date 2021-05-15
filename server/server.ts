@@ -1,8 +1,10 @@
 // declare function require(name:string):any;
+import { idText } from 'typescript';
 import {} from './server1'
 // tslint:disable-next-line: no-var-requires
 const express = require('express');
 const functions = require('./functions');
+const fs = require('fs');
 //  import express from 'express';
 /*install :
 npm install --save-dev @types/node
@@ -100,22 +102,27 @@ app.get('/', (req:any, res:any) => {
       //   `I received your POST request. This is what you sent me:`  
       //  // ${req.body.post}`
       //   )
-        const {pacientid, type, name, time } = req.body;
-        functions.updateAppoinments(pacientid, type, name, time)
+        const {id, type, name, time } = req.body;
+        //functions.updateAppoinments(pacientid, type, name, time)
+        const path = "appointByUser.json";
           console.log(req.body, 'posted on newvisit');
+          if (typeof id !==undefined) functions.updateAppoinments(path, req.body.id, req.body.type, req.body.name, req.body.time) // function not saving data to file
+          console.log('updated appointments througt post');
+          let data0 =fs.readFileSync(__dirname +`/${path}`,'utf8');
+          //console.log(typeof data0)
+         // let data = JSON.parse(data0);
+          console.log(data0)
   });
 
    app.get('/newVisit', (req, res) => {
-     const {pacientid, type, name, time } = req.body;
-functions.updateAppoinments("./appointByUser.json",pacientid, type, name, time)
+    const {id, type, name, time } = req.body;
 //     //id:pacientid, type: selectedOption[0],name: selectedOption2[0], time:startDate
 //     //books.push(newBook);
 //     //updateAppoinments({pacientid, type, name, time})
-       console.log(name, pacientid, type, time);
-//       res.json(
-//         {name, pacientid, type, time }
+       console.log(name, id, type, time);
+      res.json(      {name, id, type, time }
 //        // ${req.body.post}`
-//         )
+        )
  })
 
 

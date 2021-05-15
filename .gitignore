@@ -21,3 +21,8 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+server.js
+server/functions.js
+server/server.ts
+src/comp/Appointments copy 2.tsx
+server/server.js

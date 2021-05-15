@@ -28,7 +28,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "startfnc": "tsc-watch ./server/functions.ts  --outDir  ./server --onSuccess \"node console.log(\"it's working\")\"",
+    "startfnc": "tsc-watch ./server/functions.ts  --outDir  ./server ",
     "server": "tsc-watch ./server/server.ts  --outDir ./server/ --onSuccess \"node ./server/server.js\"",
     "buildts": "tsc --project ./",   
     "build": "react-scripts build",
