@@ -65,25 +65,13 @@ function handleVisOfDocSel (){
     })
 }
 
-const visitApiAdress ="http://localhost:3001/newVisit";
+// server API code
+const visitApiAdress ="http://localhost:3001/";
 
 function onSubmit(e: any| null | void) {
-  //e.preventDefault();
-  // get form data out of state
-  //const { first_name, last_name, password, email, phone } = this.state;
-//   fetch(`${visitApiAdress}`, {
-//   method: "POST",
-//   headers: {
-//     'Content-type': 'application/json'
-//   },
-//   body: JSON.stringify([{id:pacientid, type: selectedOption[0],name: selectedOption2[0], time:startDate}])
-// })
-// .then((response) => response.json())
-// .then((result) => {
-//   console.log(result)
-// })
+  e.preventDefault();
       axios
-      .post(`${visitApiAdress}`, {id:pacientid, type: selectedOption[0],name: selectedOption2[0], time:startDate})
+      .post(`${visitApiAdress}/newVisit`, {id:pacientid, type: selectedOption[0],name: selectedOption2[0], time:startDate})
       .then((res:any) => console.log('data was send', res))
       .catch((err: any) => {
         console.error(err);
@@ -93,14 +81,8 @@ function onSubmit(e: any| null | void) {
   return (
     <div className="appointment">
 
-         <p> This is new appointment {JSON.stringify( value)}.</p> 
-        
-         <Appointment noOfAppointment = {value}/>
-       
     <div id="welcome-section">
-        
         <div><h1 id="title">Help us inprove!</h1></div>
- 
         <div><p id="description">Thank you for your supprot and choosing us to learn new skills. Please take a quick qiuestionnaire. And help us improve ourself.</p>
         </div>
     </div>
