@@ -83,6 +83,23 @@ function onSubmit(e: any| null | void) {
 //set default value of variable savedAppList
 const [pacientVisitsData, setpacientVisitsData] =useState({ "id": pacientid, "visits": []});
 
+// set current data in pacientVisitsData from json file send from server
+function getdataFromFile(){
+  axios
+  .get(`${visitApiAdress}/${pacientid}`)
+  .then((res:any) => {
+  //log in browser
+  console.log('data was received', JSON.parse(res.data))
+  const data = JSON.parse(res.data);
+  setpacientVisitsData(pacientVisitsData => data)
+  }
+)
+.catch((err: any) => {
+  console.error(err);
+});
+}
+
+
 
 
   return (
