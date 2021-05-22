@@ -33,7 +33,7 @@ function Rightboard(props: any) {
   const { pathname } = useLocation();
   const match = pathname.match(/[^\/]/g)?.join("");
   //const type = match?.[1];
-  const comps = [<Start />, <Appointments />,<Refferals />,<Result />, <Receipts />, <Account />]
+  const comps = [<Start />, <Appointments pacientId ={4}/>,<Refferals />,<Result />, <Receipts />, <Account pacientId ={4} />]
 
       // case "/"+ data.menu[2][1]:
       //  comps[2];

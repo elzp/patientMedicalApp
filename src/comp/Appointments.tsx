@@ -14,7 +14,7 @@ const [selectedOption, setSelectedOption] = useState(["none"]);
 const [selectedOption2, setSelectedOption2] = useState(["none"]);
 const [startDate, setStartDate] = useState(new Date());
 const [selectNameofDocVis, setVisNameOfDoc] = useState(false);
-const pacientid = 8;
+const { pacientId } = props;
 const newDoctors =
   data.doctors.map((item:any )=> { 
     let {option: value, value:label} = item;
@@ -72,7 +72,7 @@ function onSubmit(e: any| null | void) {
   e.preventDefault();
    // saving data from form to .json file
       axios
-      .post(`${visitApiAdress}/newVisit`, {id:pacientid, type: selectedOption[0],name: selectedOption2[0], time:startDate})
+      .post(`${visitApiAdress}/newVisit`, {id:pacientId, type: selectedOption[0],name: selectedOption2[0], time:startDate})
       .then((res:any) => console.log('data was send', res))
       .catch((err: any) => {
         console.error(err);
@@ -81,12 +81,12 @@ function onSubmit(e: any| null | void) {
 }
 
 //set default value of variable savedAppList
-const [pacientVisitsData, setpacientVisitsData] =useState({ "id": pacientid, "visits": []});
+const [pacientVisitsData, setpacientVisitsData] =useState({ "id": pacientId, "visits": []});
 
 // set current data in pacientVisitsData from json file send from server
 function getdataFromFile(){
   axios
-  .get(`${visitApiAdress}/${pacientid}`)
+  .get(`${visitApiAdress}/${pacientId}`)
   .then((res:any) => {
   //log in browser
   console.log('data was received', JSON.parse(res.data))

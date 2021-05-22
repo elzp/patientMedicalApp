@@ -4,6 +4,7 @@ import './../App.css';
 
 function Account(props: any ) {
  const {value}: {value: number} = props;
+ const { pacientId } = props;
  //const {appointment} : {appointment: object} = props.styles;
 
   return (
