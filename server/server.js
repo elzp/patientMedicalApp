@@ -89,15 +89,20 @@ app.post('/newVisit', function (req, res) {
     // let data = JSON.parse(data0);
     console.log(data0);
 });
-app.get('/newVisit', function (req, res) {
-    var _a = req.body, id = _a.id, type = _a.type, name = _a.name, time = _a.time;
-    //     //id:pacientid, type: selectedOption[0],name: selectedOption2[0], time:startDate
-    //     //books.push(newBook);
-    //     //updateAppoinments({pacientid, type, name, time})
-    console.log(name, id, type, time);
-    res.json({ name: name, id: id, type: type, time: time }
-    //        // ${req.body.post}`
-    );
+app.get('/:id', function (req, res) {
+    //getting data from file json
+    var data0 = fs.readFileSync(__dirname + ("/" + path), 'utf8');
+    var data1 = JSON.parse(data0).filter(function (it) { return it.id == req.params.id; })[0];
+    console.log(JSON.stringify(data1));
+    //sending to react
+    if (data1 === []) {
+        res.status(200).json(
+        //sending default data
+        { "id": req.params.id, "visits": [] });
+    }
+    else { //sending real data
+        res.status(200).json(JSON.stringify(data1));
+    }
 });
 app.listen(port, function () {
     // tslint:disable-next-line: no-console

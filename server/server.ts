@@ -90,7 +90,7 @@ app.get('/', (req:any, res:any) => {
       //   )
         const {id, type, name, time } = req.body;
         //functions.updateAppoinments(pacientid, type, name, time)
-        
+
           console.log(req.body, 'posted on newvisit');
           if (typeof id !==undefined) functions.updateAppoinments(path, req.body.id, req.body.type, req.body.name, req.body.time) // function not saving data to file
           console.log('updated appointments througt post');
@@ -100,15 +100,17 @@ app.get('/', (req:any, res:any) => {
           console.log(data0)
   });
 
-   app.get('/newVisit', (req, res) => {
-    const {id, type, name, time } = req.body;
-//     //id:pacientid, type: selectedOption[0],name: selectedOption2[0], time:startDate
-//     //books.push(newBook);
-//     //updateAppoinments({pacientid, type, name, time})
-       console.log(name, id, type, time);
-      res.json(      {name, id, type, time }
-//        // ${req.body.post}`
-        )
+  app.get('/:id', (req, res) => {
+     //getting data from file json
+      let data0 =fs.readFileSync(__dirname +`/${path}`,'utf8');
+      const data1 = JSON.parse(data0).filter(it=> it.id == req.params.id)[0];
+      console.log(JSON.stringify(data1))
+      //sending to react
+      if (data1===[]) {res.status(200).json(
+        //sending default data
+         { "id": req.params.id, "visits": []})}
+      else {//sending real data
+        res.status(200).json(JSON.stringify(data1))}
  })
 
 
