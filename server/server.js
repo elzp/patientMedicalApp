@@ -2,6 +2,8 @@
 exports.__esModule = true;
 // tslint:disable-next-line: no-var-requires
 var express = require('express');
+var functions = require('./functions');
+var fs = require('fs');
 //  import express from 'express';
 /*install :
 npm install --save-dev @types/node
@@ -12,6 +14,8 @@ npm add -D @types/node @types/express '; to get access to ts types for
 var cors = require('cors');
 /* import cors from 'cors';
 import * as fs from 'fs';
+import { writeFile } from 'fs';
+import { updateAppoinments } from '../src/functions';
 npm i cors ; npm i @types/cors
 bug with express_1[default](): https://stackoverflow.com/questions/
 34520288/node-js-typescript-unclear-syntax-with-type-script-compiled-code - replace import with require();
@@ -19,6 +23,7 @@ bug with express_1[default](): https://stackoverflow.com/questions/
 */
 var app = express();
 var port = 3001;
+var path = "appointByUser.json";
 /*
 
 2021-05-09 19:19 - npm install -g typescript
@@ -68,43 +73,32 @@ app.get('/', function (req, res) {
 app.get('/', function (req, res) {
     //// res.send('Hello World!')
 });
-// tslint:disable-next-line: only-arrow-functions
-//app.post('/newVisit', function(req:any, res:any) {
-// const newDataOfVisit = {
-//     pacientid: req.body.id,
-//     type: req.body.type,
-//     name: req.body.name,
-//     time: req.body.time,
-// };
-// const { type , name , time } = req.body;
-// id:pacientid, type: selectedOption[0],name: selectedOption2[0], time:startDate
-// books.push(newBook);
-// updateAppoinments({pacientid, type, name, time})
-// tslint:disable-next-line: no-console
-// console.log({name: name , type: type, time: time});
-//res.send({name: name , type: type, time: time})
 app.post('/newVisit', function (req, res) {
-    console.log(req.body, 'posted on newvisit');
     // res.send(
     //   `I received your POST request. This is what you sent me:`  
     //  // ${req.body.post}`
     //   )
-    var _a = req.body, pacientid = _a.pacientid, type = _a.type, name = _a.name, time = _a.time;
-    res.json({ name: name, pacientid: pacientid, type: type, time: time }
-    // ${req.body.post}`
+    var _a = req.body, id = _a.id, type = _a.type, name = _a.name, time = _a.time;
+    //functions.updateAppoinments(pacientid, type, name, time)
+    console.log(req.body, 'posted on newvisit');
+    if (typeof id !== undefined)
+        functions.updateAppoinments(path, req.body.id, req.body.type, req.body.name, req.body.time); // function not saving data to file
+    console.log('updated appointments througt post');
+    var data0 = fs.readFileSync(__dirname + ("/" + path), 'utf8');
+    //console.log(typeof data0)
+    // let data = JSON.parse(data0);
+    console.log(data0);
+});
+app.get('/newVisit', function (req, res) {
+    var _a = req.body, id = _a.id, type = _a.type, name = _a.name, time = _a.time;
+    //     //id:pacientid, type: selectedOption[0],name: selectedOption2[0], time:startDate
+    //     //books.push(newBook);
+    //     //updateAppoinments({pacientid, type, name, time})
+    console.log(name, id, type, time);
+    res.json({ name: name, id: id, type: type, time: time }
+    //        // ${req.body.post}`
     );
 });
-//   app.get('/newVisit', (req, res) => {
-//     const {pacientid, type, name, time } = req.body;
-//     //id:pacientid, type: selectedOption[0],name: selectedOption2[0], time:startDate
-//     //books.push(newBook);
-//     //updateAppoinments({pacientid, type, name, time})
-//       console.log(name, pacientid, type, time);
-//       res.json(
-//         {name, pacientid, type, time }
-//        // ${req.body.post}`
-//         )
-// })
 app.listen(port, function () {
     // tslint:disable-next-line: no-console
     console.log("Example app listening at http://localhost:" + port);

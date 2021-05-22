@@ -25,6 +25,7 @@ bug with express_1[default](): https://stackoverflow.com/questions/
 */
 const app = express()
 const port = 3001
+const path = "appointByUser.json";
 /* 
 
 2021-05-09 19:19 - npm install -g typescript
@@ -80,22 +81,7 @@ app.get('/', (req:any, res:any) => {
 app.get('/', (req:any, res:any) => {
    //// res.send('Hello World!')
   })
-// tslint:disable-next-line: only-arrow-functions
-//app.post('/newVisit', function(req:any, res:any) {
-    // const newDataOfVisit = {
-    //     pacientid: req.body.id,
-    //     type: req.body.type,
-    //     name: req.body.name,
-    //     time: req.body.time,
-    // };
 
-  // const { type , name , time } = req.body;
-  // id:pacientid, type: selectedOption[0],name: selectedOption2[0], time:startDate
-  // books.push(newBook);
-  // updateAppoinments({pacientid, type, name, time})
-    // tslint:disable-next-line: no-console
-   // console.log({name: name , type: type, time: time});
-    //res.send({name: name , type: type, time: time})
     app.post(   '/newVisit', (req, res) => {
       
       // res.send(
@@ -104,7 +90,7 @@ app.get('/', (req:any, res:any) => {
       //   )
         const {id, type, name, time } = req.body;
         //functions.updateAppoinments(pacientid, type, name, time)
-        const path = "appointByUser.json";
+        
           console.log(req.body, 'posted on newvisit');
           if (typeof id !==undefined) functions.updateAppoinments(path, req.body.id, req.body.type, req.body.name, req.body.time) // function not saving data to file
           console.log('updated appointments througt post');
