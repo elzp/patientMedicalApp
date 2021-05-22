@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useMemo} from 'react';
 import Appointment from './Appointment';
 import Select from 'react-select';//npm install --save @types/react-select
 import DatePicker from "react-datepicker";// npm i react-datepicker  ;  npm i @types/react-datepicker
@@ -14,7 +14,7 @@ const [selectedOption, setSelectedOption] = useState(["none"]);
 const [selectedOption2, setSelectedOption2] = useState(["none"]);
 const [startDate, setStartDate] = useState(new Date());
 const [selectNameofDocVis, setVisNameOfDoc] = useState(false);
-const pacientid = 4;
+const pacientid = 8;
 const newDoctors =
   data.doctors.map((item:any )=> { 
     let {option: value, value:label} = item;
@@ -66,7 +66,7 @@ function handleVisOfDocSel (){
 }
 
 // server API code
-const visitApiAdress ="http://localhost:3001/";
+const visitApiAdress ="http://localhost:3001";
 
 function onSubmit(e: any| null | void) {
   e.preventDefault();
@@ -99,7 +99,16 @@ function getdataFromFile(){
 });
 }
 
+// variable tell if memoized fn: getdataFromFile should reload data
+const [submited, setStatusofSubmit] = useState(false)
 
+// change status of submitting data/sending it to server 
+function submitStatus() {
+  setStatusofSubmit(submited=>!submited);
+ }
+
+// waits to change in data to update current data about patient
+useMemo(()=>  getdataFromFile(), [submited]) 
 
 
   return (
@@ -112,7 +121,7 @@ function getdataFromFile(){
     </div>
     
        
-    <form id="survey-form" onSubmit={onSubmit}
+    <form id="survey-form" onSubmit={(event)=>{onSubmit(event); submitStatus()}}
     >   
     wybrana opcja w 1: {JSON.stringify(selectedOption)} ------  <br /> 
          grupa lekarzy: {JSON.stringify(namesOfDoctorsInGroup)} -----<br /> 
