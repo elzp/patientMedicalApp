@@ -70,6 +70,7 @@ const visitApiAdress ="http://localhost:3001/";
 
 function onSubmit(e: any| null | void) {
   e.preventDefault();
+   // saving data from form to .json file
       axios
       .post(`${visitApiAdress}/newVisit`, {id:pacientid, type: selectedOption[0],name: selectedOption2[0], time:startDate})
       .then((res:any) => console.log('data was send', res))
@@ -78,6 +79,12 @@ function onSubmit(e: any| null | void) {
       });
 
 }
+
+//set default value of variable savedAppList
+const [pacientVisitsData, setpacientVisitsData] =useState({ "id": pacientid, "visits": []});
+
+
+
   return (
     <div className="appointment">
 
