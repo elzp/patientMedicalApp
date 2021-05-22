@@ -113,7 +113,16 @@ useMemo(()=>  getdataFromFile(), [submited])
 
   return (
     <div className="appointment">
-
+       <div>
+           {pacientVisitsData.visits.map( (it: visit) => (
+            <div><Appointment 
+                key = {it.vizId} 
+                dataAboutAppointment = {it} 
+                lengthofAllData ={pacientVisitsData.visits.length}
+                />
+            </div>)
+           )}
+        </div>
     <div id="welcome-section">
         <div><h1 id="title">Help us inprove!</h1></div>
         <div><p id="description">Thank you for your supprot and choosing us to learn new skills. Please take a quick qiuestionnaire. And help us improve ourself.</p>
