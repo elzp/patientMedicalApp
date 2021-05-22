@@ -39,3 +39,16 @@ interface doctorsNameValue{
         "1"?: string;
     }
 }
+
+
+interface visit {
+    "vizId": number,
+    "type": string,
+    "name": string,
+    "time": Date | string
+  }
+  interface pacient {
+    "id": number,
+      "visits": Array<visit> | []
+  }
+  
