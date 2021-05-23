@@ -5,81 +5,42 @@ import Result from './Result';
 import Refferals from './Refferals';
 import Receipts from './Receipts';
 import Account from './Account';
-
+import {userContext} from '../context/userContext';
 import './../App.css';
 import data from './../somedata.json';
 import { useLocation, useParams } from 'react-router-dom'; 
 
 function Rightboard(props: any) {
 
-
-  //const { pathType } = useParams<Record<string, string | undefined>>();
-  //const  type2 = useParams()?.pathType;
-  // const { pathType } = useParams<Record<string, string | undefined>>()
- //  save  string from "":type" variable in path string from route in App.tsx.
- //https://stackoverflow.com/questions/59085911/required-url-param-on-react-router-v5-with-typescript-can-be-undefined
- // const { pathname } = useLocation();
-  // const [type, setType] =useState("start");
- const { propsPath } = props;
-
-  // function changeType(){
-  //   setType(props.type);
-  // }
-   const numberOfApp: Array<number> = [1,2,3,4,5,6];
-
-  //  useEffect(()=>{
-  //    setType(props.type);
-  // },[type] )
+//useLocation works if in parent component providor is set. 
   const { pathname } = useLocation();
-  const match = pathname.match(/[^\/]/g)?.join("");
-  //const type = match?.[1];
+ 
   const comps = [<Start />, <Appointments pacientId ={4}/>,<Refferals />,<Result />, <Receipts />, <Account pacientId ={4} />]
+  const comps2 = [Start, Account, Refferals, Result, Receipts,Appointments ]
+  let ChosenChildcomp =Start;
 
-      // case "/"+ data.menu[2][1]:
-      //  comps[2];
-      //  break; 
-      // case "/"+ data.menu[3][1]:
-      //  comps[3];
-      //  break;
-      // case "/"+ data.menu[4][1]:
-      //  comps[4];
-      //  break; 
-      // case "/"+ data.menu[5][1]:
-      //  comps[5];
-      //  break;
-      // default:
-      //   comps[0];
-      // }
-    
+ // setting child component to be visible depending on path value
+ for (let i=0; i < comps2.length; i++)
+  {
+    if(pathname === "/"+ data.menu[i][1]) {
+      ChosenChildcomp=comps2[i];
+      break;
+    } 
+}
 
 
-     // const combo = [comps, data.menu];
+
+
   return (
     <div className='rightdiv'>
       
-      {
-     // JSON.stringify(pathname)
-      }
-      {
-       //JSON.stringify("/"+ data.menu[0][1]) 
-      }
-
-      <div>
-      {//data.menu.map((item, id) => {(pathname === "/" + item[1] ) && (comps[id])})
-      
-      
-      // comps.map(item => {
-      //   data.menu.map(item2=>pathname === "/"+ item2[1] && item )
-      // })
-      } 
-      {pathname === "/"+ data.menu[0][1] && comps[0] }
-      {pathname === "/"+ data.menu[1][1] && comps[5] }
-      {pathname === "/"+ data.menu[2][1] && comps[2] }
-      {pathname === "/"+ data.menu[3][1] && comps[3] }
-      {pathname === "/"+ data.menu[4][1] && comps[4] }
-      {pathname === "/"+ data.menu[5][1] && comps[1] }
-
-      </div>
+    
+      <userContext.Consumer>
+        {(value) => {
+        return <ChosenChildcomp userdata={value} />
+        }}
+      </userContext.Consumer>
+  
        
     </div>
   );

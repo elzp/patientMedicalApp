@@ -52,3 +52,7 @@ interface visit {
       "visits": Array<visit> | []
   }
   
+  interface userdata {
+      currentuser: {pacientId: number}
+    }
+

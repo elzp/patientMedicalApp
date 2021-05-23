@@ -5,12 +5,14 @@ import axios from 'axios';
 
 function Account(props: any ) {
  const {value}: {value: number} = props;
- const { pacientId } = props;
+ const { currentuser } = props.userdata;
+ const { pacientId } = currentuser;
+
  //const {appointment} : {appointment: object} = props.styles;
  // server API code
  const visitApiAdress ="http://localhost:3001";
 
- //set default value of variable savedAppList
+ //set default value of variable pacientVisitsData
  const [pacientVisitsData, setpacientVisitsData] =useState({ "id": pacientId, "visits": []});
  
  // set current data in pacientVisitsData from json file send from server

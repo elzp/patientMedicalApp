@@ -14,7 +14,8 @@ const [selectedOption, setSelectedOption] = useState(["none"]);
 const [selectedOption2, setSelectedOption2] = useState(["none"]);
 const [startDate, setStartDate] = useState(new Date());
 const [selectNameofDocVis, setVisNameOfDoc] = useState(false);
-const { pacientId } = props;
+const { currentuser } = props.userdata;
+const { pacientId } = currentuser;
 const newDoctors =
   data.doctors.map((item:any )=> { 
     let {option: value, value:label} = item;
@@ -80,7 +81,7 @@ function onSubmit(e: any| null | void) {
 
 }
 
-//set default value of variable savedAppList
+//set default value of variable pacientVisitsData
 const [pacientVisitsData, setpacientVisitsData] =useState({ "id": pacientId, "visits": []});
 
 // set current data in pacientVisitsData from json file send from server
@@ -116,17 +117,17 @@ function handleVisOfVisitsList() { setVisOfVisitsList(!visOfVisitsList)}
   return (
     <div className="appointment">
     <div id="welcome-section">
-        <div><h1 id="title">Help us inprove!</h1></div>
-        <div><p id="description">Thank you for your supprot and choosing us to learn new skills. Please take a quick qiuestionnaire. And help us improve ourself.</p>
-        </div>
+        <div><h1 id="title">Add new Visit to your account</h1></div>
+        <h4 id="description">
+          {data.desc.visits.instruction}       
+        </h4>
     </div>
-    
        
     <form id="survey-form" onSubmit={(event)=>{onSubmit(event); handleRefreshingVisits()//submitStatus()
     }}>   
-    wybrana opcja w 1: {JSON.stringify(selectedOption)} ------  <br /> 
+    {/* wybrana opcja w 1: {JSON.stringify(selectedOption)} ------  <br /> 
          grupa lekarzy: {JSON.stringify(namesOfDoctorsInGroup)} -----<br /> 
-          wybrana opcja w 2: {JSON.stringify(selectedOption2)}
+          wybrana opcja w 2: {JSON.stringify(selectedOption2)} */}
      <div className="div">Choose type of doctor:<br/></div>
        <div>       
          <Select /*https://stackoverflow.com/questions/43250854/react-select-does-not-show-the-selected-value-in-the-field*/
