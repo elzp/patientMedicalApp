@@ -13,7 +13,7 @@ import { BrowserRouter as Router, Switch, Link, Route, Redirect } from 'react-ro
 
 function App(props: any) {
   
-  const [TypeOfRightboard, setTypeOfRightboard ] = useState('Account');
+  const [TypeOfRightboard, setTypeOfRightboard ] = useState('new');
   function changeTypeOfRightboard (props: any){
     const temporaryType = props ;//| 'Account';
     setTypeOfRightboard( temporaryType);
@@ -28,24 +28,28 @@ function App(props: any) {
           <Header />
       </header>
       <main>
-        <Leftboard />
+          <Leftboard /> 
 
         
               
         
-        {
-        }  <Router forceRefresh={true}>
+          <Router >
             <Switch>
-        {menu.map(item=>( 
-            <Route exact path={`/${item[1]}`} component = {()=> <Rightboard type={item[0]} /> }> </Route>
-        ))}
-        { //<Link  className= "menu-a" to={`/${item}`}  onClick={changeMenuVisibility}>{item}</Link>
-        }
-        </Switch>
-        </Router>
+              {  menu.map(item=>( 
+                   <Route exact path=//"/:pathType"
+                    {`/${item[1]}`}
+                   >
+                    <Rightboard propsPath={item[0]} /> 
+                  </Route>
+              ))
+              }
+              { //<Link  className= "menu-a" to={`/${item}`}  onClick={changeMenuVisibility}>{item}</Link>
+              }
+            </Switch>
+          </Router> 
         
-        <Rightboard type={""} />
-        <Footer /> 
+        {/* <Rightboard type={""} />  */}
+        <Footer />  
       
       </main>
       

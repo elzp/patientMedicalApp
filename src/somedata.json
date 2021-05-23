@@ -1,10 +1,10 @@
 {
-"menu": [["Start",""],
-        ["New Appointment","new"],
-        ["Refferals","refferals" ],
-        ["Result","result"],
-        ["Receipts","receipts" ],
-        ["Account","account"]],
+"menu": [["Start","","Start" ],
+        ["New Appointment","new", "Appointments"],
+        ["Refferals","refferals","Refferals" ],
+        ["Result","result", "Result"],
+        ["Receipts","receipts", "Receipts" ],
+        ["Account","account", "Account"]],
 "foot": {
     "adress":{
         "street-type": "Al.",
@@ -16,5 +16,28 @@
     },
     "phone": "354 328 996",
     "email": "somebrand@brand.com"
-    }
+    },
+"doctors": [{"id": 0,
+            "option": "doc1",
+            "value": "Pediatrician",
+            "allDoctors": {
+                "0": "dr Brown Pediatrician",
+                "1": "dr Grey Pediatrician"
+            }},
+            {"id": 1,
+            "option": "doc2",
+            "value": "Gynecologist",
+            "allDoctors": {
+                "0":"dr yellow Gynecologist",
+                "1":"dr green Gynecologist"
+                }},
+            {"id": 2,
+            "option": "doc3",
+            "value": "Kardiologist",
+            "allDoctors": {
+                "0":"dr orange Kardiologist",
+                "1": "dr blue Kardiologist"
+            }}
+]
+
 }

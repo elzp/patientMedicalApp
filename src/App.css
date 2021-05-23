@@ -4,40 +4,26 @@
   grid-template-areas: "head" "bottom";
   }
 
-header {
- height: 7.5em;
- grid-area: "head";
- display: grid;
- grid-auto-flow: column;
- grid-template-areas: "logo" "header" ;
- /*border: 3px solid rgb(202, 27, 158);*/
- margin-bottom: 5px;
- /*border: 1px solid rgb(119, 7, 95);*/
-}
-
-main {
-  display: grid;
-  grid-area: "bottom";
-
-  grid-template-areas: "left right" "foot foot" ;
-}
-
-
-
- /* .App-logo {
-    height: 40vmin;
-    pointer-events: none;
-    display: flexbox;
-    flex-flow: column;
-  }
-*/
-/*@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}*/
-
-  .App-header  {
+  header {
+    height: 7.5em;
+    grid-area: "head";
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-areas: "brand-nav" "header" ;
+    /*border: 3px solid rgb(202, 27, 158);*/
+    margin-bottom: 15px;
+    margin-top: 10px;
+    /*border: 1px solid rgb(119, 7, 95);*/
+   }
+   
+   main {
+     display: grid;
+     grid-area: "bottom";
+   
+     grid-template-areas: "left right" "foot foot" ;
+   }
+   
+   .App-header  {
 
     /*max-width: 90vw;
     position: relative;*/
@@ -51,88 +37,17 @@ main {
     grid-area: "header";
 
   }
-
-  a {
-    color: darkslategrey;
-  }
-  .App-link {
-    color: #61dafb;
-  }
-
-  @keyframes App-logo-spin {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
-
-  
-  .leftdiv {
-      background-image: linear-gradient(to left, lightgrey 90%, white);
-      font-size: 0.4em;   
-      padding-right: 20px;
-      min-width: 30vw; 
-      grid-area: "left";
-      border-right: 1px solid brown;
-      padding-left:  10%;
-     /* border-width: 3px;
-  border-style: solid;
-  border-image: 
-  linear-gradient(to left, grey 90%, white) ;*/
-
-    }
-    
-  .rightdiv {
-      /*padding: 10px;*/
-      font-size: 0.5em;
-      display:flexbox;
-      flex-direction: column;
-      min-width: 60vw; 
-      min-height: 200px;
-      background-color: lightgrey;  
-      border-top-left-radius: 0%;
-      border-top-right-radius: 3%;
-      border-top: 1px solid grey;
-      border-left: 1px solid grey;
-      padding: 15px 25px 15px 25px;
-      margin-left: 10px;
-      grid-area: "right";
-    }
-
-
-  .appointment {
-    background-color: white;
-    border-bottom: 0.5px dotted grey;
-    padding-left: 5px;
-    margin: 15px;
-    font-size: 80%;
-  }
-
-  .navbar-wrapper {
-    display: none;
-    }
-
-  .navbar-wrapper-1 {
-    /*border: 3px solid rgb(49, 16, 112);
-    */height: 1.75em;
-    display: grid;
-    grid-auto-flow: column;
-    /*grid-template-columns:  4em ;*/
-    grid-template-areas: "brand-nav" "menu-el";
-    
-  }
-
-
+   
   .brand-nav {
     display: grid;
     grid-auto-flow: row;
     grid-area: "brand-nav";
     grid-template-areas: "logo title ";
     justify-content: center;
+    grid-gap: 0;
+    
   }
-  
+
   .App-logo {
     grid-area: "logo";
     height: 4em;
@@ -144,57 +59,27 @@ main {
     /*border: 3px solid rgb(11, 168, 63);*/
   }
 
-  button{
-    border-radius: 25%;
-    /*border: 1px solid rgb(206, 0, 69);*/
-    background-color: beige;
-  }
-
-.navbar-button-1 {
-    /*border: 3px dotted black;*/
-    grid-area: "menu-button";
-    position: relative;
-    padding: 5px 0 0 5px;  
+  .navbar-wrapper {
     display: none;
+    }
+
+  .menu-elements-wrapper-1 {
+    grid-area: "menu-el";
+    /* border: 2px solid green; */
+    width: 100%;
+    
+  }
+  
+    .menu-elements-1 {
+    display:grid;
+    grid-auto-flow: column;
+    margin-left: 0px;
+    background-color: white;
+    width: 100%;
+    border-bottom: 2px solid lightslategrey;
   }
 
-.button-img {
-    height: 1.5em;
-    width:auto;
-}
-
-.menu-elements-wrapper-1 {
-  grid-area: "menu-el";
- /* border: 2px solid green;*/
-  width: 100%;
-  
-}
-
-.menu-elements-1 {
-  display:grid;
-  grid-auto-flow: column;
-  margin-left: 0px;
-  background-color: white;
-  width: 100%;
-  border-bottom: 2px solid lightslategrey;
-}
-
-.menu-elements-wrapper {
-  display:  none;
-}
-  
-
-.menu-elements{
-  /*border-bottom: 0.5px solid rgb(143, 140, 140);
-  position: absolute;*/
-  display:grid;
-  grid-auto-flow: column;
-  margin-left: 0px;
-  background-color: white;
-  width: 100%;
-
-}
-.menu-link{
+  .menu-link{
   /*border: 3px solid rgb(94, 7, 21);*/
   position: relative;
   background-color: white;
@@ -203,36 +88,143 @@ main {
   text-align: center;
 }
 
+.menu-link-clicked{
+  /*border: 3px solid rgb(94, 7, 21);*/
+  position: relative;
+  background-color: red;
+  width: 10em;
+  height: 1.5em;
+  text-align: center;
+}
+a {
+  color: darkslategrey;
+}
 .menu-a {
  text-decoration: none;
 }
 
-.title {
-  /*border: 3px solid rgb(218, 113, 15);*/
-  min-width:max-content;
-  grid-area: "title";
-  
-  
+.navbar-button-1 {
+  grid-area: "menu-button";
+  position: relative;
+  padding: 5px 0 0 5px;  
+  display: none;
+  background-color: yellow;
 }
+
+.button-img {
+  height: 1.5em;
+  width:auto;
+}
+/*end of header styling*/
+
+
+
+
+
+.leftdiv {
+  background-image: linear-gradient(to right, lightgrey 90%, white);
+  font-size: 0.8em;   
+  padding-right: 20px;
+  min-width: 30vw; 
+  grid-area: "left";
+  /* border-right: 1px solid grey; */
+  margin-left:  10px;
+  padding:  1em ;
+  border-top-left-radius: 3%;
+  border-top-right-radius: 0%;
+  border-top: 1px solid grey;
+  border-left: 1px solid grey;
+  border-bottom: 1px solid grey;  
+  /* border-top-width: 3px;
+border-top-style: solid;
+ */
+
+}
+
+.rightdiv {
+  /*padding: 10px;*/
+    background-image: linear-gradient(to left, lightgrey 95%, white);
+
+  font-size: 0.8em;
+  display:flexbox;
+  flex-direction: column;
+  min-width: 60vw; 
+  min-height: 200px;
+  background-color: lightgrey;  
+  border-top-left-radius: 0%;
+  border-top-right-radius: 3%;
+  border-top: 1px solid grey;
+  /* border-left: 1px solid grey; */
+  border-bottom: 1px solid grey;  
+  padding: 15px 25px 15px 25px;
+  /* margin-left: 10px; */
+  grid-area: "right";
+}
+
+
+.appointment {
+background-color: white;
+border-bottom: 0.7px dotted grey;
+padding-left: 5px;
+margin: 15px;
+font-size: 80%;
+}
+
+
 
 .App-footer {
   grid-area: "foot";
-  font-size: 0.5em;
+  font-size: 0.7em;
 }
 
 
-
 @media (max-width: 800px) {
-  .App {
-    grid-auto-flow: column;
+  .brand-nav {
+    justify-content: left;
+   }
+  
+  
+  
+  .navbar-wrapper-1 {
+    display: none;
+    }
+
+  .navbar-wrapper {
+    /* position: relative; */
     display: grid;
-    grid-template-areas: "head"  "bottom";
+    grid-auto-flow: row;
+    grid-template-rows: fit-content 0px auto;
+    grid-template-areas: "menu-button menu-el brand-nav";
+    align-items: center;
+    /* justify-content: center; */
+    }
+
+  .navbar-button {
+    grid-area: "menu-button";
+    position: relative;
+    padding: 5px 30px 0 15px; 
+    justify-self: left; 
+    justify-self: left;
+  }
+
+  .menu-elements-wrapper {
+    position: relative;
+    grid-area: "menu-el";
+     /* border: 2px solid green;  */
+    width: 0%;
+    /* background-color: yellow; */
+
+    margin:0;
   }
 
 
-  /*.App-header {
-    grid-template-areas: "menu-button" "logo";
-  }*/
+  .menu-elements{
+    position:absolute;
+    grid-auto-flow: row;
+  }
+
+  /*end of header styling*/
+
 
   main {
     display: grid;
@@ -240,104 +232,42 @@ main {
     grid-auto-flow: column;
     grid-template-areas: "left" "right" "foot";
   }
-/*@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}*/
-.menu-elements{
-  margin-left: 0px;
-  border-bottom-width: 0px;
-  /*border-bottom: 0px solid rgb(129, 40, 114);
-  border-left: 3px solid rgb(129, 40, 114);
-  
-*/
 
-}
-.navbar-wrapper {
-  /*border: 3px solid rgb(42, 212, 50);*/
-  position: relative;
-  display: grid;
-  grid-auto-flow: row;
-  grid-template-areas: "menu-button logo title";
-  /*max-width: 4em;*/
-  }
-
-  .navbar-wrapper-1 {
-    /*border: 3px solid rgb(49, 16, 112);
-    */height: 1.75em;
-    display: grid;
-    grid-auto-flow: row;
-    grid-template-columns:  4em max-content;
-    grid-template-areas: "logo title" " menu-el menu-el ";
-    
-  }
-
-.navbar-wrapper-1 {
-    display:none;
-}
-
-.menu-link {
-  text-align: left;
-}
- 
-
-.navbar-button {
-    /*border: 3px dotted black;*/
-    grid-area: "menu-button";
-    position: relative;
-    padding: 5px 0 0 5px;  
-  }
-
-  .menu-elements{
-    
-    grid-auto-flow: row;
-  }
-
-  a {
-    color: darkslategrey;
-  }
-  .App-link {
-    color: #61dafb;
-  }
-
-  
-  
   .leftdiv {
-      /*width: 90vw; */ 
-      background: initial;/*https://stackoverflow.com/questions/45523879/cannot-remove-gradient*/
-      background-color: lightgrey;
-      /*background-color: lightgrey;*/
-      padding-right: 0px;
-      min-width: 100vw; 
-    }
-    
+    /*width: 90vw; */ 
+    background: initial;/*https://stackoverflow.com/questions/45523879/cannot-remove-gradient*/
+    background-color: lightgrey;
+    border-bottom: 1px solid grey;  
+    border-top-left-radius: 0%;
+    border-top-right-radius: 0%;
+    margin: 0px;
+    min-width: 0; 
+  }
+  
 
 .rightdiv {
-      flex-direction: row;
-      min-width: 90vw; 
-      border-top-left-radius: 0%;
-      border-top-right-radius: 0%;
-      border-top: 1px solid grey;
-      border-left: 0px solid grey;
-      padding: 15px 25px 15px 25px;
-      margin-left: 0px;
-    }
-
-  .appointment {
-    background-color: white;
-    border-bottom: 3px dotted darkgrey;
-    
+    background: initial;
+    background-color: lightgrey;
+    flex-direction: row;
+    min-width: 0; 
+    border-top-left-radius: 0%;
+    border-top-right-radius: 0%;
+    border-top: 1px solid grey;
+    border-left: 0px solid grey;
+    border-bottom: 1px solid grey;  
+    padding: 15px 25px 15px 25px;
+    margin-left: 0px;
   }
 
 
 
 
+.appointment {
+  background-color: white;
+  border-top: 3px dotted darkgrey;
+  border-bottom: 3px dotted darkgrey;
+  }
+
 
 
 }
-
-
-
-
-

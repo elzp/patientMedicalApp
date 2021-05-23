@@ -23,3 +23,32 @@ interface footObj  {
     phone: string,
     email: string,
 }
+ 
+
+interface doctorsValue  {
+    value: string,
+    label: string,
+}
+
+interface doctorsNameValue{
+    id: number;
+    option: string;
+    value: string;
+    allDoctors: {
+        "0"?: string;
+        "1"?: string;
+    }
+}
+
+
+interface visit {
+    "vizId": number,
+    "type": string,
+    "name": string,
+    "time": Date | string
+  }
+  interface pacient {
+    "id": number,
+      "visits": Array<visit> | []
+  }
+  

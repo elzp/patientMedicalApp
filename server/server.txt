@@ -1,0 +1,82 @@
+// declare function require(name:string):any;
+import {} from './server1'
+// tslint:disable-next-line: no-var-requires
+const express = require('express')
+
+//  import express from 'express';
+/*install :
+npm install --save-dev @types/node
+and 'npm install --save-dev @types/express;
+npm add -D @types/node @types/express '; to get access to ts types for
+ express (in development phase).*/
+// tslint:disable-next-line: no-var-requires
+const cors = require('cors')
+
+/* import cors from 'cors';
+npm i cors ; npm i @types/cors
+bug with express_1[default](): https://stackoverflow.com/questions/
+34520288/node-js-typescript-unclear-syntax-with-type-script-compiled-code
+
+*/
+const app = express()
+const port = 3001
+/* add     ''buildts': 'tsc --project ./',' to scripts in package.json
+and to compie ts files write in terminal  'npm run buildts'.
+to run server add ex. ''startserver': 'node ./src/server/dist/server.js', '
+ in scripts section in package.json; then run in terminal: npm run startserver .
+!!!! to START SERVER: enter in terminal localization of js file of sever and use
+ 'node server' or 'nodemon server'.
+
+https://stackoverflow.com/questions/41465954/exclude-folder-when-compiling-typescript to not compile
+
+npm i -D ts-node - at the root of project/app to enable transpilation of ts files;
+2021-05-09 19:19 - npm install -g ts-node typescript
+
+2021-05-09 19:35 -
+https://stackoverflow.com/questions/57998762/run-nodemon-with-typescript-compiling :
+add
+
+"start": "tsc-watch ./server/server.ts --project
+ . --outDir ./server --onSuccess \"nodemon ./server/server.js\""
+
+to scripts in akage.json in root of app/project i zainstalowano
+ npm i g tsc-watch gdyż terminal zgłosił że nie nie mam takiej paczki.
+
+2021-05-09 19:48 -
+questions/38276862/is-there-a-way-to-use-npm-scripts-to-run-tsc-watch-nodemon-watch
+
+"scripts": {
+    "compile": "tsc && node app.js",
+    "dev": "./node_modules/nodemon/bin/nodemon.js -e ts  --exec \"npm run compile\""
+     "compile": "tsc && node ./server/server.js",
+    "dev": ".nodemon -e ts  --exec \"npm run compile\"",
+}
+
+!!! https://stackoverflow.com/questions/49582984/
+how-do-i-disable-js-file-is-a-commonjs-module-it-may-be-converted-to-an-es6
+ to fix problem
+  "Not using the local TSLint version found for
+  'c:/Users/lenovo/Documents/ITProjects/react-node/patientApp(04-2021)/
+patient-doctor-app/server/server.js' To enable code execution from
+  the current workspace you must enable workspace library execution.tslint(1)"
+USE: ctrl+shift+P THEN write : "workbench.action.configureLanguageBasedSettings"
+and in opened "file settings.json" add options:
+
+"typescript.suggestionActions.enabled": false,
+"javascript.suggestionActions.enabled": false
+.
+
+
+
+
+
+in next project try:  npm install --save-dev ts-node-dev
+from https://devimalplanet.com/how-to-build-and-run-typescript-watch-mode#3-using-ts-node-dev .
+
+
+!11-05-2021 -
+use npm run server and  find out why in js is exports.__esModule = true;
+ReferenceError: exports is not defined
+- 12.05.2021 deleted {"type": "module"} from package.json in folder " server" and fixed the problem :).
+based on : https://stackoverflow.com/questions/59696265/exports-is-not-defined-when-running-compiled-typescript .
+
