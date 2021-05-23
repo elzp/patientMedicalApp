@@ -73,11 +73,11 @@ function Rightboard(props: any) {
       // })
       } 
       {pathname === "/"+ data.menu[0][1] && comps[0] }
-      {pathname === "/"+ data.menu[1][1] && comps[1] }
+      {pathname === "/"+ data.menu[1][1] && comps[5] }
       {pathname === "/"+ data.menu[2][1] && comps[2] }
       {pathname === "/"+ data.menu[3][1] && comps[3] }
       {pathname === "/"+ data.menu[4][1] && comps[4] }
-      {pathname === "/"+ data.menu[5][1] && comps[5] }
+      {pathname === "/"+ data.menu[5][1] && comps[1] }
 
       </div>
        
