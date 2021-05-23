@@ -108,23 +108,13 @@ function handleRefreshingVisits(){
   setStatusIfRefresh(!ifRefresh);
 }
 
-// visibility list's of visits
-const [visOfVisitsList, setVisOfVisitsList] = useState(false)
-function handleVisOfVisitsList() {setVisOfVisitsList(!visOfVisitsList)}
+//  visibility list's of visits
+const [visOfVisitsList, setVisOfVisitsList] = useState(false) 
+function handleVisOfVisitsList() { setVisOfVisitsList(!visOfVisitsList)}
 
 
   return (
     <div className="appointment">
-       <div>
-           {pacientVisitsData.visits.map( (it: visit) => (
-            <div><Appointment 
-                key = {it.vizId} 
-                dataAboutAppointment = {it} 
-                lengthofAllData ={pacientVisitsData.visits.length}
-                />
-            </div>)
-           )}
-        </div>
     <div id="welcome-section">
         <div><h1 id="title">Help us inprove!</h1></div>
         <div><p id="description">Thank you for your supprot and choosing us to learn new skills. Please take a quick qiuestionnaire. And help us improve ourself.</p>
@@ -179,7 +169,17 @@ function handleVisOfVisitsList() {setVisOfVisitsList(!visOfVisitsList)}
           
           <div id="button"> <button  id="submit" type="submit">Submit</button></div> 
       </form>
-     
+      <button onClick={()=>handleVisOfVisitsList()}>Show My Appointments</button>
+        {visOfVisitsList && (<div>
+           {pacientVisitsData.visits.map( (it: visit) => (
+            <div><Appointment 
+                key = {it.vizId} 
+                dataAboutAppointment = {it} 
+                lengthofAllData ={pacientVisitsData.visits.length}
+                />
+            </div>)
+           )}
+        </div>)}
       
    
     </div>
