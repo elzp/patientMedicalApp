@@ -10,7 +10,7 @@ function Start(props: any ) {
 
   return (
     <div>
-      <h3>Welcome{props.userdata.currentuser.pacientId}!</h3>
+      <h3>Welcome {props.userdata.currentuser.pacientUsername}, you're id:{props.userdata.currentuser.pacientId}.</h3>
       {
       // <Router forceRefresh={true} > {/* forces refresh of page and loading nee type of content in rightboard */} 
       //   <Link to={`/${data.menu[1][1]}`} //className= "menu-a"

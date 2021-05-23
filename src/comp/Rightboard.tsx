@@ -5,6 +5,8 @@ import Result from './Result';
 import Refferals from './Refferals';
 import Receipts from './Receipts';
 import Account from './Account';
+import Login from './Login';
+import SignIn from './SignIn';
 import {userContext} from '../context/userContext';
 import './../App.css';
 import data from './../somedata.json';
@@ -15,8 +17,8 @@ function Rightboard(props: any) {
 //useLocation works if in parent component providor is set. 
   const { pathname } = useLocation();
  
-  const comps = [<Start />, <Appointments pacientId ={4}/>,<Refferals />,<Result />, <Receipts />, <Account pacientId ={4} />]
-  const comps2 = [Start, Account, Refferals, Result, Receipts,Appointments ]
+  // const comps = [<Start />, <Appointments pacientId ={4}/>,<Refferals />,<Result />, <Receipts />, <Account />]
+  const comps2 = [Start, Account, Refferals, Result, Receipts,Appointments, Login, SignIn ]
   let ChosenChildcomp =Start;
 
  // setting child component to be visible depending on path value

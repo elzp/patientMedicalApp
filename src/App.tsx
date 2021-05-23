@@ -17,7 +17,8 @@ function App(props: any) {
 
 
   const userdata:userdata = {
-    currentuser: {pacientId: 4}
+    currentuser: {pacientId: 1,
+                  pacientUsername: "Greenbean"}
   }
 
   const {menu}:{menu: Array<Array<string>>} = data;

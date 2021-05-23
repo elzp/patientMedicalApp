@@ -53,6 +53,8 @@ interface visit {
   }
   
   interface userdata {
-      currentuser: {pacientId: number}
+      currentuser: {pacientId: number,
+        pacientUsername:string
+    }
     }
 
