@@ -99,16 +99,18 @@ function getdataFromFile(){
 });
 }
 
-// variable tell if memoized fn: getdataFromFile should reload data
-const [submited, setStatusofSubmit] = useState(false)
 
-// change status of submitting data/sending it to server 
-function submitStatus() {
-  setStatusofSubmit(submited=>!submited);
- }
+// refresh list of visits
+const [ifRefresh, setStatusIfRefresh] = useState(false)
+useMemo(()=> {getdataFromFile(); }, [ifRefresh])
 
-// waits to change in data to update current data about patient
-useMemo(()=>  getdataFromFile(), [submited]) 
+function handleRefreshingVisits(){
+  setStatusIfRefresh(!ifRefresh);
+}
+
+// visibility list's of visits
+const [visOfVisitsList, setVisOfVisitsList] = useState(false)
+function handleVisOfVisitsList() {setVisOfVisitsList(!visOfVisitsList)}
 
 
   return (
@@ -130,8 +132,8 @@ useMemo(()=>  getdataFromFile(), [submited])
     </div>
     
        
-    <form id="survey-form" onSubmit={(event)=>{onSubmit(event); submitStatus()}}
-    >   
+    <form id="survey-form" onSubmit={(event)=>{onSubmit(event); handleRefreshingVisits()//submitStatus()
+    }}>   
     wybrana opcja w 1: {JSON.stringify(selectedOption)} ------  <br /> 
          grupa lekarzy: {JSON.stringify(namesOfDoctorsInGroup)} -----<br /> 
           wybrana opcja w 2: {JSON.stringify(selectedOption2)}
