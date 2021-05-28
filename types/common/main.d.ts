@@ -54,7 +54,8 @@ interface visit {
   
   interface userdata {
       currentuser: {pacientId: number,
-        pacientUsername:string
+        pacientUsername:string,
+        isLogin: boolean
     }
     }
 
