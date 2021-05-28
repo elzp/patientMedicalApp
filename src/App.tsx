@@ -7,6 +7,7 @@ import Footer from './comp/Footer';
 import {userContext} from './context/userContext';
 import data from './somedata.json';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'; /* zainstaluj: npm i --save-dev @types/react-router-dom */
+import useEffect from 'react';
 
 
 
@@ -15,15 +16,29 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'; /* za
 function App(props: any) {
   
 
+  const [userdata, setuserdata] = useState({
+    currentuser: {pacientId: -5,
+                  pacientUsername: "",
+                  isLogin: false}
+  })
 
-  const userdata:userdata = {
-    currentuser: {pacientId: 1,
-                  pacientUsername: "Greenbean"}
-  }
 
+  
+
+function handleChangeOfUser(newlogin: string, newid: number, status: boolean){
+  const newuser = {
+    currentuser: {pacientId: newid,
+                pacientUsername: newlogin,
+                isLogin: true}
+}
+  setuserdata(userdata=>newuser)
+  console.log(`handleChangeOfUser was used and updated ${newlogin} `)
+}
+  
   const {menu}:{menu: Array<Array<string>>} = data;
   return (
     <div className= "App">
+      <userContext.Provider value={userdata}>
       <header>
           <Header />
       </header>
@@ -36,9 +51,9 @@ function App(props: any) {
                    <Route exact path=//"/:pathType"
                     {`/${item[1]}`}
                    >
-                    <userContext.Provider value={userdata}>
-                    <Rightboard propsPath={item[0]} /> 
-                    </userContext.Provider>
+                    
+                    <Rightboard propsPath={item[0]} changeuser={handleChangeOfUser} /> 
+                    
                   </Route>
               ))
               }
@@ -48,7 +63,7 @@ function App(props: any) {
         <Footer />  
       
       </main>
-      
+      </userContext.Provider> 
     </div>
   );
 }
