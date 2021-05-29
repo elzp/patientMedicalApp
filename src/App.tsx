@@ -15,9 +15,9 @@ import useEffect from 'react';
                   pacientUsername: "",
                   isLogin: false}
   }
-  localStorage.setItem('nameOfLogin', `${defaultUser.currentuser.pacientUsername}`);
-  localStorage.setItem('isLogin', `${defaultUser.currentuser.isLogin}`);
-  localStorage.setItem('id', `${defaultUser.currentuser.pacientId}`);
+  // localStorage.setItem('nameOfLogin', `${defaultUser.currentuser.pacientUsername}`);
+  // localStorage.setItem('isLogin', `${defaultUser.currentuser.isLogin}`);
+  // localStorage.setItem('id', `${defaultUser.currentuser.pacientId}`);
 // if(localStorage.getItem('isLogin')=="true"){//to much rerenders!!!
 //   const actualUser = {
 //       currentuser: {pacientId: localStorage.getItem('id')||  "-5",
@@ -53,7 +53,7 @@ function handleChangeOfUser(newlogin: string, newid: string, status: boolean){
 }
  
 
-function handleLogout(){
+function handleLogout(){//NOT WORKING 
 
   setuserdata(userdata=>defaultUser)
   localStorage.setItem('nameOfLogin', `${defaultUser.currentuser.pacientUsername}`);
@@ -69,16 +69,18 @@ function handleLogout(){
           <Header />
       </header>
       <main>
-          <Leftboard {...handleLogout}/> 
+          <Leftboard handleLogout={handleLogout} defaultuserdata = {defaultUser.currentuser} /> 
 
           <Router >
             <Switch>
               {  menu.map(item=>( 
                    <Route exact path=//"/:pathType"
                     {`/${item[1]}`}
+                    key={item[0]}
                    >
                     
-                    <Rightboard propsPath={item[0]} changeuser={handleChangeOfUser} /> 
+                    <Rightboard propsPath={item[0]} changeuser={handleChangeOfUser} 
+                    defaultuser={defaultUser}/> 
                     
                   </Route>
               ))

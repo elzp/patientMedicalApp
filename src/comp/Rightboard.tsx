@@ -39,7 +39,7 @@ function Rightboard(props: any) {
     
       <userContext.Consumer>
         {(value) => {
-        return <ChosenChildcomp userdata={value} changeuser={props.changeuser} />
+        return <ChosenChildcomp userdata={value} changeuser={props.changeuser} defaultuser={props.defaultuser} />
         }}
       </userContext.Consumer>
   

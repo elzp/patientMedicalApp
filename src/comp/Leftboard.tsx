@@ -2,15 +2,17 @@ import React from 'react';
 import { BrowserRouter as Router, Link } from 'react-router-dom';
 import './../App.css';
 
-function Leftboard(...props: any//styles : Styletype
+function Leftboard(props: any//styles : Styletype
   ) {
 //const style: object = styles.leftdiv;
+  //  const { pacientId, pacientUsername, isLogin } = props.defaultuserdata.currentuser
 
   return (
     <div className='leftdiv'>
      
     {//<img src={logo} className="App-logo" alt="logo" />
 }
+{/* {JSON.stringify(props)} */}
 
         <Router forceRefresh={true} > {/* forces refresh of page and loading nee type of content in rightboard */} 
          {localStorage.getItem('isLogin')==="true" ? <Link to="/login" //className= "menu-a"

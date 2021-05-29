@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './../App.css';
 import { BrowserRouter as Router, Link, Redirect, Route } from 'react-router-dom';
-import data from '../somedata.json';
+import udata from '../usersdata.json';
 import useEffect from 'react';
 
 
@@ -10,16 +10,41 @@ function Login(props: any ) {
   const [ password, setpass ]= useState("")
   const [ showAccountPage, setshowAccountPage ] = useState(false)
   const [ error , setError] = useState("")
-  function getvalidationdatafromserver(login:string, pass:string){
-    // fn's which returns password for given login
-    const goodlogin = "u1";
-    const goodpassword ="p1";
 
-    if(goodlogin===login && goodpassword === pass){
-      return true;
-    }else {
-      return false;
-    } 
+  const { currentuser } = props.defaultuser;
+  const newdefaultuser = [currentuser.pacientId, currentuser.pacientUsername, currentuser.isLogin, ""];
+  // preparing users data from json file to use for authorification
+    const sth3:any = Object.entries(udata).map(it=>{
+
+      const neww:any = [it[0], //pacientId
+                      Object.entries(it[1])[0][1],//pacientUsername
+                      Object.entries(it[1])[2][1],//isLogin
+                      Object.entries(it[1])[1][1]//password
+                    ]
+    return neww
+    })
+
+  function validateWithDataFromServer(log:string, pass:string){
+    // fn's which returns password for given login
+
+    const sth4 = sth3.find((it:any)=>it[1]===log)
+      if(sth4 === undefined || sth4 === null){
+    return newdefaultuser;}
+      else{ 
+        if(sth4[3]===pass){return sth4;}
+        else{
+          setError(error=>"bad password")
+          console.log(error)
+          return newdefaultuser;
+        }
+      }
+      
+    
+    // if(goodlogin===login && goodpassword === pass){
+    //   return true;
+    // }else {
+    //   return false;
+    // } 
   }
 
 
@@ -31,18 +56,25 @@ function Login(props: any ) {
     
   }
 
-  function onSubmit(e:any){
+  async function onSubmit(e:any){
     e.preventDefault();
 
     if(login.length >0 && password.length >0){
       setError(error => "");
-      setshowAccountPage(showAccountPage => getvalidationdatafromserver(login, password));
-      props.changeuser(login)
-      if(!showAccountPage){      setError(error => "Wrong login or password.");
-      console.log(error)}
+      //setshowAccountPage(showAccountPage => getvalidationdatafromserver(login, password));
+      const validation = validateWithDataFromServer(login, password);
+      await console.log(validation)
+
+      if (validation===newdefaultuser) {
+        setError(error=>"Wrong login or password.");
+        await console.log("error",error);
+        return
+      }
       else{
-        setError(error => "good login & password.");
-      console.log(error)
+        await setError(error => "good login & password.");
+        await console.log("error",error)
+        props.changeuser(validation[1], validation[0], validation[3])
+        
       }
     }
   }
@@ -51,6 +83,8 @@ function Login(props: any ) {
   return (
     <div>
       <h3></h3>
+      {/* {JSON.stringify( sth
+    )} */}
    <form onSubmit={onSubmit} >
     <div>
       <label>login:</label> <input value={login} onChange={(e)=>{onChange(e,"log")}}/>
@@ -62,7 +96,7 @@ function Login(props: any ) {
    <div id="button"> <button type="submit" >Submit</button></div> 
    </form>
     {/*login + ', ' +password*/}
-    {/*error*/}
+    {error}
     {/*JSON.stringify(showAccountPage)  */}
     
 
@@ -71,8 +105,11 @@ function Login(props: any ) {
       render={(props) =>   localStorage.getItem('isLogin')==="true" &&
       <Redirect to={{pathname: '/'} }/>}
     />
+    
+        {/* {JSON.stringify( sth3.find((it:any)=>it[1]===login)
+    )} */}
 
-    </div>
+    </div> 
     
    
   );

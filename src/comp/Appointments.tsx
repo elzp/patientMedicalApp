@@ -15,7 +15,7 @@ const [selectedOption2, setSelectedOption2] = useState(["none"]);
 const [startDate, setStartDate] = useState(new Date());
 const [selectNameofDocVis, setVisNameOfDoc] = useState(false);
 const { currentuser } = props.userdata;
-const { pacientId } = currentuser;
+const pacientId  = localStorage.getItem('id');
 const newDoctors =
   data.doctors.map((item:any )=> { 
     let {option: value, value:label} = item;
@@ -117,7 +117,7 @@ function handleVisOfVisitsList() { setVisOfVisitsList(!visOfVisitsList)}
   return (
     <div className="appointment">
     <div id="welcome-section">
-        <div><h1 id="title">Add new Visit to your account</h1></div>
+        <div><h1 id="title">Add new Visit to your account (id:{pacientId}).</h1></div>
         <h4 id="description">
           {data.desc.visits.instruction}       
         </h4>
