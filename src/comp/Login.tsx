@@ -12,8 +12,8 @@ function Login(props: any ) {
   const [ error , setError] = useState("")
   function getvalidationdatafromserver(login:string, pass:string){
     // fn's which returns password for given login
-    const goodlogin = "cos1";
-    const goodpassword ="cos2";
+    const goodlogin = "u1";
+    const goodpassword ="p1";
 
     if(goodlogin===login && goodpassword === pass){
       return true;
@@ -47,34 +47,30 @@ function Login(props: any ) {
     }
   }
 
-  //useEffect(()=>{if(!showAccountPage){setError(error => "Wrong login or password.");}}, )
 
   return (
     <div>
-      <h3>Log In part</h3>
+      <h3></h3>
    <form onSubmit={onSubmit} >
     <div>
-      login: <input value={login} onChange={(e)=>{onChange(e,"log")}}/>
+      <label>login:</label> <input value={login} onChange={(e)=>{onChange(e,"log")}}/>
     </div>
     <div>
-      Password:  <input value={password} onChange={(e)=>{onChange(e,"pass")}}/>
+     <label> Password: </label> <input value={password} onChange={(e)=>{onChange(e,"pass")}}
+      type="password"/>
       </div>
    <div id="button"> <button type="submit" >Submit</button></div> 
    </form>
-    {login + ', ' +password}
-    {error}
-    {JSON.stringify(showAccountPage)  }
+    {/*login + ', ' +password*/}
+    {/*error*/}
+    {/*JSON.stringify(showAccountPage)  */}
     
-    <Route exact path="/">
-        {showAccountPage && (<Redirect  to="/account" /> )
-        }
-    </Route>
-{JSON.stringify(props)}
 
-    {/* <Route
-      render={(props) => showAccountPage===true &&
+
+    <Route
+      render={(props) =>   localStorage.getItem('isLogin')==="true" &&
       <Redirect to={{pathname: '/'} }/>}
-    /> */}
+    />
 
     </div>
     

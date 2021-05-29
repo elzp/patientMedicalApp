@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Link } from 'react-router-dom';
 import './../App.css';
 
-function Leftboard(//styles : Styletype
+function Leftboard(...props: any//styles : Styletype
   ) {
 //const style: object = styles.leftdiv;
 
@@ -13,10 +13,10 @@ function Leftboard(//styles : Styletype
 }
 
         <Router forceRefresh={true} > {/* forces refresh of page and loading nee type of content in rightboard */} 
-         <Link to="/login" //className= "menu-a"
-          ><button>login</button></Link>
-       </Router>
-       <Router forceRefresh={true} > {/* forces refresh of page and loading nee type of content in rightboard */} 
+         {localStorage.getItem('isLogin')==="true" ? <Link to="/login" //className= "menu-a"
+          ><button onClick={props.handleLogout}>logout</button></Link> :
+          <Link to="/login" //className= "menu-a"
+          ><button>login</button></Link>}
          <Link to="/signin" //className= "menu-a"
           ><button>Sign In</button></Link>
        </Router> 
