@@ -19,16 +19,27 @@ function Rightboard(props: any) {
  
   // const comps = [<Start />, <Appointments pacientId ={4}/>,<Refferals />,<Result />, <Receipts />, <Account />]
   const comps2 = [Start, Account, Refferals, Result, Receipts,Appointments, Login, SignIn ]
+  const comps21 = data.menu.map(it=> {return it[0];}) 
+  const comps3 = [comps21[0], comps21[6], comps21[7]];
+  const datamenu2 = [data.menu[0][0], data.menu[6][0], data.menu[7][0]];
   let ChosenChildcomp =Start;
-
  // setting child component to be visible depending on path value
+ //MAKE REDIRECTING only to start, login and sing up when user is not login. //   
  for (let i=0; i < comps2.length; i++)
   {
     if(pathname === "/"+ data.menu[i][1]) {
+    if(localStorage.getItem('isLogin')===null || localStorage.getItem('isLogin')!="true"){
+      if(datamenu2.some(it=>it===comps21[i])){
       ChosenChildcomp=comps2[i];
       break;
     } 
+    }else{
+      ChosenChildcomp=comps2[i];
+      break;
+    } 
+  }
 }
+
 
 
 
