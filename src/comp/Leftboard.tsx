@@ -19,8 +19,9 @@ function Leftboard(props: any//styles : Styletype
           ><button onClick={props.handleLogout}>logout</button></Link> :
           <Link to="/login" //className= "menu-a"
           ><button>login</button></Link>}
-         <Link to="/signin" //className= "menu-a"
-          ><button>Sign In</button></Link>
+         
+         {localStorage.getItem('isLogin')==="false" && <Link to="/signin" //className= "menu-a"
+          ><button>Sign In</button></Link>}
        </Router> 
   {/* https://medium.com/@towfiqu/nodejs-password-encryption-with-bcrypt-8f78d78dc3e8 */}
     </div>
