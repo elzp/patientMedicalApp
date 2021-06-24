@@ -58,6 +58,7 @@ function Appointments(props) {
     }
     // server API code
     var visitApiAdress = "http://localhost:3001";
+    var idUserAPI = visitApiAdress + "/" + pacientId;
     function onSubmit(e) {
         e.preventDefault();
         // saving data from form to .json file
@@ -70,21 +71,22 @@ function Appointments(props) {
     //set default value of variable pacientVisitsData
     var _f = react_1.useState({ "id": pacientId, "visits": [] }), pacientVisitsData = _f[0], setpacientVisitsData = _f[1];
     // set current data in pacientVisitsData from json file send from server
-    function getdataFromFile() {
+    function getdataFromFile(urlAPI, callback, param) {
         axios_1["default"]
-            .get(visitApiAdress + "/" + pacientId)
+            .get("" + urlAPI)
             .then(function (res) {
             //log in browser
             console.log('data was received', JSON.parse(res.data));
             var data = JSON.parse(res.data);
-            setpacientVisitsData(function (pacientVisitsData) { return data; });
+            callback(function (param) { return data; });
+            //setpacientVisitsData(pacientVisitsData => data)
         })["catch"](function (err) {
             console.error(err);
         });
     }
     // refresh list of visits
     var _g = react_1.useState(false), ifRefresh = _g[0], setStatusIfRefresh = _g[1];
-    react_1.useMemo(function () { getdataFromFile(); }, [ifRefresh]);
+    react_1.useMemo(function () { getdataFromFile(idUserAPI, setpacientVisitsData, pacientVisitsData); }, [ifRefresh]);
     function handleRefreshingVisits() {
         setStatusIfRefresh(!ifRefresh);
     }

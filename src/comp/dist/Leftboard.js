@@ -16,7 +16,7 @@ function Leftboard(props //styles : Styletype
                 react_1["default"].createElement(react_router_dom_1.Link, { to: "/login" //className= "menu-a"
                  },
                     react_1["default"].createElement("button", null, "login")),
-            react_1["default"].createElement(react_router_dom_1.Link, { to: "/signin" //className= "menu-a"
+            localStorage.getItem('isLogin') === "false" && react_1["default"].createElement(react_router_dom_1.Link, { to: "/signin" //className= "menu-a"
              },
                 react_1["default"].createElement("button", null, "Sign In")))));
 }

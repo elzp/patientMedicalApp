@@ -1,17 +1,1 @@
-{
-    "0":{
-        "username": "u1",
-        "password": "p1",
-        "islogin": "false"
-    }
-    ,"1":{
-        "username": "u2",
-        "password": "p2",
-        "islogin": "false"  
-    }
-    ,"2":{
-        "username": "1",
-        "password": "2",
-        "islogin": "false"  
-    }
-}
+{"0":{"username":"u1","password":"u1","islogin":"false"},"1":{"username":"u2","password":"$2b$10$SIKzIJcpb0H.Pp5xaF2kpuV4DvuY98V8GmfTfdkP3C8n7cGDot7My","islogin":"false"},"2":{"username":"1","password":"","islogin":"false"}}

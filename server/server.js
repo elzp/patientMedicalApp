@@ -1,4 +1,15 @@
 "use strict";
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 exports.__esModule = true;
 // tslint:disable-next-line: no-var-requires
 var express = require('express');
@@ -24,6 +35,7 @@ bug with express_1[default](): https://stackoverflow.com/questions/
 var app = express();
 var port = 3001;
 var path = "appointByUser.json";
+var path2 = "./../src/usersdata.json";
 /*
 
 2021-05-09 19:19 - npm install -g typescript
@@ -87,7 +99,7 @@ app.post('/newVisit', function (req, res) {
     var data0 = fs.readFileSync(__dirname + ("/" + path), 'utf8');
     //console.log(typeof data0)
     // let data = JSON.parse(data0);
-    console.log(data0);
+    console.log('updated data', data0);
 });
 app.get('/:id', function (req, res) {
     //getting data from file json
@@ -102,6 +114,22 @@ app.get('/:id', function (req, res) {
     }
     else { //sending real data
         res.status(200).json(JSON.stringify(data1));
+    }
+});
+//get data from server for signin and send to react response with info if usersname exist
+app.post('/isusernameunique', function (req, res) {
+    //getting data from file json
+    var data0 = fs.readFileSync(__dirname + ("/" + path2), 'utf8');
+    var data1 = Object.entries(JSON.parse(data0))
+        .map(function (it) { return __assign(__assign({}, it[1]), { id: it[0] }); })
+        .filter(function (it) { return it.username === req.body.login2; });
+    console.log(data1);
+    //sending to react
+    if (data1.length === 0) {
+        res.status(200).json("true");
+    }
+    else {
+        res.status(200).json("false");
     }
 });
 app.listen(port, function () {

@@ -6,6 +6,7 @@ import axios from 'axios';
 import './../App.css';
 import "react-datepicker/dist/react-datepicker.css";
 import data from './../somedata.json';
+import { callbackify } from 'util';
 
 function Appointments(props: any ) {
  const {value}: {value: number} = props;
@@ -68,7 +69,7 @@ function handleVisOfDocSel (){
 
 // server API code
 const visitApiAdress ="http://localhost:3001";
-
+const idUserAPI = `${visitApiAdress}/${pacientId}`
 function onSubmit(e: any| null | void) {
   e.preventDefault();
    // saving data from form to .json file
@@ -85,14 +86,17 @@ function onSubmit(e: any| null | void) {
 const [pacientVisitsData, setpacientVisitsData] =useState({ "id": pacientId, "visits": []});
 
 // set current data in pacientVisitsData from json file send from server
-function getdataFromFile(){
+function getdataFromFile(urlAPI:string 
+  ,callback: React.Dispatch<any>, param: any
+  ){
   axios
-  .get(`${visitApiAdress}/${pacientId}`)
+  .get(`${urlAPI}`)
   .then((res:any) => {
   //log in browser
   console.log('data was received', JSON.parse(res.data))
   const data = JSON.parse(res.data);
-  setpacientVisitsData(pacientVisitsData => data)
+  callback((param:any)=>data)
+  //setpacientVisitsData(pacientVisitsData => data)
   }
 )
 .catch((err: any) => {
@@ -103,7 +107,7 @@ function getdataFromFile(){
 
 // refresh list of visits
 const [ifRefresh, setStatusIfRefresh] = useState(false)
-useMemo(()=> {getdataFromFile(); }, [ifRefresh])
+useMemo(()=> {getdataFromFile(idUserAPI, setpacientVisitsData,pacientVisitsData ); }, [ifRefresh])
 
 function handleRefreshingVisits(){
   setStatusIfRefresh(!ifRefresh);

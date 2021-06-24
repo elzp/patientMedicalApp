@@ -38,13 +38,15 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 exports.__esModule = true;
 var react_1 = require("react");
 require("./../App.css");
-var react_router_dom_1 = require("react-router-dom");
+var axios_1 = require("axios");
 var usersdata_json_1 = require("../usersdata.json");
-function Login(props) {
-    var _a = react_1.useState(""), login = _a[0], setlogin = _a[1];
-    var _b = react_1.useState(""), password = _b[0], setpass = _b[1];
-    var _c = react_1.useState(false), showAccountPage = _c[0], setshowAccountPage = _c[1];
-    var _d = react_1.useState(""), error = _d[0], setError = _d[1];
+function SignIn(props) {
+    var _a = react_1.useState(""), login2 = _a[0], setlogin = _a[1];
+    var _b = react_1.useState(false), isLoginUnique = _b[0], setisLoginUnique = _b[1];
+    var _c = react_1.useState(""), password = _c[0], setpass = _c[1];
+    var _d = react_1.useState(false), isPasswordOk = _d[0], setisPasswordOk = _d[1];
+    var _e = react_1.useState(false), showAccountPage = _e[0], setshowAccountPage = _e[1];
+    var _f = react_1.useState(""), error = _f[0], setError = _f[1];
     // defaultuser={currentuser: {
     //     pacientId: "-5",
     //     pacientUsername: "",
@@ -78,69 +80,88 @@ function Login(props) {
                 return newdefaultuser;
             }
         }
-        // if(goodlogin===login && goodpassword === pass){
-        //   return true;
-        // }else {
-        //   return false;
-        // } 
     }
-    function onChange(e, type) {
-        if (type === "log") {
-            setlogin(function (login) { return e.target.value; });
-        }
-        else {
-            setpass(function (password) { return e.target.value; });
-        }
-    }
-    function onSubmit(e) {
+    function validateinput(e, type) {
         return __awaiter(this, void 0, void 0, function () {
-            var validation;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
+            var _a;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
                     case 0:
                         e.preventDefault();
-                        if (!(login.length > 0 && password.length > 0)) return [3 /*break*/, 6];
-                        setError(function (error) { return ""; });
-                        validation = validateWithDataFromServer(login, password);
-                        return [4 /*yield*/, console.log(validation)];
-                    case 1:
-                        _a.sent();
-                        if (!(validation === newdefaultuser)) return [3 /*break*/, 3];
-                        setError(function (error) { return "Wrong login or password."; });
-                        return [4 /*yield*/, console.log("error", error)];
+                        _a = type;
+                        switch (_a) {
+                            case "log": return [3 /*break*/, 1];
+                            case "pass": return [3 /*break*/, 3];
+                        }
+                        return [3 /*break*/, 4];
+                    case 1: 
+                    //send to server new username to check if is unique
+                    return [4 /*yield*/, axios_1["default"]
+                            .post("http://localhost:3001/isusernameunique", { login2: login2 })
+                            .then(function (res) {
+                            console.log(res.data, 'was send');
+                            //save in react getted response about if username was used in database is unique(=true)
+                            setisLoginUnique(function (isLoginUnique) { return JSON.parse(res.data); }); //ERROR!!!problems with validating login and password in singin page
+                        })["catch"](function (err) {
+                            console.error(err);
+                        })];
                     case 2:
-                        _a.sent();
-                        return [2 /*return*/];
-                    case 3: return [4 /*yield*/, setError(function (error) { return "good login & password."; })];
+                        //send to server new username to check if is unique
+                        _b.sent();
+                        if (isLoginUnique === false) {
+                            setError(function (error) { return "Another user is using this name. Choose another username."; });
+                        }
+                        ;
+                        return [3 /*break*/, 4];
+                    case 3:
+                        // validate prenounciation of password
+                        // if(/@|#|$|%|\^|&|\*|(|)|!|~/ig.test(password)){
+                        //   setError(error=>"Your password shouldn't have sighs like: @,#.")
+                        //   setisPasswordOk(isPasswordOk=>false)
+                        // }else{
+                        setisPasswordOk(function (isPasswordOk) { return true; });
+                        // }
+                        return [3 /*break*/, 4];
                     case 4:
-                        _a.sent();
-                        return [4 /*yield*/, console.log("error", error)];
-                    case 5:
-                        _a.sent();
-                        props.changeuser(validation[1], validation[0], validation[3]);
-                        _a.label = 6;
-                    case 6: return [2 /*return*/];
+                        ;
+                        return [2 /*return*/];
                 }
             });
         });
     }
+    function onSubmit1(e) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                e.preventDefault();
+                return [2 /*return*/];
+            });
+        });
+    }
     return (react_1["default"].createElement("div", null,
-        react_1["default"].createElement("h3", null, "Login Page"),
+        react_1["default"].createElement("h3", null, "SignIn page"),
         JSON.stringify(usersdata_json_1["default"]),
-        react_1["default"].createElement("form", { onSubmit: onSubmit },
+        react_1["default"].createElement("form", null,
             react_1["default"].createElement("div", null,
                 react_1["default"].createElement("label", null, "login:"),
                 " ",
-                react_1["default"].createElement("input", { value: login, onChange: function (e) { onChange(e, "log"); } })),
+                react_1["default"].createElement("input", { onChange: function (e) {
+                        setlogin(function (login2) { return e.target.value; });
+                        validateinput(e, "log");
+                    } })),
             react_1["default"].createElement("div", null,
-                react_1["default"].createElement("label", null, " Password: "),
+                react_1["default"].createElement("label", null, "Password: "),
                 " ",
-                react_1["default"].createElement("input", { value: password, onChange: function (e) { onChange(e, "pass"); }, type: "password" })),
+                react_1["default"].createElement("input", { onChange: function (e) {
+                        setpass(function (password) { return e.target.value; });
+                        validateinput(e, "pass");
+                    }, type: "password" })),
             react_1["default"].createElement("div", { id: "button" },
                 " ",
-                react_1["default"].createElement("button", { type: "submit" }, "Submit"))),
-        error,
-        react_1["default"].createElement(react_router_dom_1.Route, { render: function (props) { return localStorage.getItem('isLogin') === "true" &&
-                react_1["default"].createElement(react_router_dom_1.Redirect, { to: { pathname: '/' } }); } })));
+                react_1["default"].createElement("button", null, "Submit"))),
+        error, login2 + "; password " + password,
+        JSON.stringify([isLoginUnique, isPasswordOk]),
+        JSON.stringify(/@|#|$|%|\^|&|\*|(|)|!|~/.test("%65"))
+    ///[@#$%^&*()!~]
+    ));
 }
-exports["default"] = Login;
+exports["default"] = SignIn;
