@@ -1,0 +1,100 @@
+                                                                         
+  Moderate        Regular Expression Denial of Service                          
+                                                                                
+  Package         browserslist                                                  
+                                                                                
+  Patched in      >=4.16.5                                                      
+                                                                                
+  Dependency of   react-scripts                                                 
+                                                                                
+  Path            react-scripts > react-dev-utils > browserslist                
+                                                                                
+  More info       https://npmjs.com/advisories/1747                             
+                                                                                                                                                                
+ ----------------------------   
+  Moderate        Regular expression denial of service                          
+                                                                                
+  Package         glob-parent                                                   
+                                                                                
+  Patched in      >=5.1.2                                                       
+                                                                                
+  Dependency of   react-scripts                                                 
+                                                                                
+  Path            react-scripts > webpack > watchpack > watchpack-chokidar2 >   
+                  chokidar > glob-parent                                        
+                                                                                
+  More info       https://npmjs.com/advisories/1751                             
+                                                                                
+                                                                                   
+ ----------------------------                                                                                
+  Moderate        Regular expression denial of service                          
+                                   npm i glob-parent@5.1.1                                             
+  Package         glob-parent                                                   
+                                                                                
+  Patched in      >=5.1.2                                                       
+                                                                                
+  Dependency of   react-scripts                                                 
+                                                                                
+  Path            react-scripts > webpack-dev-server > chokidar > glob-parent   
+                                                                                
+  More info       https://npmjs.com/advisories/1751                             
+                                                                                
+                                                                                        
+ ----------------------------                                                                           
+  High            Denial of Service                                             
+                                                                                
+  Package         css-what                                                      
+                                                                                
+  Patched in      >=5.0.1                                                       
+                                                                                
+  Dependency of   react-scripts                                                 
+                                                                                
+  Path            react-scripts > @svgr/webpack > @svgr/plugin-svgo > svgo >    
+                  css-select > css-what                                         
+                                                                                
+  More info       https://npmjs.com/advisories/1754                             
+                                                                                
+                                                                                  
+ ----------------------------                                                                                 
+  High            Denial of Service                                             
+                            npm i css-what                                                   
+  Package         css-what                                                      
+                                                                                
+  Patched in      >=5.0.1                                                       
+                                                                                
+  Dependency of   react-scripts                                                 
+                                                                                
+  Path            react-scripts > optimize-css-assets-webpack-plugin > cssnano  
+                  > cssnano-preset-default > postcss-svgo > svgo > css-select   
+                  > css-what                                                    
+                                                                                
+  More info       https://npmjs.com/advisories/1754                             
+                                                                                
+ ----------------------------                                                                               
+  High            Regular Expression Denial of Service                          
+                                                                                
+  Package         normalize-url                                                 
+                                                                                
+  Patched in      >=4.5.1 <5.0.0 || >=5.3.1 <6.0.0 || >=6.0.1                   
+                                                                                
+  Dependency of   react-scripts                                                 
+                                                                                
+  Path            react-scripts > mini-css-extract-plugin > normalize-url       
+                                                                                
+  More info       https://npmjs.com/advisories/1755                             
+                                                                                
+                                                                                  
+ ----------------------------                                                                                 
+  High            Regular Expression Denial of Service                          
+                                                                                
+  Package         normalize-url                                                 
+                                                                                
+  Patched in      >=4.5.1 <5.0.0 || >=5.3.1 <6.0.0 || >=6.0.1                   
+                                                                                
+  Dependency of   react-scripts                                                 
+                                                                                
+  Path            react-scripts > optimize-css-assets-webpack-plugin > cssnano  
+                  > cssnano-preset-default > postcss-normalize-url >            
+                  normalize-url                                                 
+                                                                                
+  More info       https://npmjs.com/advisories/1755 
