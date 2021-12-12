@@ -6,14 +6,12 @@ import data from './../somedata.json';
 import { BrowserRouter as Router, Link } from 'react-router-dom';
 import { IndexKind } from 'typescript';
 
-function Header(styles: Styletype) {
- //const logo : string = './../public/ic-menu.png';
+function Header() {
 const [menuVisible, setVisibility] = useState(false);
 const {menu}:{menu: Array<Array<string>>} = data;
+const newmenu = menu.slice(0,6);
 
-const arrOfFalse = new Array(data.menu.length).fill(false);
 const arrOfMenuButtonsStyle = new Array(data.menu.length).fill("menu-link");
-const [areClicked, setIfareClicked] = useState(arrOfFalse);
 const [buttonStyle,setButtonStyle] = useState(arrOfMenuButtonsStyle);
 
 function changeMenuVisibility () {
@@ -22,10 +20,6 @@ function changeMenuVisibility () {
 
 
 function changeMenuItemView(indexOfItem: number) {
-  let newAreClicked = arrOfFalse;
-  newAreClicked[indexOfItem] = true;
-  console.log(newAreClicked);
-  setIfareClicked(areClicked =>newAreClicked);
   changeMenuVisibility();
 
   let newArrOfMenuButtonsStyle = arrOfMenuButtonsStyle;
@@ -55,12 +49,11 @@ function changeMenuItemView(indexOfItem: number) {
           
           <div className="menu-elements-wrapper-1">
             <div  className="menu-elements-1">
-              {menu.map((item,index)=>(
-              <div className={buttonStyle[index]}>
+              {newmenu.map((item,index)=>(
+              <div key={item[0]} className={buttonStyle[index]}>
               <Router forceRefresh={true} > {/* forces refresh of page and loading nee type of content in rightboard */} 
                 <Link to={`/${item[1]}`} className= "menu-a" key = {item[0]} onClick={()=>changeMenuItemView(index)} >{item[0]}</Link>
               </Router>
-                {/* <a className= "menu-a" href="/"  onClick={changeMenuVisibility}>{item[0]}</a> */}
               </div>))
               }
             </div>
@@ -78,12 +71,11 @@ function changeMenuItemView(indexOfItem: number) {
           (
           
             <div  className="menu-elements">
-              {menu.map(item=>(
-              <div className="menu-link">
+              {newmenu.map(item=>(
+              <div  key={item[0]} className="menu-link">
               <Router forceRefresh={true} > {/* forces refresh of page and loading nee type of content in rightboard */} 
                 <Link to={`/${item[1]}`} className= "menu-a" key = {item[0]} onClick={changeMenuVisibility} >{item[0]}</Link>
               </Router>
-                {/* <a className= "menu-a" href="/"  onClick={changeMenuVisibility}>{item[0]}</a> */}
               </div>))
               }
               
@@ -100,11 +92,6 @@ function changeMenuItemView(indexOfItem: number) {
             </div>
           </div>
       </div>
-{
-       /*: (<div className="navbar-button">
-          <button  onClick={changeMenuVisibility}><img src={menuLogo} alt="menu" className="button-img"/></button>
-          </div >)*/
-      }
       
     </div>
   );

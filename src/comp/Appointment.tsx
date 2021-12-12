@@ -3,7 +3,7 @@ import Refferal from './Refferal';
 import './../App.css';
 
 function Appointment(props: any) {
- const {value}: {value: number} = props;
+ //const {value}: {value: number} = props;
  //const {appointment} : {appointment: object} = props.styles;
 
  const data =  props.dataAboutAppointment || {
@@ -24,7 +24,7 @@ function Appointment(props: any) {
         <p>Date:  {time.substr(0,10)}.</p>
         <p>Time:  {time.substr(11,5)}.</p>       
         
-         <Refferal noOfAppointment = {value}/>
+         {/* <Refferal noOfAppointment = {value}/> */}
        
        
    

@@ -52,3 +52,10 @@ interface visit {
       "visits": Array<visit> | []
   }
   
+  interface typeuserdata {
+      currentuser: {pacientId:  string,
+        pacientUsername:string ,
+        isLogin: boolean | string
+    }
+    }
+

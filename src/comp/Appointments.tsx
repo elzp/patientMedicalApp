@@ -2,10 +2,11 @@ import React, {useState, useMemo} from 'react';
 import Appointment from './Appointment';
 import Select from 'react-select';//npm install --save @types/react-select
 import DatePicker from "react-datepicker";// npm i react-datepicker  ;  npm i @types/react-datepicker
-import axios from 'axios';
 import './../App.css';
 import "react-datepicker/dist/react-datepicker.css";
 import data from './../somedata.json';
+import { getdataFromFile, onSubmitAppointmentForm } from './srcfunctions';
+
 
 function Appointments(props: any ) {
  const {value}: {value: number} = props;
@@ -14,7 +15,9 @@ const [selectedOption, setSelectedOption] = useState(["none"]);
 const [selectedOption2, setSelectedOption2] = useState(["none"]);
 const [startDate, setStartDate] = useState(new Date());
 const [selectNameofDocVis, setVisNameOfDoc] = useState(false);
-const { pacientId } = props;
+const { currentuser } = props.userdata;
+const pacientId  = props.userdata.currentuser.pacientId === "-5"? localStorage.getItem('id'): props.userdata.currentuser.pacientId;
+//prepare data for forms to choose from
 const newDoctors =
   data.doctors.map((item:any )=> { 
     let {option: value, value:label} = item;
@@ -31,7 +34,6 @@ const [namesOfDoctorsInGroup, setNamesOfDoctorsInGroup] = useState(defaultValueD
 
 const handleDoctorSelect = (e:  any | null | void ) => {//sets selected value of doctors' type
     setSelectedOption([ e?.label]);
-  //  handleTypeDoctorSelect(JSON.stringify(e));
   };
 
   
@@ -67,42 +69,21 @@ function handleVisOfDocSel (){
 
 // server API code
 const visitApiAdress ="http://localhost:3001";
+const idUserAPI = `${visitApiAdress}/${pacientId}`
+const postFormUrl = `${visitApiAdress}/newVisit`
+const postDataFromForm = {id:pacientId, type: selectedOption[0],name: selectedOption2[0], time:startDate}
+// function onSubmitAppointmentForm  was moved to srcfunctions.ts.
 
-function onSubmit(e: any| null | void) {
-  e.preventDefault();
-   // saving data from form to .json file
-      axios
-      .post(`${visitApiAdress}/newVisit`, {id:pacientId, type: selectedOption[0],name: selectedOption2[0], time:startDate})
-      .then((res:any) => console.log('data was send', res))
-      .catch((err: any) => {
-        console.error(err);
-      });
-
-}
-
-//set default value of variable savedAppList
+//set default value of variable pacientVisitsData
 const [pacientVisitsData, setpacientVisitsData] =useState({ "id": pacientId, "visits": []});
 
 // set current data in pacientVisitsData from json file send from server
-function getdataFromFile(){
-  axios
-  .get(`${visitApiAdress}/${pacientId}`)
-  .then((res:any) => {
-  //log in browser
-  console.log('data was received', JSON.parse(res.data))
-  const data = JSON.parse(res.data);
-  setpacientVisitsData(pacientVisitsData => data)
-  }
-)
-.catch((err: any) => {
-  console.error(err);
-});
-}
+// function getdataFromFile was moved to srcfunctions.ts.
 
 
 // refresh list of visits
 const [ifRefresh, setStatusIfRefresh] = useState(false)
-useMemo(()=> {getdataFromFile(); }, [ifRefresh])
+useMemo(()=> {getdataFromFile(idUserAPI, setpacientVisitsData,pacientVisitsData ); }, [ifRefresh])
 
 function handleRefreshingVisits(){
   setStatusIfRefresh(!ifRefresh);
@@ -112,21 +93,33 @@ function handleRefreshingVisits(){
 const [visOfVisitsList, setVisOfVisitsList] = useState(false) 
 function handleVisOfVisitsList() { setVisOfVisitsList(!visOfVisitsList)}
 
+const listOfSavedAppointments = pacientVisitsData.visits === []? 
+    "Missing some options. Please refill form above.":
+           pacientVisitsData.visits.map( (it: visit) => (
+            <div key = {it.vizId} ><Appointment 
+                key = {it.vizId} 
+                dataAboutAppointment = {it} 
+                lengthofAllData ={pacientVisitsData.visits.length}
+                />
+            </div>)
+           )
+        
 
   return (
     <div className="appointment">
     <div id="welcome-section">
-        <div><h1 id="title">Help us inprove!</h1></div>
-        <div><p id="description">Thank you for your supprot and choosing us to learn new skills. Please take a quick qiuestionnaire. And help us improve ourself.</p>
-        </div>
+        <div><h1 id="title">Add new Visit to your account (id:{pacientId}).</h1></div>
+        <h4 id="description">
+          {data.desc.visits.instruction}       
+        </h4>
     </div>
-    
-       
-    <form id="survey-form" onSubmit={(event)=>{onSubmit(event); handleRefreshingVisits()//submitStatus()
+      <form id="survey-form" onSubmit={(event)=>{
+      onSubmitAppointmentForm(event, postFormUrl, postDataFromForm, 'data from form was send'); 
+      handleRefreshingVisits()//submitStatus()
     }}>   
-    wybrana opcja w 1: {JSON.stringify(selectedOption)} ------  <br /> 
+    {/* wybrana opcja w 1: {JSON.stringify(selectedOption)} ------  <br /> 
          grupa lekarzy: {JSON.stringify(namesOfDoctorsInGroup)} -----<br /> 
-          wybrana opcja w 2: {JSON.stringify(selectedOption2)}
+          wybrana opcja w 2: {JSON.stringify(selectedOption2)} */}
      <div className="div">Choose type of doctor:<br/></div>
        <div>       
          <Select /*https://stackoverflow.com/questions/43250854/react-select-does-not-show-the-selected-value-in-the-field*/
@@ -169,19 +162,14 @@ function handleVisOfVisitsList() { setVisOfVisitsList(!visOfVisitsList)}
           
           <div id="button"> <button  id="submit" type="submit">Submit</button></div> 
       </form>
-      <button onClick={()=>handleVisOfVisitsList()}>Show My Appointments</button>
-        {visOfVisitsList && (<div>
-           {pacientVisitsData.visits.map( (it: visit) => (
-            <div><Appointment 
-                key = {it.vizId} 
-                dataAboutAppointment = {it} 
-                lengthofAllData ={pacientVisitsData.visits.length}
-                />
-            </div>)
-           )}
-        </div>)}
-      
-   
+      <button data-testid="buttonToShowAppointment" onClick={()=>handleVisOfVisitsList()}>Show My Appointments</button>
+      <div 
+          data-testid="list of saved apponntments">
+            {visOfVisitsList && listOfSavedAppointments}
+            </div>
+        <div data-testid="error">
+        {/* Missing some options. Please refill form above. */}
+        </div>
     </div>
   );
 }
