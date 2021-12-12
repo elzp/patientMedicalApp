@@ -26,6 +26,7 @@ bug with express_1[default](): https://stackoverflow.com/questions/
 const app = express()
 const port = 3001
 const path = "appointByUser.json";
+const path2 = "./../src/usersdata.json";
 /* 
 
 2021-05-09 19:19 - npm install -g typescript
@@ -97,7 +98,7 @@ app.get('/', (req:any, res:any) => {
           let data0 =fs.readFileSync(__dirname +`/${path}`,'utf8');
           //console.log(typeof data0)
          // let data = JSON.parse(data0);
-          console.log(data0)
+          console.log('updated data',data0)
   });
 
   app.get('/:id', (req, res) => {
@@ -113,6 +114,22 @@ app.get('/', (req:any, res:any) => {
         res.status(200).json(JSON.stringify(data1))}
  })
 
+//get data from server for signin and send to react response with info if usersname exist
+ app.post('/isusernameunique', (req, res) => {
+  //getting data from file json
+   let data0 =fs.readFileSync(__dirname +`/${path2}`,'utf8');
+   const data1 = Object.entries(JSON.parse(data0))
+          .map((it:[string,any])=>{return {...it[1],id: it[0]}})
+          .filter(it=> it.username === req.body.login2);
+          console.log(data1)
+ //sending to react
+if(data1.length===0){
+  res.status(200).json("true")
+}
+else{
+  res.status(200).json("false") 
+}
+})
 
 
 app.listen(port, () => {

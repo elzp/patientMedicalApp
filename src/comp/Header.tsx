@@ -10,6 +10,7 @@ function Header(styles: Styletype) {
  //const logo : string = './../public/ic-menu.png';
 const [menuVisible, setVisibility] = useState(false);
 const {menu}:{menu: Array<Array<string>>} = data;
+const newmenu = menu.slice(0,6);
 
 const arrOfFalse = new Array(data.menu.length).fill(false);
 const arrOfMenuButtonsStyle = new Array(data.menu.length).fill("menu-link");
@@ -55,8 +56,8 @@ function changeMenuItemView(indexOfItem: number) {
           
           <div className="menu-elements-wrapper-1">
             <div  className="menu-elements-1">
-              {menu.map((item,index)=>(
-              <div className={buttonStyle[index]}>
+              {newmenu.map((item,index)=>(
+              <div key={item[0]} className={buttonStyle[index]}>
               <Router forceRefresh={true} > {/* forces refresh of page and loading nee type of content in rightboard */} 
                 <Link to={`/${item[1]}`} className= "menu-a" key = {item[0]} onClick={()=>changeMenuItemView(index)} >{item[0]}</Link>
               </Router>
@@ -78,8 +79,8 @@ function changeMenuItemView(indexOfItem: number) {
           (
           
             <div  className="menu-elements">
-              {menu.map(item=>(
-              <div className="menu-link">
+              {newmenu.map(item=>(
+              <div  key={item[0]} className="menu-link">
               <Router forceRefresh={true} > {/* forces refresh of page and loading nee type of content in rightboard */} 
                 <Link to={`/${item[1]}`} className= "menu-a" key = {item[0]} onClick={changeMenuVisibility} >{item[0]}</Link>
               </Router>
