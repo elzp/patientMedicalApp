@@ -4,10 +4,10 @@ var react_1 = require("react");
 var Appointment_1 = require("./Appointment");
 var react_select_1 = require("react-select"); //npm install --save @types/react-select
 var react_datepicker_1 = require("react-datepicker"); // npm i react-datepicker  ;  npm i @types/react-datepicker
-var axios_1 = require("axios");
 require("./../App.css");
 require("react-datepicker/dist/react-datepicker.css");
 var somedata_json_1 = require("./../somedata.json");
+var srcfunctions_1 = require("./srcfunctions");
 function Appointments(props) {
     var value = props.value;
     var _a = react_1.useState(["none"]), selectedOption = _a[0], setSelectedOption = _a[1];
@@ -15,7 +15,8 @@ function Appointments(props) {
     var _c = react_1.useState(new Date()), startDate = _c[0], setStartDate = _c[1];
     var _d = react_1.useState(false), selectNameofDocVis = _d[0], setVisNameOfDoc = _d[1];
     var currentuser = props.userdata.currentuser;
-    var pacientId = localStorage.getItem('id');
+    var pacientId = props.userdata.currentuser.pacientId === "-5" ? localStorage.getItem('id') : props.userdata.currentuser.pacientId;
+    //prepare data for forms to choose from
     var newDoctors = somedata_json_1["default"].doctors.map(function (item) {
         var value = item.option, label = item.value;
         return { value: value, label: label };
@@ -29,7 +30,6 @@ function Appointments(props) {
     var _e = react_1.useState(defaultValueDoctorsGroup), namesOfDoctorsInGroup = _e[0], setNamesOfDoctorsInGroup = _e[1];
     var handleDoctorSelect = function (e) {
         setSelectedOption([e === null || e === void 0 ? void 0 : e.label]);
-        //  handleTypeDoctorSelect(JSON.stringify(e));
     };
     var handleExactDoctorSelect = function (e) {
         setSelectedOption2([e === null || e === void 0 ? void 0 : e.label]);
@@ -59,40 +59,26 @@ function Appointments(props) {
     // server API code
     var visitApiAdress = "http://localhost:3001";
     var idUserAPI = visitApiAdress + "/" + pacientId;
-    function onSubmit(e) {
-        e.preventDefault();
-        // saving data from form to .json file
-        axios_1["default"]
-            .post(visitApiAdress + "/newVisit", { id: pacientId, type: selectedOption[0], name: selectedOption2[0], time: startDate })
-            .then(function (res) { return console.log('data was send', res); })["catch"](function (err) {
-            console.error(err);
-        });
-    }
+    var postFormUrl = visitApiAdress + "/newVisit";
+    var postDataFromForm = { id: pacientId, type: selectedOption[0], name: selectedOption2[0], time: startDate };
+    // function onSubmitAppointmentForm  was moved to srcfunctions.ts.
     //set default value of variable pacientVisitsData
     var _f = react_1.useState({ "id": pacientId, "visits": [] }), pacientVisitsData = _f[0], setpacientVisitsData = _f[1];
     // set current data in pacientVisitsData from json file send from server
-    function getdataFromFile(urlAPI, callback, param) {
-        axios_1["default"]
-            .get("" + urlAPI)
-            .then(function (res) {
-            //log in browser
-            console.log('data was received', JSON.parse(res.data));
-            var data = JSON.parse(res.data);
-            callback(function (param) { return data; });
-            //setpacientVisitsData(pacientVisitsData => data)
-        })["catch"](function (err) {
-            console.error(err);
-        });
-    }
+    // function getdataFromFile was moved to srcfunctions.ts.
     // refresh list of visits
     var _g = react_1.useState(false), ifRefresh = _g[0], setStatusIfRefresh = _g[1];
-    react_1.useMemo(function () { getdataFromFile(idUserAPI, setpacientVisitsData, pacientVisitsData); }, [ifRefresh]);
+    react_1.useMemo(function () { srcfunctions_1.getdataFromFile(idUserAPI, setpacientVisitsData, pacientVisitsData); }, [ifRefresh]);
     function handleRefreshingVisits() {
         setStatusIfRefresh(!ifRefresh);
     }
     //  visibility list's of visits
     var _h = react_1.useState(false), visOfVisitsList = _h[0], setVisOfVisitsList = _h[1];
     function handleVisOfVisitsList() { setVisOfVisitsList(!visOfVisitsList); }
+    var listOfSavedAppointments = pacientVisitsData.visits === [] ?
+        "Missing some options. Please refill form above." :
+        pacientVisitsData.visits.map(function (it) { return (react_1["default"].createElement("div", { key: it.vizId },
+            react_1["default"].createElement(Appointment_1["default"], { key: it.vizId, dataAboutAppointment: it, lengthofAllData: pacientVisitsData.visits.length }))); });
     return (react_1["default"].createElement("div", { className: "appointment" },
         react_1["default"].createElement("div", { id: "welcome-section" },
             react_1["default"].createElement("div", null,
@@ -102,7 +88,7 @@ function Appointments(props) {
                     ").")),
             react_1["default"].createElement("h4", { id: "description" }, somedata_json_1["default"].desc.visits.instruction)),
         react_1["default"].createElement("form", { id: "survey-form", onSubmit: function (event) {
-                onSubmit(event);
+                srcfunctions_1.onSubmitAppointmentForm(event, postFormUrl, postDataFromForm, 'data from form was send');
                 handleRefreshingVisits(); //submitStatus()
             } },
             react_1["default"].createElement("div", { className: "div" },
@@ -126,8 +112,8 @@ function Appointments(props) {
             react_1["default"].createElement("div", { id: "button" },
                 " ",
                 react_1["default"].createElement("button", { id: "submit", type: "submit" }, "Submit"))),
-        react_1["default"].createElement("button", { onClick: function () { return handleVisOfVisitsList(); } }, "Show My Appointments"),
-        visOfVisitsList && (react_1["default"].createElement("div", null, pacientVisitsData.visits.map(function (it) { return (react_1["default"].createElement("div", null,
-            react_1["default"].createElement(Appointment_1["default"], { key: it.vizId, dataAboutAppointment: it, lengthofAllData: pacientVisitsData.visits.length }))); })))));
+        react_1["default"].createElement("button", { "data-testid": "buttonToShowAppointment", onClick: function () { return handleVisOfVisitsList(); } }, "Show My Appointments"),
+        react_1["default"].createElement("div", { "data-testid": "list of saved apponntments" }, visOfVisitsList && listOfSavedAppointments),
+        react_1["default"].createElement("div", { "data-testid": "error" })));
 }
 exports["default"] = Appointments;

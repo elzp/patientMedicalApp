@@ -38,6 +38,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 exports.__esModule = true;
 var react_1 = require("react");
 require("./../App.css");
+var srcfunctions_1 = require("./srcfunctions");
 var react_router_dom_1 = require("react-router-dom");
 var usersdata_json_1 = require("../usersdata.json");
 function Login(props) {
@@ -45,12 +46,7 @@ function Login(props) {
     var _b = react_1.useState(""), password = _b[0], setpass = _b[1];
     var _c = react_1.useState(false), showAccountPage = _c[0], setshowAccountPage = _c[1];
     var _d = react_1.useState(""), error = _d[0], setError = _d[1];
-    // defaultuser={currentuser: {
-    //     pacientId: "-5",
-    //     pacientUsername: "",
-    //     isLogin: false
-    //   }
-    // }
+    var changeuser = props.changeuser;
     var currentuser = props.defaultuser.currentuser;
     var newdefaultuser = [currentuser.pacientId, currentuser.pacientUsername, currentuser.isLogin, ""];
     // preparing users data from json file to use for authorification
@@ -94,7 +90,7 @@ function Login(props) {
     }
     function onSubmit(e) {
         return __awaiter(this, void 0, void 0, function () {
-            var validation;
+            var validation, newuser;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -111,13 +107,18 @@ function Login(props) {
                     case 2:
                         _a.sent();
                         return [2 /*return*/];
-                    case 3: return [4 /*yield*/, setError(function (error) { return "good login & password."; })];
+                    case 3:
+                        newuser = { currentuser: { pacientId: validation[1],
+                                pacientUsername: validation[0],
+                                isLogin: validation[3] } };
+                        return [4 /*yield*/, setError(function (error) { return "good login & password."; })];
                     case 4:
                         _a.sent();
                         return [4 /*yield*/, console.log("error", error)];
                     case 5:
                         _a.sent();
-                        props.changeuser(validation[1], validation[0], validation[3]);
+                        srcfunctions_1.handleChangeOfUser(validation[1], validation[0], validation[3], props.changeuser, props.userdata);
+                        changeuser(newuser);
                         _a.label = 6;
                     case 6: return [2 /*return*/];
                 }

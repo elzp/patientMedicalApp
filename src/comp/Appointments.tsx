@@ -2,11 +2,11 @@ import React, {useState, useMemo} from 'react';
 import Appointment from './Appointment';
 import Select from 'react-select';//npm install --save @types/react-select
 import DatePicker from "react-datepicker";// npm i react-datepicker  ;  npm i @types/react-datepicker
-import axios from 'axios';
 import './../App.css';
 import "react-datepicker/dist/react-datepicker.css";
 import data from './../somedata.json';
-import { callbackify } from 'util';
+import { getdataFromFile, onSubmitAppointmentForm } from './srcfunctions';
+
 
 function Appointments(props: any ) {
  const {value}: {value: number} = props;
@@ -16,7 +16,8 @@ const [selectedOption2, setSelectedOption2] = useState(["none"]);
 const [startDate, setStartDate] = useState(new Date());
 const [selectNameofDocVis, setVisNameOfDoc] = useState(false);
 const { currentuser } = props.userdata;
-const pacientId  = localStorage.getItem('id');
+const pacientId  = props.userdata.currentuser.pacientId === "-5"? localStorage.getItem('id'): props.userdata.currentuser.pacientId;
+//prepare data for forms to choose from
 const newDoctors =
   data.doctors.map((item:any )=> { 
     let {option: value, value:label} = item;
@@ -33,7 +34,6 @@ const [namesOfDoctorsInGroup, setNamesOfDoctorsInGroup] = useState(defaultValueD
 
 const handleDoctorSelect = (e:  any | null | void ) => {//sets selected value of doctors' type
     setSelectedOption([ e?.label]);
-  //  handleTypeDoctorSelect(JSON.stringify(e));
   };
 
   
@@ -70,39 +70,15 @@ function handleVisOfDocSel (){
 // server API code
 const visitApiAdress ="http://localhost:3001";
 const idUserAPI = `${visitApiAdress}/${pacientId}`
-function onSubmit(e: any| null | void) {
-  e.preventDefault();
-   // saving data from form to .json file
-      axios
-      .post(`${visitApiAdress}/newVisit`, {id:pacientId, type: selectedOption[0],name: selectedOption2[0], time:startDate})
-      .then((res:any) => console.log('data was send', res))
-      .catch((err: any) => {
-        console.error(err);
-      });
-
-}
+const postFormUrl = `${visitApiAdress}/newVisit`
+const postDataFromForm = {id:pacientId, type: selectedOption[0],name: selectedOption2[0], time:startDate}
+// function onSubmitAppointmentForm  was moved to srcfunctions.ts.
 
 //set default value of variable pacientVisitsData
 const [pacientVisitsData, setpacientVisitsData] =useState({ "id": pacientId, "visits": []});
 
 // set current data in pacientVisitsData from json file send from server
-function getdataFromFile(urlAPI:string 
-  ,callback: React.Dispatch<any>, param: any
-  ){
-  axios
-  .get(`${urlAPI}`)
-  .then((res:any) => {
-  //log in browser
-  console.log('data was received', JSON.parse(res.data))
-  const data = JSON.parse(res.data);
-  callback((param:any)=>data)
-  //setpacientVisitsData(pacientVisitsData => data)
-  }
-)
-.catch((err: any) => {
-  console.error(err);
-});
-}
+// function getdataFromFile was moved to srcfunctions.ts.
 
 
 // refresh list of visits
@@ -117,6 +93,17 @@ function handleRefreshingVisits(){
 const [visOfVisitsList, setVisOfVisitsList] = useState(false) 
 function handleVisOfVisitsList() { setVisOfVisitsList(!visOfVisitsList)}
 
+const listOfSavedAppointments = pacientVisitsData.visits === []? 
+    "Missing some options. Please refill form above.":
+           pacientVisitsData.visits.map( (it: visit) => (
+            <div key = {it.vizId} ><Appointment 
+                key = {it.vizId} 
+                dataAboutAppointment = {it} 
+                lengthofAllData ={pacientVisitsData.visits.length}
+                />
+            </div>)
+           )
+        
 
   return (
     <div className="appointment">
@@ -126,8 +113,9 @@ function handleVisOfVisitsList() { setVisOfVisitsList(!visOfVisitsList)}
           {data.desc.visits.instruction}       
         </h4>
     </div>
-       
-    <form id="survey-form" onSubmit={(event)=>{onSubmit(event); handleRefreshingVisits()//submitStatus()
+      <form id="survey-form" onSubmit={(event)=>{
+      onSubmitAppointmentForm(event, postFormUrl, postDataFromForm, 'data from form was send'); 
+      handleRefreshingVisits()//submitStatus()
     }}>   
     {/* wybrana opcja w 1: {JSON.stringify(selectedOption)} ------  <br /> 
          grupa lekarzy: {JSON.stringify(namesOfDoctorsInGroup)} -----<br /> 
@@ -174,19 +162,14 @@ function handleVisOfVisitsList() { setVisOfVisitsList(!visOfVisitsList)}
           
           <div id="button"> <button  id="submit" type="submit">Submit</button></div> 
       </form>
-      <button onClick={()=>handleVisOfVisitsList()}>Show My Appointments</button>
-        {visOfVisitsList && (<div>
-           {pacientVisitsData.visits.map( (it: visit) => (
-            <div><Appointment 
-                key = {it.vizId} 
-                dataAboutAppointment = {it} 
-                lengthofAllData ={pacientVisitsData.visits.length}
-                />
-            </div>)
-           )}
-        </div>)}
-      
-   
+      <button data-testid="buttonToShowAppointment" onClick={()=>handleVisOfVisitsList()}>Show My Appointments</button>
+      <div 
+          data-testid="list of saved apponntments">
+            {visOfVisitsList && listOfSavedAppointments}
+            </div>
+        <div data-testid="error">
+        {/* Missing some options. Please refill form above. */}
+        </div>
     </div>
   );
 }

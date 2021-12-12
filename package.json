@@ -36,7 +36,7 @@
     "server2": "tsc-watch ./server/server2.ts  --outDir ./server/ --onSuccess \"node ./server/server2.js\"",
     "buildts": "tsc --project ./",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --detectOpenHandles",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

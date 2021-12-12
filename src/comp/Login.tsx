@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './../App.css';
-import { BrowserRouter as Router, Link, Redirect, Route } from 'react-router-dom';
+import {handleChangeOfUser} from './srcfunctions'
+import { BrowserRouter as Router, Redirect, Route } from 'react-router-dom';
 import axios from 'axios';
 import udata from '../usersdata.json';
 import useEffect from 'react';
@@ -11,12 +12,7 @@ function Login(props: any ) {
   const [ password, setpass ]= useState("")
   const [ showAccountPage, setshowAccountPage ] = useState(false)
   const [ error , setError] = useState("")
-  // defaultuser={currentuser: {
-                  //     pacientId: "-5",
-                  //     pacientUsername: "",
-                  //     isLogin: false
-                  //   }
-                  // }
+  const changeuser:React.Dispatch<React.SetStateAction<typeuserdata>> = props.changeuser
   const { currentuser } = props.defaultuser;
   const newdefaultuser = [currentuser.pacientId, currentuser.pacientUsername, currentuser.isLogin, ""];
   // preparing users data from json file to use for authorification
@@ -67,7 +63,7 @@ function Login(props: any ) {
 
     if(login.length >0 && password.length >0){
       setError(error => "");
-      //setshowAccountPage(showAccountPage => getvalidationdatafromserver(login, password));
+       
       const validation = validateWithDataFromServer(login, password);
       await console.log(validation)
 
@@ -77,10 +73,13 @@ function Login(props: any ) {
         return
       }
       else{
+        const newuser = {currentuser: {pacientId: validation[1],
+          pacientUsername: validation[0],
+          isLogin: validation[3]}}
         await setError(error => "good login & password.");
         await console.log("error",error)
-        props.changeuser(validation[1], validation[0], validation[3])
-        
+        handleChangeOfUser(validation[1], validation[0], validation[3], props.changeuser, props.userdata )
+        changeuser(newuser)
       }
     }
   }
@@ -100,20 +99,12 @@ function Login(props: any ) {
       </div>
    <div id="button"> <button type="submit" >Submit</button></div> 
    </form>
-    {/*login + ', ' +password*/}
     {error}
-    {/*JSON.stringify(showAccountPage)  */}
-    
-
 
     <Route
       render={(props) =>   localStorage.getItem('isLogin')==="true" &&
       <Redirect to={{pathname: '/'} }/>}
     />
-    
-        {/* {JSON.stringify( sth3.find((it:any)=>it[1]===login)
-    )} */}
-
     </div> 
     
    

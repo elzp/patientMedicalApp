@@ -1,26 +1,21 @@
 import React from 'react';
 import { BrowserRouter as Router, Link } from 'react-router-dom';
 import './../App.css';
-
-function Leftboard(props: any//styles : Styletype
+import { handleLogout } from './srcfunctions';
+function Leftboard(props: any
   ) {
-//const style: object = styles.leftdiv;
-  //  const { pacientId, pacientUsername, isLogin } = props.defaultuserdata.currentuser
 
   return (
     <div className='leftdiv'>
      
-    {//<img src={logo} className="App-logo" alt="logo" />
-}
-{/* {JSON.stringify(props)} */}
 
         <Router forceRefresh={true} > {/* forces refresh of page and loading nee type of content in rightboard */} 
-         {localStorage.getItem('isLogin')==="true" ? <Link to="/login" //className= "menu-a"
-          ><button onClick={props.handleLogout}>logout</button></Link> :
-          <Link to="/login" //className= "menu-a"
+         {localStorage.getItem('isLogin')==="true" ? <Link to="/login" 
+          ><button onClick={()=>handleLogout(props.defaultuserdata, props.changeuser, props.currentuserdata)}>logout</button></Link> :
+          <Link to="/login" 
           ><button>login</button></Link>}
          
-         {localStorage.getItem('isLogin')==="false" && <Link to="/signin" //className= "menu-a"
+         {localStorage.getItem('isLogin')==="false" && <Link to="/signin" 
           ><button>Sign In</button></Link>}
        </Router> 
   {/* https://medium.com/@towfiqu/nodejs-password-encryption-with-bcrypt-8f78d78dc3e8 */}
