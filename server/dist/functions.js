@@ -13,26 +13,26 @@ var fs = require("fs");
 function modify(obj, data) {
     var pacient_id = obj.pacient_id, type = obj.type, name = obj.name, time = obj.time;
     console.log(pacient_id);
-    var nData = __spreadArrays(data);
+    var copyOfData = __spreadArrays(data);
     var data3;
-    console.log(nData);
-    var data1 = nData.filter(function (it) { return it.id === pacient_id; })[0];
-    console.log('id_pacient type of data:', typeof data1, "; data1 :", data1);
-    if (data1 === undefined) {
-        data3 = { id: pacient_id, visits: [{ vizId: 0, type: type, name: name, time: time }] };
-        nData.push(data3);
+    console.log(copyOfData);
+    var filteredData = copyOfData.filter(function (it) { return it.id == pacient_id; })[0];
+    console.log('id_pacient type of data:', typeof filteredData, "; filteredData :", filteredData);
+    if (filteredData === undefined) {
+        data3 = { id: "" + pacient_id, visits: [{ vizId: 0, type: type, name: name, time: time }] };
+        copyOfData.push(data3);
     }
-    if (data1 !== undefined) {
-        data3 = { vizId: data1.visits.length, type: type, name: name, time: time };
-        data1.visits.push(data3);
+    if (filteredData !== undefined) {
+        data3 = { vizId: filteredData.visits.length, type: type, name: name, time: time };
+        filteredData.visits.push(data3);
     }
     console.log('data was modified.');
-    return nData;
+    return copyOfData;
 }
-function write(data2, path) {
-    fs.writeFile(path, data2, function (err) {
+function write(JSONData, path) {
+    fs.writeFile(path, JSONData, function (err) {
         if (err) {
-            return console.log("jakiś error");
+            return console.log("problems with write json text with new data");
         }
         console.log("changes are saved");
     });
@@ -58,21 +58,14 @@ function updateAppoinments(path, pacient_id, type, name, time) {
     var obj = { pacient_id: pacient_id, type: type, name: name, time: time };
     console.log('path:', path);
     //read file
-    var data0 = fs.readFileSync(__dirname + ("/" + path), 'utf8');
-    //console.log(typeof data0)
-    var data = JSON.parse(data0);
-    //  console.log( "data",data)
-    // console.log('data', data0,  data);
+    var dataFromFile = fs.readFileSync(__dirname + ("/" + path), 'utf8');
+    var parsedDataFromFile = JSON.parse(dataFromFile);
     //modyfy data
-    var data2 = modify(obj, data); //.toString();
-    //  console.log('data2', data2);
-    //let data4 = JSON.stringify(data2);
+    var modifiedData = modify(obj, parsedDataFromFile);
     //write data
-    var d = JSON.stringify(data2, null, 2); //.toString();//https://stackoverflow.com/questions/10685998/how-to-update-a-value-in-a-json-file-and-save-it-through-node-js
-    // console.log("is ok" //,data2, typeof data2.toString()
-    // , d)
-    write(d, __dirname + ("/" + path));
-    console.log(data2);
+    var stringifiedAndModifiedData = JSON.stringify(modifiedData, null, 2); //https://stackoverflow.com/questions/10685998/how-to-update-a-value-in-a-json-file-and-save-it-through-node-js
+    write(stringifiedAndModifiedData, __dirname + ("/" + path));
+    console.log(modifiedData);
     console.log("finish updating appinintments");
 }
 exports.updateAppoinments = updateAppoinments;

@@ -1,6 +1,6 @@
 [
   {
-    "id": 0,
+    "id": "0",
     "visits": [
       {
         "vizId": 0,
@@ -13,27 +13,29 @@
         "type": "Pediatrician",
         "name": "dr Grey Pediatrician",
         "time": "time1"
+      },
+      {
+        "vizId": 2,
+        "type": "Kardiologist",
+        "name": "dr blue Kardiologist",
+        "time": "2021-12-15T15:00:00.000Z"
       }
     ]
   },
   {
-    "id": 1,
-    "visits": [
-    ]
+    "id": "1",
+    "visits": []
   },
   {
-    "id": 3,
-    "visits": [
-
-    ]
+    "id": "3",
+    "visits": []
   },
   {
-    "id": 2,
-    "visits": [
-    ]
+    "id": "2",
+    "visits": []
   },
   {
-    "id": 4,
+    "id": "4",
     "visits": [
       {
         "vizId": 0,
@@ -47,12 +49,6 @@
         "name": "dr green Gynecologist",
         "time": "2021-05-30T09:30:00.000Z"
       }
-    ]
-  },
-  {
-    "id": "0",
-    "visits": [
-      
     ]
   }
 ]
