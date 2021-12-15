@@ -7,58 +7,20 @@ import { BrowserRouter as Router, Link } from 'react-router-dom';
 import { IndexKind } from 'typescript';
 
 function Header() {
-const [menuVisible, setVisibility] = useState(false);
+const [menuVisible, setVisibility] = useState(true);
 const {menu}:{menu: Array<Array<string>>} = data;
 const newmenu = menu.slice(0,6);
 
-const arrOfMenuButtonsStyle = new Array(data.menu.length).fill("menu-link");
-const [buttonStyle,setButtonStyle] = useState(arrOfMenuButtonsStyle);
+// const arrOfMenuButtonsStyle = new Array(data.menu.length).fill("menu-link");
+// const [buttonStyle,setButtonStyle] = useState(arrOfMenuButtonsStyle);
 
 function changeMenuVisibility () {
   setVisibility(menuVisible=>!menuVisible)
 }
 
 
-function changeMenuItemView(indexOfItem: number) {
-  changeMenuVisibility();
-
-  let newArrOfMenuButtonsStyle = arrOfMenuButtonsStyle;
-  newArrOfMenuButtonsStyle[indexOfItem] = "menu-link-clicked";
-  console.log(newArrOfMenuButtonsStyle);
-  setButtonStyle(buttonStyle =>newArrOfMenuButtonsStyle);
-  changeMenuVisibility(); 
-}
-
   return (
     <div className="App-header">
-      
-      <div className="navbar-wrapper-1"> 
-          {/* in css this class has property to be hidden when screen is bigger than 1024px */}
-          <div className="brand-nav">
-            <div className="App-logo">        
-              <img src={logo} alt="logoOfApp"  className="img-logo"/>
-            </div>
-            <div className="title"> 
-              <h3>Patient-doctor App</h3>
-            </div>
-          </div>
-          
-          <div className="navbar-button-1">
-            <button  onClick={changeMenuVisibility}><img src={menuLogo} alt="menu" className="button-img" /></button>
-          </div>
-          
-          <div className="menu-elements-wrapper-1">
-            <div  className="menu-elements-1">
-              {newmenu.map((item,index)=>(
-              <div key={item[0]} className={buttonStyle[index]}>
-              <Router forceRefresh={true} > {/* forces refresh of page and loading nee type of content in rightboard */} 
-                <Link to={`/${item[1]}`} className= "menu-a" key = {item[0]} onClick={()=>changeMenuItemView(index)} >{item[0]}</Link>
-              </Router>
-              </div>))
-              }
-            </div>
-          </div>
-      </div>
       <div className="navbar-wrapper">
         {/* in css this class has property to be hidden when screen is smaller than 1024px */}
           <div className="navbar-button">
@@ -72,11 +34,14 @@ function changeMenuItemView(indexOfItem: number) {
           
             <div  className="menu-elements">
               {newmenu.map(item=>(
-              <div  key={item[0]} className="menu-link">
               <Router forceRefresh={true} > {/* forces refresh of page and loading nee type of content in rightboard */} 
-                <Link to={`/${item[1]}`} className= "menu-a" key = {item[0]} onClick={changeMenuVisibility} >{item[0]}</Link>
+                <Link to={`/${item[1]}`} className= "menu-a" key = {item[0]} onClick={changeMenuVisibility} >
+                <div  key={item[0]} className="menu-link">
+                  {item[0]}
+                </div>
+                  </Link>
               </Router>
-              </div>))
+              ))
               }
               
             </div>

@@ -50,11 +50,9 @@ function App(props: any) {
               ))
               }
             </Switch>
-          </Router> 
-        
-        <Footer />  
-      
+          </Router>       
       </main>
+      <Footer />
       </userContext.Provider> 
     </div>
   );
