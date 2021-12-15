@@ -17,7 +17,7 @@ const {foot}:{foot: footObj} = data;
          {foot.adress.buildingNr} lok. {foot.adress.localNr},<br/>
          {foot.adress.postCode} lok. {foot.adress.city},</p>
         <p>Telefon: {foot.phone}.</p>
-        <p>E-mail: {foot.email}.</p>)
+        <p>E-mail: {foot.email}.</p>
 
       </footer>
     </div>
