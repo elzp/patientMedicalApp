@@ -6,13 +6,13 @@
         "vizId": 0,
         "type": "Gynecologist",
         "name": "dr yellow Gynecologist",
-        "time": "time0"
+        "time": "2021-12-11T14:00:00.000Z"
       },
       {
         "vizId": 1,
         "type": "Pediatrician",
         "name": "dr Grey Pediatrician",
-        "time": "time1"
+        "time": "2022-04-15T15:00:00.000Z"
       },
       {
         "vizId": 2,
