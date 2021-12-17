@@ -14,12 +14,21 @@ function Appointments(props) {
     var _b = react_1.useState(["none"]), selectedOption2 = _b[0], setSelectedOption2 = _b[1];
     var _c = react_1.useState(new Date()), startDate = _c[0], setStartDate = _c[1];
     var _d = react_1.useState(false), selectNameofDocVis = _d[0], setVisNameOfDoc = _d[1];
+    var placeholder = "choose option";
     var currentuser = props.userdata.currentuser;
     var pacientId = props.userdata.currentuser.pacientId === "-5" ? localStorage.getItem('id') : props.userdata.currentuser.pacientId;
     //prepare data for forms to choose from
     var newDoctors = somedata_json_1["default"].doctors.map(function (item) {
         var value = item.option, label = item.value;
         return { value: value, label: label };
+    });
+    var typesOfDoctors = newDoctors.map(function (it) { return it.label; });
+    var DataAboutDoctors = somedata_json_1["default"].doctors.map(function (item) {
+        var value = item.option, label = item.value, allDoctors = item.allDoctors;
+        var optionsToSecondSelect = Object.entries(allDoctors).map(function (it, ind) {
+            return { "value": "" + ind, "label": "" + it[1] };
+        });
+        return optionsToSecondSelect; //{"type": label, "docs": optionsToSecondSelect}// {"label":label, "docs": optionsToSecondSelect};
     });
     var NamesOfDoctors = //prepare data in format {value label}.
      somedata_json_1["default"].doctors.map(function (item) {
@@ -28,27 +37,10 @@ function Appointments(props) {
     });
     var defaultValueDoctorsGroup = [{ value: "choose Type of doctor", label: "choose Type of doctor2" }];
     var _e = react_1.useState(defaultValueDoctorsGroup), namesOfDoctorsInGroup = _e[0], setNamesOfDoctorsInGroup = _e[1];
-    var handleDoctorSelect = function (e) {
-        setSelectedOption([e === null || e === void 0 ? void 0 : e.label]);
-    };
-    var handleExactDoctorSelect = function (e) {
-        setSelectedOption2([e === null || e === void 0 ? void 0 : e.label]);
-    };
     function handleTypeDoctorSelect(e) {
-        //sets array of doctor's names depending on chosen type of doctor
-        var newnamesOfDoctorsInGroup = somedata_json_1["default"].doctors
-            //getting object with value = value2
-            .filter(function (item) { return item.value === (e === null || e === void 0 ? void 0 : e.label) || item.value === selectedOption[0]; })
-            //retreving array allDoctors
-            .map(function (item) { return item.allDoctors; });
-        var newnamesOfDoctorsInGroup1 = newnamesOfDoctorsInGroup[0];
-        var newnamesOfDoctorsInGroup2 = Object.values(newnamesOfDoctorsInGroup1).map(function (it, ind) {
-            var value = "" + ind;
-            var label = "" + it;
-            return { value: value, label: label };
-        }) //create array with values type: {value, label}.
-            || namesOfDoctorsInGroup; //fix bug: not handling undefined or null
-        setNamesOfDoctorsInGroup(function (namesOfDoctorsInGroup) { return newnamesOfDoctorsInGroup2; });
+        var idOfChoosenDoctorType = typesOfDoctors.indexOf(e === null || e === void 0 ? void 0 : e.label);
+        var NamesOfDocsInTypeOf = DataAboutDoctors[idOfChoosenDoctorType];
+        setNamesOfDoctorsInGroup(function (namesOfDoctorsInGroup) { return NamesOfDocsInTypeOf; });
     }
     function handleVisOfDocSel() {
         setVisNameOfDoc(function (selectNameofDocVis) {
@@ -88,25 +80,27 @@ function Appointments(props) {
                     ").")),
             react_1["default"].createElement("h4", { id: "description" }, somedata_json_1["default"].desc.visits.instruction)),
         react_1["default"].createElement("form", { id: "survey-form", onSubmit: function (event) {
-                srcfunctions_1.onSubmitAppointmentForm(event, postFormUrl, postDataFromForm, 'data from form was send');
-                handleRefreshingVisits(); //submitStatus()
+                (function () {
+                    srcfunctions_1.onSubmitAppointmentForm(event, postFormUrl, postDataFromForm, 'data from form was send');
+                    handleRefreshingVisits(); //submitStatus()
+                    setSelectedOption([""]);
+                    setSelectedOption2([""]);
+                });
             } },
-            react_1["default"].createElement("div", { className: "div" },
-                "Choose type of doctor:",
-                react_1["default"].createElement("br", null)),
+            react_1["default"].createElement("div", { className: "div" }, "Choose type of doctor:"),
             react_1["default"].createElement("div", null,
                 react_1["default"].createElement(react_select_1["default"] /*https://stackoverflow.com/questions/43250854/react-select-does-not-show-the-selected-value-in-the-field*/, { options: newDoctors, onChange: function (e) {
                         handleTypeDoctorSelect(e); //set array of doctors
-                        handleDoctorSelect(e); //set value of first select
+                        setSelectedOption([e === null || e === void 0 ? void 0 : e.label]); //sets selected value of doctors' type
                     }, onMenuClose: handleVisOfDocSel, value: newDoctors.find(function (option) {
                         return option.value === selectedOption[0];
-                    }), label: "Single select" })),
+                    }), label: "Single select", placeholder: placeholder })),
             selectNameofDocVis && (react_1["default"].createElement("div", { className: "div" },
                 " Choose your doctor/s:",
                 react_1["default"].createElement("br", null),
-                react_1["default"].createElement(react_select_1["default"] /*https://stackoverflow.com/questions/43250854/react-select-does-not-show-the-selected-value-in-the-field*/, { options: namesOfDoctorsInGroup, onChange: function (e) { return handleExactDoctorSelect(e); }, value: namesOfDoctorsInGroup.find(function (option) {
+                react_1["default"].createElement(react_select_1["default"] /*https://stackoverflow.com/questions/43250854/react-select-does-not-show-the-selected-value-in-the-field*/, { options: namesOfDoctorsInGroup, onChange: function (e) { return setSelectedOption2([e === null || e === void 0 ? void 0 : e.label]); }, value: namesOfDoctorsInGroup.find(function (option) {
                         return option.value === selectedOption2[0];
-                    }), label: "Single select" }))),
+                    }), label: "Single select", placeholder: placeholder }))),
             react_1["default"].createElement("br", null),
             react_1["default"].createElement(react_datepicker_1["default"], { selected: startDate, onChange: function (date) { setStartDate(date); }, showTimeSelect: true, timeFormat: "HH:mm", timeIntervals: 15, timeCaption: "time", dateFormat: "MMMM d, yyyy h:mm aa" }),
             react_1["default"].createElement("div", { id: "button" },
