@@ -88,3 +88,47 @@ export  function onSubmitAppointmentForm(e: any| null | void,
       });
 
 }
+
+////for displaying good hour of appoinments
+
+// code from https://stackoverflow.com/questions/51345691/how-to-know-if-daylight-saving-time-was-on-a-specific-date-in-javascript
+function stdTimezoneOffset(date: Date) {
+  var jan = new Date(date.getFullYear(), 0, 1);
+  var jul = new Date(date.getFullYear(), 6, 1);
+  return Math.max(jan.getTimezoneOffset(), jul.getTimezoneOffset());
+  }  
+  
+  //-------------- dst  === daylight saving time
+  
+  export function DSTshiftedHour(date: Date) {
+      const actualOfset = date.getTimezoneOffset()-stdTimezoneOffset(date);
+      return date.getHours()+(actualOfset)/60 ;
+  }
+      
+  //-------------- code to check if above functions works
+  const date = new Date() //generate actual date
+  console.log("date", date
+  , "hours", date.getHours()
+  , "offset", date.getTimezoneOffset(), stdTimezoneOffset(date)
+  // , "actual hour", date.getHours() //- date.getTimezoneOffset()/60)
+  // , "isDstObserved", date.isDstObserved()
+  // ,"utc time", date.getUTCHours()
+  // , date.toUTCString()
+  , DSTshiftedHour(date)
+  )
+  const date2 = date;
+  // date2.setHours
+  const date3 = new Date("2021-04-12T09:15:04.919Z")
+  date3.setHours(date.getHours())
+  // console.log("wiosenna data", date3, date3.getHours(), date3.getTimezoneOffset(), date3.stdTimezoneOffset(), date3.isDstObserved())
+  console.log("date", date3
+  , "hours", date3.getHours()
+  , "offset", date3.getTimezoneOffset(), stdTimezoneOffset(date3)
+  // , "actual hour", date3.getHours() //- date.getTimezoneOffset()/60)
+  // , "isDstObserved", date3.isDstObserved()
+  // ,"utc time", date3.getUTCHours()
+  // , date3.toUTCString()
+  , DSTshiftedHour(date3)
+  )
+  
+////////////////////////////////  
