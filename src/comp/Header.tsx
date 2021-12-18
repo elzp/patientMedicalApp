@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import './../App.css';
 import menuLogo from './../ic-menu.png';
 import logo from './../ic-logo.png';
@@ -27,7 +27,23 @@ useEffect(() => {
   window.addEventListener('resize', handleResize);
   return () => window.removeEventListener('resize', handleResize);
 }, []);
+// https://stackoverflow.com/questions/32553158/detect-click-outside-react-component
+function useOutsideAlerter(ref: any) {
+  useEffect(() => {
+      function handleClickOutside(event:any) {
+          if (ref.current && !ref.current.contains(event.target)) {
+            setVisibility(false);
+          }
+      }
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => {
+          document.removeEventListener("mousedown", handleClickOutside);
+      };
+  }, [ref]);
+}
 
+const wrapperRef = useRef(null);
+useOutsideAlerter(wrapperRef);
 
   return (
     <div className="App-header">
@@ -38,7 +54,8 @@ useEffect(() => {
           </div>
           
           
-          <div className="menu-elements-wrapper">
+          <div className="menu-elements-wrapper"
+          ref={wrapperRef}>
           {((windowWidth>800) || ((windowWidth<=800) && menuVisible)) && 
           (
           

@@ -26,12 +26,28 @@ function Header() {
         window.addEventListener('resize', handleResize);
         return function () { return window.removeEventListener('resize', handleResize); };
     }, []);
+    // https://stackoverflow.com/questions/32553158/detect-click-outside-react-component
+    function useOutsideAlerter(ref) {
+        react_1.useEffect(function () {
+            function handleClickOutside(event) {
+                if (ref.current && !ref.current.contains(event.target)) {
+                    setVisibility(false);
+                }
+            }
+            document.addEventListener("mousedown", handleClickOutside);
+            return function () {
+                document.removeEventListener("mousedown", handleClickOutside);
+            };
+        }, [ref]);
+    }
+    var wrapperRef = react_1.useRef(null);
+    useOutsideAlerter(wrapperRef);
     return (react_1["default"].createElement("div", { className: "App-header" },
         react_1["default"].createElement("div", { className: "navbar-wrapper" },
             react_1["default"].createElement("div", { className: "navbar-button" },
                 react_1["default"].createElement("button", { onClick: changeMenuVisibility },
                     react_1["default"].createElement("img", { src: ic_menu_png_1["default"], alt: "menu", className: "button-img" }))),
-            react_1["default"].createElement("div", { className: "menu-elements-wrapper" }, ((windowWidth > 800) || ((windowWidth <= 800) && menuVisible)) &&
+            react_1["default"].createElement("div", { className: "menu-elements-wrapper", ref: wrapperRef }, ((windowWidth > 800) || ((windowWidth <= 800) && menuVisible)) &&
                 (react_1["default"].createElement("div", { className: "menu-elements" }, newmenu.map(function (item) { return (react_1["default"].createElement(react_router_dom_1.BrowserRouter, { forceRefresh: true },
                     " ",
                     react_1["default"].createElement(react_router_dom_1.Link, { to: "/" + item[1], className: "menu-a", key: item[0], onClick: changeMenuVisibility },
