@@ -1,51 +1,67 @@
-.App {
-  grid-auto-flow: column;
-  display: grid;
-  grid-template-areas: "head" "bottom";
-  }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
+.App {
+  width: 100%;
+  height: 100vh;
+  grid-auto-flow: row;
+  display: grid;
+  grid-template-areas: "head" "bottom" "foot"; 
+   grid-template-rows: max-content 1fr max-content;
+  }
+/* header * {
+  border: 2px dashed green;
+} */
   header {
-    height: 7.5em;
+    height: max-content;
+    font-size: 1.2em;
     grid-area: "head";
-    display: grid;
-    grid-auto-flow: column;
-    grid-template-areas: "brand-nav" "header" ;
-    /*border: 3px solid rgb(202, 27, 158);*/
-    margin-bottom: 15px;
-    margin-top: 10px;
-    /*border: 1px solid rgb(119, 7, 95);*/
+    /* display: grid; */
+    position: relative;
+    /* grid-auto-flow: row;
+    grid-template-areas: "branding" "menu"; */
+    /* margin-bottom: 15px;
+    margin-top: 10px; */
    }
    
+  .navbar-wrapper { 
+    position: relative;
+    display: grid;
+    /* grid-area: mewnu; */
+    grid-auto-flow: row;
+    /* grid-template-rows: min-content auto; */
+    grid-template-areas: "branding" "menu";
+    align-items: center;
+    padding-top: 15px;
+    }
+
+.menu-elements-wrapper {/*dawniej -1*/
+    grid-area: "menu";
+    width: 100%;
+    order: 2;
+    justify-content: center;
+  } 
+ 
    main {
      display: grid;
+     position: relative;
      grid-area: "bottom";
-   
-     grid-template-areas: "left right" "foot foot" ;
+     grid-template-areas: "left right";
+     margin: 0 30px;
    }
-   
-   .App-header  {
-
-    /*max-width: 90vw;
-    position: relative;*/
-    height: auto;
-    background-color: white;
-    /*border: 3px solid rgb(202, 132, 27);*/
-    font-size: 1.2em;
-    display:grid;
-    grid-auto-flow: column;
-    margin-bottom: 10px;
-    grid-area: "header";
-
-  }
-   
+    
   .brand-nav {
     display: grid;
-    grid-auto-flow: row;
-    grid-area: "brand-nav";
-    grid-template-areas: "logo title ";
+    grid-auto-flow: column;
+    grid-area: "branding";
+    grid-template-areas: "logo title";
     justify-content: center;
     grid-gap: 0;
-    
+    padding-bottom: 15px;
+    order: 1;
   }
 
   .App-logo {
@@ -56,31 +72,20 @@
   .img-logo {
     height: 4em;
     width: auto;
-    /*border: 3px solid rgb(11, 168, 63);*/
+    padding-right: 10px;
   }
 
-  .navbar-wrapper {
-    display: none;
-    }
 
-  .menu-elements-wrapper-1 {
-    grid-area: "menu-el";
-    /* border: 2px solid green; */
-    width: 100%;
-    
-  }
-  
-    .menu-elements-1 {
+  .menu-elements {  
     display:grid;
+    /* max-width: 1100px; */
+    /* justify-self: center; */
     grid-auto-flow: column;
-    margin-left: 0px;
     background-color: white;
-    width: 100%;
     border-bottom: 2px solid lightslategrey;
   }
 
   .menu-link{
-  /*border: 3px solid rgb(94, 7, 21);*/
   position: relative;
   background-color: white;
   width: 10em;
@@ -88,13 +93,9 @@
   text-align: center;
 }
 
-.menu-link-clicked{
-  /*border: 3px solid rgb(94, 7, 21);*/
-  position: relative;
-  background-color: red;
-  width: 10em;
-  height: 1.5em;
-  text-align: center;
+.menu-link:hover {
+  background-color: gray;
+  color: white;
 }
 a {
   color: darkslategrey;
@@ -103,18 +104,22 @@ a {
  text-decoration: none;
 }
 
-.navbar-button-1 {
-  grid-area: "menu-button";
-  position: relative;
-  padding: 5px 0 0 5px;  
+.navbar-button {
   display: none;
-  background-color: yellow;
 }
 
-.button-img {
-  height: 1.5em;
-  width:auto;
+ header button {
+  height: min-content;
+  width: min-content;
+  padding: 5px;
+  border: 1px solid rgb(71, 71, 71);
+  background-color: white;
 }
+
+  .button-img {
+    width: 20px;
+    height: 20px;
+  }
 /*end of header styling*/
 
 
@@ -122,42 +127,35 @@ a {
 
 
 .leftdiv {
-  background-image: linear-gradient(to right, lightgrey 90%, white);
+  /* background-image: linear-gradient(to right, lightgrey 90%, white); */
   font-size: 0.8em;   
-  padding-right: 20px;
-  min-width: 30vw; 
+  min-width: max-content; 
   grid-area: "left";
-  /* border-right: 1px solid grey; */
-  margin-left:  10px;
-  padding:  1em ;
-  border-top-left-radius: 3%;
-  border-top-right-radius: 0%;
-  border-top: 1px solid grey;
-  border-left: 1px solid grey;
-  border-bottom: 1px solid grey;  
-  /* border-top-width: 3px;
-border-top-style: solid;
- */
+  padding:  1em;  
+}
 
+ main button {
+  border: 1px solid #474747;
+  background-color: white;
+  padding: 4px 6px;
+  margin: 10px 5px;
+}
+
+main button:hover {
+background-color: #474747;
+color: white;
 }
 
 .rightdiv {
-  /*padding: 10px;*/
-    background-image: linear-gradient(to left, lightgrey 95%, white);
-
+    /* background-image: linear-gradient(to left, lightgrey 95%, white); */
   font-size: 0.8em;
   display:flexbox;
   flex-direction: column;
   min-width: 60vw; 
   min-height: 200px;
-  background-color: lightgrey;  
-  border-top-left-radius: 0%;
-  border-top-right-radius: 3%;
-  border-top: 1px solid grey;
-  /* border-left: 1px solid grey; */
-  border-bottom: 1px solid grey;  
-  padding: 15px 25px 15px 25px;
-  /* margin-left: 10px; */
+  border-left: 2px solid grey;
+  padding: 15px 25px;
+  margin: 20px auto;
   grid-area: "right";
 }
 
@@ -175,54 +173,61 @@ font-size: 80%;
 .App-footer {
   grid-area: "foot";
   font-size: 0.7em;
+  width: 100%;
+  min-height: max-content;
+  padding: 10px 20%;
+  display: block;
+  background-color: lightgray;
 }
 
 
 @media (max-width: 800px) {
+
   .brand-nav {
-    justify-content: left;
+    justify-content: center;
+    margin: 20px 0;
    }
-  
-  
-  
-  .navbar-wrapper-1 {
-    display: none;
-    }
 
-  .navbar-wrapper {
-    /* position: relative; */
-    display: grid;
-    grid-auto-flow: row;
-    grid-template-rows: fit-content 0px auto;
-    grid-template-areas: "menu-button menu-el brand-nav";
-    align-items: center;
-    /* justify-content: center; */
-    }
-
-  .navbar-button {
-    grid-area: "menu-button";
+   .navbar-wrapper { 
     position: relative;
-    padding: 5px 30px 0 15px; 
-    justify-self: left; 
-    justify-self: left;
+    display: grid;
+    /* grid-auto-flow: column; */
+    /* grid-template-columns: 40px auto; */
+    grid-template-areas: "branding";
+    align-items: center;
+    }
+
+.menu-elements-wrapper {
+    position: absolute;
+    width: 0%;
+    top: 30px;
+    left: 30px;
+    margin:0;
+    z-index: 1;
   }
 
-  .menu-elements-wrapper {
-    position: relative;
-    grid-area: "menu-el";
-     /* border: 2px solid green;  */
-    width: 0%;
-    /* background-color: yellow; */
-
-    margin:0;
+  .navbar-button {
+    display: block;
+    grid-area: "menu-button";
+    position: absolute;
+    padding: 5px 30px 0 15px; 
+    justify-self: left; 
+    width: 20px;
+    top: 10px;
+    left: 10px;
   }
 
 
   .menu-elements{
-    position:absolute;
     grid-auto-flow: row;
+    border: 2px solid lightgray;
+    width: fit-content;
   }
 
+  .menu-link:hover {
+    background-color: lightgray;
+    color: darkslategrey;
+  }
   /*end of header styling*/
 
 
@@ -230,36 +235,24 @@ font-size: 80%;
     display: grid;
     grid-area: "bottom";
     grid-auto-flow: column;
-    grid-template-areas: "left" "right" "foot";
+    grid-template-areas: "left" "right";
   }
 
   .leftdiv {
-    /*width: 90vw; */ 
-    background: initial;/*https://stackoverflow.com/questions/45523879/cannot-remove-gradient*/
-    background-color: lightgrey;
-    border-bottom: 1px solid grey;  
-    border-top-left-radius: 0%;
-    border-top-right-radius: 0%;
+    /*background: initial;//https://stackoverflow.com/questions/45523879/cannot-remove-gradient*/
     margin: 0px;
-    min-width: 0; 
+    height: max-content;
+    border-bottom: 2px solid grey;
   }
   
 
 .rightdiv {
-    background: initial;
-    background-color: lightgrey;
     flex-direction: row;
     min-width: 0; 
-    border-top-left-radius: 0%;
-    border-top-right-radius: 0%;
-    border-top: 1px solid grey;
     border-left: 0px solid grey;
-    border-bottom: 1px solid grey;  
     padding: 15px 25px 15px 25px;
     margin-left: 0px;
   }
-
-
 
 
 .appointment {
@@ -267,7 +260,5 @@ font-size: 80%;
   border-top: 3px dotted darkgrey;
   border-bottom: 3px dotted darkgrey;
   }
-
-
 
 }
