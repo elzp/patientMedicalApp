@@ -1,1 +1,20 @@
-{"0":{"username":"u1","password":"u1","islogin":"false"},"1":{"username":"u2","password":"$2b$10$5Bb5TgddHj.9q4Zo3ukIoO/xn9LTK88zqQJ4axOnIbgc47l5Sete2","islogin":"false"},"2":{"username":"1","password":"2","islogin":"false"}}
+{
+    "0": {
+        "username": "u1",
+        "password": "u1",
+        "islogin": "false",
+        "e-mail":"u1@u11.com"
+    },
+    "1": {
+        "username": "u2",
+        "password": "$2b$10$5Bb5TgddHj.9q4Zo3ukIoO/xn9LTK88zqQJ4axOnIbgc47l5Sete2",
+        "islogin": "false",
+        "e-mail":"u2@u22.com"
+    },
+    "2": {
+        "username": "1",
+        "password": "2",
+        "islogin": "false",
+        "e-mail":"1@11.com"
+    }
+}
