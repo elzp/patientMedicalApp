@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  word-wrap: break-word;
 }
 
 .App {
@@ -195,7 +196,35 @@ font-size: 80%;
   background-color: lightgray;
 }
 
+.right-start {
+  width: fit-content;
+  padding: auto;
+  font-size: 1.5em;
+}
 
+.right-start h3 {
+  text-align: center;
+}
+.right-log-form div {
+  width: min-content;
+}
+.right-log-form label {
+  display: block;
+  width: 8em;
+}
+
+.right-log-form input {
+  display: block;
+  width: 10em;
+}
+
+span {
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: black;
+  /* padding: 10px;
+  background-color: red; */
+}
 @media (max-width: 800px) {
 
   .brand-nav {
