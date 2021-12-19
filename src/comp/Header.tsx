@@ -1,23 +1,49 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import './../App.css';
 import menuLogo from './../ic-menu.png';
 import logo from './../ic-logo.png';
 import data from './../somedata.json';
 import { BrowserRouter as Router, Link } from 'react-router-dom';
-import { IndexKind } from 'typescript';
 
 function Header() {
-const [menuVisible, setVisibility] = useState(true);
+const [menuVisible, setVisibility] = useState(false);
 const {menu}:{menu: Array<Array<string>>} = data;
 const newmenu = menu.slice(0,6);
-
-// const arrOfMenuButtonsStyle = new Array(data.menu.length).fill("menu-link");
-// const [buttonStyle,setButtonStyle] = useState(arrOfMenuButtonsStyle);
 
 function changeMenuVisibility () {
   setVisibility(menuVisible=>!menuVisible)
 }
+//https://stackoverflow.com/questions/36862334/get-viewport-window-height-in-reactjs
+function getWindowWidth() {
+  const { innerWidth: width } = window;
+  return width;
+}
+const [windowWidth, setWindowWidth] = useState(getWindowWidth());
+  
+useEffect(() => {
+  function handleResize() {
+    setWindowWidth(getWindowWidth());  
+  }
+  window.addEventListener('resize', handleResize);
+  return () => window.removeEventListener('resize', handleResize);
+}, []);
+// https://stackoverflow.com/questions/32553158/detect-click-outside-react-component
+function useOutsideAlerter(ref: any) {
+  useEffect(() => {
+      function handleClickOutside(event:any) {
+          if (ref.current && !ref.current.contains(event.target)) {
+            setVisibility(false);
+          }
+      }
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => {
+          document.removeEventListener("mousedown", handleClickOutside);
+      };
+  }, [ref]);
+}
 
+const wrapperRef = useRef(null);
+useOutsideAlerter(wrapperRef);
 
   return (
     <div className="App-header">
@@ -28,8 +54,9 @@ function changeMenuVisibility () {
           </div>
           
           
-          <div className="menu-elements-wrapper">
-          {menuVisible && 
+          <div className="menu-elements-wrapper"
+          ref={wrapperRef}>
+          {((windowWidth>800) || ((windowWidth<=800) && menuVisible)) && 
           (
           
             <div  className="menu-elements">
