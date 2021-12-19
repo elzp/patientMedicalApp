@@ -19,7 +19,7 @@ function Rightboard(props: any) {
 //useLocation works if in parent component providor is set. 
   const { pathname } = useLocation();
   const changeuser:React.Dispatch<React.SetStateAction<typeuserdata>> = props.changeuser
-  const arrayofAllJsxMenuComponents = [Start, Account, Refferals, Result, Receipts,Appointments, Login, SignIn ]
+  const arrayofAllJsxMenuComponents = [Start, Appointments, Refferals, Result, Receipts, Account, Login, SignIn ]
   const compsForNotLogged = [data.menu[0][0], data.menu[6][0], data.menu[7][0]];
   let ChosenChildcomp =Start;
  // setting child component to be visible depending on path value
