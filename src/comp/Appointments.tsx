@@ -10,11 +10,11 @@ import { getdataFromFile, onSubmitAppointmentForm } from './srcfunctions';
 
 function Appointments(props: any ) {
  const {value}: {value: number} = props;
-
 const [selectedOption, setSelectedOption] = useState(["none"]);
-const [selectedOption2, setSelectedOption2] = useState(["none"]);
+const [selectedOption2, setSelectedOption2]:[undefined|string[], any ] = useState(["none"]);
 const [startDate, setStartDate] = useState(new Date());
 const [selectNameofDocVis, setVisNameOfDoc] = useState(false);
+const placeholder = "choose option";
 const { currentuser } = props.userdata;
 const pacientId  = props.userdata.currentuser.pacientId === "-5"? localStorage.getItem('id'): props.userdata.currentuser.pacientId;
 //prepare data for forms to choose from
@@ -23,7 +23,17 @@ const newDoctors =
     let {option: value, value:label} = item;
     return {value, label};
 });
+const typesOfDoctors =  newDoctors.map(it => it.label)
 
+const DataAboutDoctors = 
+data.doctors.map((item:any )=> { 
+  let {option: value, value:label, allDoctors: allDoctors} = item;
+  const optionsToSecondSelect = Object.entries(allDoctors).map((it:any, ind:any) =>{ 
+ 
+    return { "value": `${ind}`, "label":`${it[1]}` };})
+
+  return optionsToSecondSelect//{"type": label, "docs": optionsToSecondSelect}// {"label":label, "docs": optionsToSecondSelect};
+});
 const NamesOfDoctors = //prepare data in format {value label}.
   data.doctors.map((item:any )=> { 
     let {option: value, value:label} = item;
@@ -32,31 +42,12 @@ const NamesOfDoctors = //prepare data in format {value label}.
 const defaultValueDoctorsGroup = [{value:"choose Type of doctor", label:"choose Type of doctor2"}];
 const [namesOfDoctorsInGroup, setNamesOfDoctorsInGroup] = useState(defaultValueDoctorsGroup);
 
-const handleDoctorSelect = (e:  any | null | void ) => {//sets selected value of doctors' type
-    setSelectedOption([ e?.label]);
-  };
-
-  
-const handleExactDoctorSelect = (e: any| null | void) => {//sets selected value of doctor's name and surname
-  setSelectedOption2([e?.label]);
-};
 
 function  handleTypeDoctorSelect(e:any| null | void){ //asynchronous function
-  //sets array of doctor's names depending on chosen type of doctor
-  let newnamesOfDoctorsInGroup = 
-  data.doctors
-  //getting object with value = value2
-    .filter((item:any) => item.value === e?.label || item.value === selectedOption[0])
-    //retreving array allDoctors
-    .map((item:any)=>item.allDoctors);
- let newnamesOfDoctorsInGroup1= newnamesOfDoctorsInGroup[0];  
- let newnamesOfDoctorsInGroup2=
-    Object.values(newnamesOfDoctorsInGroup1).map((it, ind) =>{ 
-      let value = `${ind}`; 
-      let label =`${it}`;
-      return { value, label };}) //create array with values type: {value, label}.
-      ||namesOfDoctorsInGroup;//fix bug: not handling undefined or null
-  setNamesOfDoctorsInGroup(namesOfDoctorsInGroup => newnamesOfDoctorsInGroup2);
+
+  const idOfChoosenDoctorType = typesOfDoctors.indexOf(e?.label);
+  const NamesOfDocsInTypeOf = DataAboutDoctors[idOfChoosenDoctorType]
+  setNamesOfDoctorsInGroup(namesOfDoctorsInGroup => NamesOfDocsInTypeOf);
 }
 
 function handleVisOfDocSel (){
@@ -114,19 +105,21 @@ const listOfSavedAppointments = pacientVisitsData.visits === []?
         </h4>
     </div>
       <form id="survey-form" onSubmit={(event)=>{
-      onSubmitAppointmentForm(event, postFormUrl, postDataFromForm, 'data from form was send'); 
+      (()=>{onSubmitAppointmentForm(event, postFormUrl, postDataFromForm, 'data from form was send'); 
       handleRefreshingVisits()//submitStatus()
+      setSelectedOption([""]);
+      setSelectedOption2([""]);});
     }}>   
     {/* wybrana opcja w 1: {JSON.stringify(selectedOption)} ------  <br /> 
          grupa lekarzy: {JSON.stringify(namesOfDoctorsInGroup)} -----<br /> 
           wybrana opcja w 2: {JSON.stringify(selectedOption2)} */}
-     <div className="div">Choose type of doctor:<br/></div>
+     <div className="div">Choose type of doctor:</div>
        <div>       
          <Select /*https://stackoverflow.com/questions/43250854/react-select-does-not-show-the-selected-value-in-the-field*/
         options={newDoctors}
         onChange={(e)=>{//https://stackoverflow.com/questions/26069238/call-multiple-functions-onclick-reactjs (multiple action functions)
           handleTypeDoctorSelect(e);//set array of doctors
-          handleDoctorSelect(e);//set value of first select
+          setSelectedOption([ e?.label]);//sets selected value of doctors' type
           } 
         }
         onMenuClose ={handleVisOfDocSel}
@@ -134,6 +127,7 @@ const listOfSavedAppointments = pacientVisitsData.visits === []?
           return option.value === selectedOption[0];
         })}
         label="Single select"
+        placeholder={placeholder}
       />
     </div>
      
@@ -141,11 +135,12 @@ const listOfSavedAppointments = pacientVisitsData.visits === []?
    <div className="div"> Choose your doctor/s:<br/>
      <Select /*https://stackoverflow.com/questions/43250854/react-select-does-not-show-the-selected-value-in-the-field*/
         options={namesOfDoctorsInGroup}
-        onChange={e=>handleExactDoctorSelect(e)}
+        onChange={e=>setSelectedOption2([e?.label])} //sets selected value of doctor's name and surname
         value={namesOfDoctorsInGroup.find(function(option) {
           return option.value === selectedOption2[0];
         })}
         label="Single select"
+        placeholder={placeholder}
       />
      </div>
      )} 

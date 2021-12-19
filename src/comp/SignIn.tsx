@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
+import LogForm from './LogForm';
 import './../App.css';
-import { BrowserRouter as Router, Link, Redirect, Route } from 'react-router-dom';
 import axios from 'axios';
 import udata from '../usersdata.json';
-import useEffect from 'react';
-
 
 function SignIn(props: any ) {
   const [ login2, setlogin ]= useState("");
@@ -81,8 +79,18 @@ function SignIn(props: any ) {
   };
 }
   
+function onChange(e:any, type: string){
+  if(type==="log") {
+    setlogin(login=>e.target.value);
+    validateinput(e, "log");
+  }
+  else{
+    setpass(password=>e.target.value)
+    validateinput(e,"pass");
+  }
+}
 
-  async function onSubmit1(e:any){
+  async function onSubmit(e:any){
     e.preventDefault();
 
   
@@ -92,19 +100,21 @@ function SignIn(props: any ) {
 
 
   return (
-    <div>
-      <h3>SignIn page</h3>
+    <>
+      {/* <h3>SignIn page</h3> */}
       
-      {JSON.stringify(udata)}
-   <form //onSubmit={onSubmit} 
+      
+   {/*<form //onSubmit={onSubmit} 
+    className="right-log-form"
    >
     <div>
       <label>login:</label> <input onChange={(e)=>{
         setlogin(login2=>e.target.value)
         validateinput(e, "log");
         }} />
-    </div>
-    
+    </div> 
+
+
     <div>
       <label>Password: </label> <input onChange={(e)=>{
         setpass(password=>e.target.value)
@@ -112,15 +122,22 @@ function SignIn(props: any ) {
       }} 
       type="password"
       />
-    </div>
-
-   <div id="button"> <button  //onSubmit={(e)=>{onSubmit1(e);}
-   //}
-   //type="submit"
+    </div> 
+    
+    <div id="button"> <button  
    >Submit</button></div> 
-   </form>
+   </form> */}
     
     {error}
+    <LogForm 
+    name="Singin as a new user"
+    onSubmit = {onSubmit}
+    login = {login2}
+    password = {password}
+    onChange = {onChange}
+    error = {error}
+    />
+    {JSON.stringify(udata)}
     {`${login2}; password ${password}`}
   
     {JSON.stringify([isLoginUnique, isPasswordOk])}
@@ -137,7 +154,7 @@ function SignIn(props: any ) {
         {/* {JSON.stringify( sth3.find((it:any)=>it[1]===login)
     )} */}
 
-    </div> 
+    </> 
     
    
   );

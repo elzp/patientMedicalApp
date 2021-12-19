@@ -5,13 +5,18 @@ import data from './../somedata.json';
 
 
 function Start(props: any ) {
- //const {value}: {value: number} = props;
- //const {appointment} : {appointment: object} = props.styles;
+
 
   return (
-    <div>
+    <div className="right-start">
       {localStorage.getItem('isLogin')==="true" ?
-      <h3>Welcome {props.userdata.currentuser.pacientUsername}, you're id:{props.userdata.currentuser.pacientId}.</h3>
+      (
+      <>
+      <h3>Welcome {localStorage.getItem('nameOfLogin')}.</h3>
+      <div>To add new appointment <Link to="/new" ><span>click here</span></Link>.</div>
+      <div>To change data about your account <Link to="/account" ><span>click here</span></Link>.</div>
+      </>
+      )
       :<div> Welcome UNKNOWN, <Router forceRefresh={true} ><Link to="/login"  >login</Link> or <Link to="/signin" >Sign In</Link></Router>.
       </div>
 }

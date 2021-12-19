@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import LogForm from './LogForm';
 import './../App.css';
 import {handleChangeOfUser} from './srcfunctions'
 import { BrowserRouter as Router, Redirect, Route } from 'react-router-dom';
@@ -86,10 +87,11 @@ function Login(props: any ) {
 
 
   return (
-    <div>
-      <h3>Login Page</h3>
-      {JSON.stringify(udata)}
-   <form onSubmit={onSubmit} >
+    <>
+      {/* <h3>Login Page</h3>
+      
+    <form onSubmit={onSubmit} 
+   className="right-log-form">
     <div>
       <label>login:</label> <input value={login} onChange={(e)=>{onChange(e,"log")}}/>
     </div>
@@ -99,15 +101,22 @@ function Login(props: any ) {
       </div>
    <div id="button"> <button type="submit" >Submit</button></div> 
    </form>
-    {error}
+    {error} */}
 
     <Route
       render={(props) =>   localStorage.getItem('isLogin')==="true" &&
       <Redirect to={{pathname: '/'} }/>}
     />
-    </div> 
-    
-   
+    <LogForm 
+    name="Login as user"
+    onSubmit = {onSubmit}
+    login = {login}
+    password = {password}
+    onChange = {onChange}
+    error = {error}
+    />
+    {JSON.stringify(udata)}
+    </> 
   );
 }
 

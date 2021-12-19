@@ -37,8 +37,9 @@ function Account(props: any ) {
    setStatusIfRefresh(!ifRefresh);
  }
   return (
-    <div className="appointment">
-    <button onClick={()=>handleRefreshingVisits()}>refresh</button>
+    <div className="account">
+      <h3>Welcome {localStorage.getItem('nameOfLogin')}.</h3>
+    {/* <button onClick={()=>handleRefreshingVisits()}>refresh</button>
     <div>
         {pacientVisitsData.visits.map( (it: visit) => (
          <div><Appointment 
@@ -48,7 +49,7 @@ function Account(props: any ) {
              />
          </div>)
         )}
-     </div>
+     </div> */}
     </div>
   );
 }
