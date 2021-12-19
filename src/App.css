@@ -50,7 +50,9 @@
      position: relative;
      grid-area: "bottom";
      grid-template-areas: "left right";
-     margin: 0 30px;
+     grid-template-columns: min-content auto;
+     max-width: 1100px;
+     margin: 0 auto;
    }
     
   .brand-nav {
@@ -78,24 +80,34 @@
 
   .menu-elements {  
     display:grid;
-    /* max-width: 1100px; */
+    max-width: 1100px;
+    margin: 0 auto 10px;
+    /* padding: 10px 0; */
     /* justify-self: center; */
     grid-auto-flow: column;
-    background-color: white;
-    border-bottom: 2px solid lightslategrey;
+    background-color: lightgray;
+    /* border-bottom: 2px solid lightslategrey; */
+    gap: 0;
   }
 
   .menu-link{
   position: relative;
-  background-color: white;
-  width: 10em;
+  /* background-color: white; */
+  max-width: 10em;
   height: 1.5em;
+  margin: auto;
   text-align: center;
 }
 
 .menu-link:hover {
-  background-color: gray;
-  color: white;
+  background-color: white;/*#474747;*/
+    /* color: white; */
+  /* border: 1px solid gray; */
+  /* height: calc(1.5em - 2px); */
+  /* border-top: 1px solid lightgray; 
+  border-bottom: 1px solid lightgray; */
+  padding: auto 0;
+  color: black;
 }
 a {
   color: darkslategrey;
@@ -151,6 +163,7 @@ color: white;
   font-size: 0.8em;
   display:flexbox;
   flex-direction: column;
+  width: 90%;
   min-width: 60vw; 
   min-height: 200px;
   border-left: 2px solid grey;
@@ -174,6 +187,8 @@ font-size: 80%;
   grid-area: "foot";
   font-size: 0.7em;
   width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
   min-height: max-content;
   padding: 10px 20%;
   display: block;
@@ -220,13 +235,18 @@ font-size: 80%;
 
   .menu-elements{
     grid-auto-flow: row;
-    border: 2px solid lightgray;
+    /* border: 2px solid lightgray; */
     width: fit-content;
+    padding: 0;
+  }
+  .menu-link {
+    width: 10em;
   }
 
   .menu-link:hover {
-    background-color: lightgray;
+    background-color: white;
     color: darkslategrey;
+    border: none;
   }
   /*end of header styling*/
 
@@ -236,6 +256,8 @@ font-size: 80%;
     grid-area: "bottom";
     grid-auto-flow: column;
     grid-template-areas: "left" "right";
+    grid-template-columns: auto;
+    width: 90%;
   }
 
   .leftdiv {
