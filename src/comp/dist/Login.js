@@ -37,6 +37,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 exports.__esModule = true;
 var react_1 = require("react");
+var LogForm_1 = require("./LogForm");
 require("./../App.css");
 var srcfunctions_1 = require("./srcfunctions");
 var react_router_dom_1 = require("react-router-dom");
@@ -125,23 +126,10 @@ function Login(props) {
             });
         });
     }
-    return (react_1["default"].createElement("div", null,
-        react_1["default"].createElement("h3", null, "Login Page"),
-        JSON.stringify(usersdata_json_1["default"]),
-        react_1["default"].createElement("form", { onSubmit: onSubmit },
-            react_1["default"].createElement("div", null,
-                react_1["default"].createElement("label", null, "login:"),
-                " ",
-                react_1["default"].createElement("input", { value: login, onChange: function (e) { onChange(e, "log"); } })),
-            react_1["default"].createElement("div", null,
-                react_1["default"].createElement("label", null, " Password: "),
-                " ",
-                react_1["default"].createElement("input", { value: password, onChange: function (e) { onChange(e, "pass"); }, type: "password" })),
-            react_1["default"].createElement("div", { id: "button" },
-                " ",
-                react_1["default"].createElement("button", { type: "submit" }, "Submit"))),
-        error,
+    return (react_1["default"].createElement(react_1["default"].Fragment, null,
         react_1["default"].createElement(react_router_dom_1.Route, { render: function (props) { return localStorage.getItem('isLogin') === "true" &&
-                react_1["default"].createElement(react_router_dom_1.Redirect, { to: { pathname: '/' } }); } })));
+                react_1["default"].createElement(react_router_dom_1.Redirect, { to: { pathname: '/' } }); } }),
+        react_1["default"].createElement(LogForm_1["default"], { name: "Login as user", onSubmit: onSubmit, login: login, password: password, onChange: onChange, error: error }),
+        JSON.stringify(usersdata_json_1["default"])));
 }
 exports["default"] = Login;

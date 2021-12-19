@@ -37,6 +37,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 exports.__esModule = true;
 var react_1 = require("react");
+var LogForm_1 = require("./LogForm");
 require("./../App.css");
 var axios_1 = require("axios");
 var usersdata_json_1 = require("../usersdata.json");
@@ -129,7 +130,17 @@ function SignIn(props) {
             });
         });
     }
-    function onSubmit1(e) {
+    function onChange(e, type) {
+        if (type === "log") {
+            setlogin(function (login) { return e.target.value; });
+            validateinput(e, "log");
+        }
+        else {
+            setpass(function (password) { return e.target.value; });
+            validateinput(e, "pass");
+        }
+    }
+    function onSubmit(e) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 e.preventDefault();
@@ -137,28 +148,10 @@ function SignIn(props) {
             });
         });
     }
-    return (react_1["default"].createElement("div", null,
-        react_1["default"].createElement("h3", null, "SignIn page"),
-        JSON.stringify(usersdata_json_1["default"]),
-        react_1["default"].createElement("form", null,
-            react_1["default"].createElement("div", null,
-                react_1["default"].createElement("label", null, "login:"),
-                " ",
-                react_1["default"].createElement("input", { onChange: function (e) {
-                        setlogin(function (login2) { return e.target.value; });
-                        validateinput(e, "log");
-                    } })),
-            react_1["default"].createElement("div", null,
-                react_1["default"].createElement("label", null, "Password: "),
-                " ",
-                react_1["default"].createElement("input", { onChange: function (e) {
-                        setpass(function (password) { return e.target.value; });
-                        validateinput(e, "pass");
-                    }, type: "password" })),
-            react_1["default"].createElement("div", { id: "button" },
-                " ",
-                react_1["default"].createElement("button", null, "Submit"))),
-        error, login2 + "; password " + password,
+    return (react_1["default"].createElement(react_1["default"].Fragment, null,
+        error,
+        react_1["default"].createElement(LogForm_1["default"], { name: "Singin as a new user", onSubmit: onSubmit, login: login2, password: password, onChange: onChange, error: error }),
+        JSON.stringify(usersdata_json_1["default"]), login2 + "; password " + password,
         JSON.stringify([isLoginUnique, isPasswordOk]),
         JSON.stringify(/@|#|$|%|\^|&|\*|(|)|!|~/.test("%65"))
     ///[@#$%^&*()!~]
