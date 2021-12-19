@@ -26,7 +26,7 @@ bug with express_1[default](): https://stackoverflow.com/questions/
 const app = express()
 const port = 3001
 const path = "appointByUser.json";
-const path2 = "./../src/usersdata.json";
+const path2 = "./../../src/usersdata.json";
 /* 
 
 2021-05-09 19:19 - npm install -g typescript
@@ -118,20 +118,38 @@ app.get('/', (req:any, res:any) => {
  app.post('/isusernameunique', (req, res) => {
   //getting data from file json
    let data0 =fs.readFileSync(__dirname +`/${path2}`,'utf8');
+
    const data1 = Object.entries(JSON.parse(data0))
           .map((it:[string,any])=>{return {...it[1],id: it[0]}})
-          .filter(it=> it.username === req.body.login2);
-          console.log(data1)
- //sending to react
-if(data1.length===0){
+          .filter(it=> it.username === req.body.username);
+  //sending info to app  
+if(data1.length>0){
   res.status(200).json("true")
+  console.log("Name:",req.body.username, " is used by another user.")
 }
 else{
+  console.log("Name:",req.body.username, " of new user's login was not found in database.")
   res.status(200).json("false") 
 }
 })
 
-
+app.post('/isemailunique', (req, res) => {
+  //getting data from file json
+   let data0 =fs.readFileSync(__dirname +`/${path2}`,'utf8');
+   const data1 = Object.entries(JSON.parse(data0))
+          .map((it:[string,any])=>{return {...it[1],id: it[0]}})
+          .filter(it=> it["e-mail"] === req.body.email);
+  console.log(data1)
+  //sending info to app  
+if(data1.length>0){
+  res.status(200).json("true")
+  console.log("Email ",req.body.email, " is used in database.")
+}
+else{
+  console.log("You can use email ",req.body.email,".")
+  res.status(200).json("false") 
+}
+})
 app.listen(port, () => {
     // tslint:disable-next-line: no-console
     console.log(`Example app listening at http://localhost:${port}`)

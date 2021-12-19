@@ -1,6 +1,5 @@
 import React from 'react';
 import './../App.css';
-import { BrowserRouter as Router, Redirect, Route } from 'react-router-dom';
 import udata from '../usersdata.json';
 
 function LogForm(props: any ) {
@@ -12,20 +11,24 @@ function LogForm(props: any ) {
     <form onSubmit={props.onSubmit} 
    className="right-log-form">
     <div>
-      <label>login:</label> <input value={props.login} onChange={(e)=>{props.onChange(e,"log")}}/>
+      <label>{props.label}</label> <input value={props.login} onChange={(e)=>{props.onChange(e,"username")}}/>
     </div>
+    {props.additionalJSX}
     <div>
-     <label> Password: </label> <input value={props.password} onChange={(e)=>{props.onChange(e,"pass")}}
+     <label> Password: </label> <input value={props.password} onChange={(e)=>{props.onChange(e,"password")}}
       type="password"/>
       </div>
    <div id="button"> <button type="submit" >Submit</button></div> 
    </form>
-    {props.error}
+    {
+      Object.values(props.error).map((it:any, id: number)=>
+        (<div key={id} className = "error">
+          {it}
+        </div>       
+        ))
+      
+    }
 
-    <Route
-      render={(props) =>   localStorage.getItem('isLogin')==="true" &&
-      <Redirect to={{pathname: '/'} }/>}
-    />
     {JSON.stringify(udata)}
     </div> 
   );

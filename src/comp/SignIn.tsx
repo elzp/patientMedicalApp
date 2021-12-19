@@ -8,17 +8,19 @@ function SignIn(props: any ) {
   const [ login2, setlogin ]= useState("");
   const [ isLoginUnique, setisLoginUnique]= useState(false); 
   const [ password, setpass ]= useState("")
-  const [ isPasswordOk, setisPasswordOk]= useState(false); 
+  const [ isPasswordOk, setisPasswordOk]= useState(false);
+  const [ email, setEmail]= useState("");
+  const [ isEmailUnique, setisEmailUnique]= useState(false);
   const [ showAccountPage, setshowAccountPage ] = useState(false)
-  const [ error , setError] = useState("")
+  const [ error , setError] = useState({"login": "","email":""})
   // defaultuser={currentuser: {
                   //     pacientId: "-5",
                   //     pacientUsername: "",
                   //     isLogin: false
                   //   }
                   // }
-  const { currentuser } = props.defaultuser;
-  const newdefaultuser = [currentuser.pacientId, currentuser.pacientUsername, currentuser.isLogin, ""];
+  // const { currentuser } = props.defaultuser;
+  // const newdefaultuser = [currentuser.pacientId, currentuser.pacientUsername, currentuser.isLogin, ""];
   // preparing users data from json file to use for authorification
     const sth3:any = Object.entries(udata).map(it=>{
 
@@ -29,43 +31,82 @@ function SignIn(props: any ) {
                     ]
     return neww
     })
-
-  function validateWithDataFromServer(log:string, pass:string){
-    // fn's which returns password for given login
-
-    const sth4 = sth3.find((it:any)=>it[1]===log)
-      if(sth4 === undefined || sth4 === null){
-    return newdefaultuser;}
-      else{ 
-        if(sth4[3]===pass){return sth4;}
-        else{
-          setError(error=>"bad password")
-          console.log(error)
-          return newdefaultuser;
-        }
-      }
-      
-  }
-
+  function changeofError(
+    errorStatus: boolean, 
+    indexOfMessage: number,
+    errorType: string,
+    ){
+    const textOfMessages = [
+      "Another user is using this name. Choose another username.",
+      "This e-mail adress was used before. ",      
+    ]
   
-  async function validateinput(e:any, type: string){//(e:any, type: string){
+    if (errorStatus===true){
+      const newBadError = {...error, [errorType]: textOfMessages[indexOfMessage]};
+      setError(error => newBadError)
+      }else{
+        const newGoodError = {...error, [errorType]: "" };
+      setError(error => newGoodError)
+      }
+    }
+  function handleChangeofError (errorStatus: boolean, errorType: string) {
+    
+    switch (errorType){
+      case "username":
+        changeofError(errorStatus, 0, errorType);
+        break;
+      case "email":
+        changeofError(errorStatus, 1, errorType);
+        break;
+    }
+  }
+  
+  async function validateUniqueness (
+    valueFromInputToValidate: string,
+    previousValue: string,
+    APIstring: string,
+    // previousIsValueUnique: boolean,
+    typeOfValue: string,
+    isUniqueSetter: Function,
+    ) {
+    if(valueFromInputToValidate !== "" && valueFromInputToValidate !== previousValue) {//if something in login input has changed then...
+      //send to server new username to check if is unique
+      await axios
+        .post(`http://localhost:3001/${APIstring}`, {[typeOfValue]: valueFromInputToValidate})
+          .then((res:any) => {
+            //save in react getted response about if username was used in database is unique(=true)
+            isUniqueSetter(()=>JSON.parse(res.data))
+            handleChangeofError(JSON.parse(res.data), typeOfValue);
+          })
+          .catch((err: any) => {
+            console.error(err);
+          }); 
+      }
+  }
+  async function validateinput(e:any, type: string, setterOfIfIsUnique: Function = ()=>{}){
     e.preventDefault()
     switch (type){
-      case "log":
-        //send to server new username to check if is unique
-        await axios
-          .post(`http://localhost:3001/isusernameunique`, {login2:login2})
-            .then((res:any) => {
-              console.log(res.data,  'was send')
-              //save in react getted response about if username was used in database is unique(=true)
-              setisLoginUnique(isLoginUnique=>JSON.parse(res.data))//ERROR!!!problems with validating login and password in singin page
-            })
-            .catch((err: any) => {
-              console.error(err);
-            }); 
-        if (isLoginUnique===false){setError(error=>"Another user is using this name. Choose another username.")};
+      case "username":
+        validateUniqueness(e.target.value, login2, `is${type}unique`, `${type}`, setterOfIfIsUnique)
+
+        // if(e.target.value !== "" && e.target.value !== login2) {//if something in login input has changed then...
+        // //send to server new username to check if is unique
+        // await axios
+        //   .post(`http://localhost:3001/isusernameunique`, {login2:e.target.value})
+        //     .then((res:any) => {
+        //       //save in react getted response about if username was used in database is unique(=true)
+        //       setisLoginUnique(isLoginUnique=>JSON.parse(res.data))
+        //       handleChangeofError(JSON.parse(res.data));
+        //     })
+        //     .catch((err: any) => {
+        //       console.error(err);
+        //     }); 
+        // }
         break
-      case "pass":
+      case "email":
+        validateUniqueness(e.target.value, email, `is${type}unique`, `${type}`, setterOfIfIsUnique);
+        break
+      case "password":
         // validate prenounciation of password
         // if(/@|#|$|%|\^|&|\*|(|)|!|~/ig.test(password)){
         //   setError(error=>"Your password shouldn't have sighs like: @,#.")
@@ -80,63 +121,51 @@ function SignIn(props: any ) {
 }
   
 function onChange(e:any, type: string){
-  if(type==="log") {
+  switch(type){
+  case "username":
+    // console.log('targetvaue: ',e.target.value, " ." )
+    validateinput(e, type, setisLoginUnique);
     setlogin(login=>e.target.value);
-    validateinput(e, "log");
-  }
-  else{
+    break;
+  case "password":
     setpass(password=>e.target.value)
-    validateinput(e,"pass");
+    validateinput(e, type);
+    break;
+  case "email":
+    setEmail(email=>e.target.value)
+    validateinput(e, type, setisEmailUnique)
+    break;
   }
 }
 
   async function onSubmit(e:any){
     e.preventDefault();
+  //   const array= [isLoginUnique, isEmailUnique, isPasswordOk];
+  //   if (array === [true, true, true]) {
 
-  
-  // send new user login data to file/server
+  //   }
+  // // send new user login data to file/server
     
   }
 
 
   return (
     <>
-      {/* <h3>SignIn page</h3> */}
-      
-      
-   {/*<form //onSubmit={onSubmit} 
-    className="right-log-form"
-   >
-    <div>
-      <label>login:</label> <input onChange={(e)=>{
-        setlogin(login2=>e.target.value)
-        validateinput(e, "log");
-        }} />
-    </div> 
-
-
-    <div>
-      <label>Password: </label> <input onChange={(e)=>{
-        setpass(password=>e.target.value)
-        validateinput(e,"pass");
-      }} 
-      type="password"
+      <LogForm 
+      name="Singin as a new user"
+      onSubmit = {onSubmit}
+      login = {login2}
+      password = {password}
+      onChange = {onChange}
+      error = {error}
+      label = {"your username"}
+      additionalJSX = {(
+      <div>
+        <label> e-mail: </label> <input value={email} onChange={(e)=>{onChange(e,"email")}}
+         type="text"/>
+      </div>
+         )}
       />
-    </div> 
-    
-    <div id="button"> <button  
-   >Submit</button></div> 
-   </form> */}
-    
-    {error}
-    <LogForm 
-    name="Singin as a new user"
-    onSubmit = {onSubmit}
-    login = {login2}
-    password = {password}
-    onChange = {onChange}
-    error = {error}
-    />
     {JSON.stringify(udata)}
     {`${login2}; password ${password}`}
   

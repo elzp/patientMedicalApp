@@ -1,4 +1,15 @@
 "use strict";
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -46,16 +57,18 @@ function SignIn(props) {
     var _b = react_1.useState(false), isLoginUnique = _b[0], setisLoginUnique = _b[1];
     var _c = react_1.useState(""), password = _c[0], setpass = _c[1];
     var _d = react_1.useState(false), isPasswordOk = _d[0], setisPasswordOk = _d[1];
-    var _e = react_1.useState(false), showAccountPage = _e[0], setshowAccountPage = _e[1];
-    var _f = react_1.useState(""), error = _f[0], setError = _f[1];
+    var _e = react_1.useState(""), email = _e[0], setEmail = _e[1];
+    var _f = react_1.useState(false), isEmailUnique = _f[0], setisEmailUnique = _f[1];
+    var _g = react_1.useState(false), showAccountPage = _g[0], setshowAccountPage = _g[1];
+    var _h = react_1.useState({ "login": "", "email": "" }), error = _h[0], setError = _h[1];
     // defaultuser={currentuser: {
     //     pacientId: "-5",
     //     pacientUsername: "",
     //     isLogin: false
     //   }
     // }
-    var currentuser = props.defaultuser.currentuser;
-    var newdefaultuser = [currentuser.pacientId, currentuser.pacientUsername, currentuser.isLogin, ""];
+    // const { currentuser } = props.defaultuser;
+    // const newdefaultuser = [currentuser.pacientId, currentuser.pacientUsername, currentuser.isLogin, ""];
     // preparing users data from json file to use for authorification
     var sth3 = Object.entries(usersdata_json_1["default"]).map(function (it) {
         var neww = [it[0],
@@ -65,56 +78,85 @@ function SignIn(props) {
         ];
         return neww;
     });
-    function validateWithDataFromServer(log, pass) {
-        // fn's which returns password for given login
-        var sth4 = sth3.find(function (it) { return it[1] === log; });
-        if (sth4 === undefined || sth4 === null) {
-            return newdefaultuser;
+    function changeofError(errorStatus, indexOfMessage, errorType) {
+        var _a, _b;
+        var textOfMessages = [
+            "Another user is using this name. Choose another username.",
+            "This e-mail adress was used before. ",
+        ];
+        if (errorStatus === true) {
+            var newBadError_1 = __assign(__assign({}, error), (_a = {}, _a[errorType] = textOfMessages[indexOfMessage], _a));
+            setError(function (error) { return newBadError_1; });
         }
         else {
-            if (sth4[3] === pass) {
-                return sth4;
-            }
-            else {
-                setError(function (error) { return "bad password"; });
-                console.log(error);
-                return newdefaultuser;
-            }
+            var newGoodError_1 = __assign(__assign({}, error), (_b = {}, _b[errorType] = "", _b));
+            setError(function (error) { return newGoodError_1; });
         }
     }
-    function validateinput(e, type) {
+    function handleChangeofError(errorStatus, errorType) {
+        switch (errorType) {
+            case "username":
+                changeofError(errorStatus, 0, errorType);
+                break;
+            case "email":
+                changeofError(errorStatus, 1, errorType);
+                break;
+        }
+    }
+    function validateUniqueness(valueFromInputToValidate, previousValue, APIstring, 
+    // previousIsValueUnique: boolean,
+    typeOfValue, isUniqueSetter) {
         return __awaiter(this, void 0, void 0, function () {
             var _a;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
-                        e.preventDefault();
-                        _a = type;
-                        switch (_a) {
-                            case "log": return [3 /*break*/, 1];
-                            case "pass": return [3 /*break*/, 3];
-                        }
-                        return [3 /*break*/, 4];
-                    case 1: 
-                    //send to server new username to check if is unique
-                    return [4 /*yield*/, axios_1["default"]
-                            .post("http://localhost:3001/isusernameunique", { login2: login2 })
-                            .then(function (res) {
-                            console.log(res.data, 'was send');
-                            //save in react getted response about if username was used in database is unique(=true)
-                            setisLoginUnique(function (isLoginUnique) { return JSON.parse(res.data); }); //ERROR!!!problems with validating login and password in singin page
-                        })["catch"](function (err) {
-                            console.error(err);
-                        })];
-                    case 2:
+                        if (!(valueFromInputToValidate !== "" && valueFromInputToValidate !== previousValue)) return [3 /*break*/, 2];
+                        //send to server new username to check if is unique
+                        return [4 /*yield*/, axios_1["default"]
+                                .post("http://localhost:3001/" + APIstring, (_a = {}, _a[typeOfValue] = valueFromInputToValidate, _a))
+                                .then(function (res) {
+                                //save in react getted response about if username was used in database is unique(=true)
+                                isUniqueSetter(function () { return JSON.parse(res.data); });
+                                handleChangeofError(JSON.parse(res.data), typeOfValue);
+                            })["catch"](function (err) {
+                                console.error(err);
+                            })];
+                    case 1:
                         //send to server new username to check if is unique
                         _b.sent();
-                        if (isLoginUnique === false) {
-                            setError(function (error) { return "Another user is using this name. Choose another username."; });
-                        }
-                        ;
-                        return [3 /*break*/, 4];
-                    case 3:
+                        _b.label = 2;
+                    case 2: return [2 /*return*/];
+                }
+            });
+        });
+    }
+    function validateinput(e, type, setterOfIfIsUnique) {
+        if (setterOfIfIsUnique === void 0) { setterOfIfIsUnique = function () { }; }
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                e.preventDefault();
+                switch (type) {
+                    case "username":
+                        validateUniqueness(e.target.value, login2, "is" + type + "unique", "" + type, setterOfIfIsUnique);
+                        // if(e.target.value !== "" && e.target.value !== login2) {//if something in login input has changed then...
+                        // //send to server new username to check if is unique
+                        // await axios
+                        //   .post(`http://localhost:3001/isusernameunique`, {login2:e.target.value})
+                        //     .then((res:any) => {
+                        //       //save in react getted response about if username was used in database is unique(=true)
+                        //       setisLoginUnique(isLoginUnique=>JSON.parse(res.data))
+                        //       handleChangeofError(JSON.parse(res.data));
+                        //     })
+                        //     .catch((err: any) => {
+                        //       console.error(err);
+                        //     }); 
+                        // }
+                        break;
+                    case "email":
+                        validateUniqueness(e.target.value, email, "is" + type + "unique", "" + type, setterOfIfIsUnique);
+                        break;
+                    case "password":
                         // validate prenounciation of password
                         // if(/@|#|$|%|\^|&|\*|(|)|!|~/ig.test(password)){
                         //   setError(error=>"Your password shouldn't have sighs like: @,#.")
@@ -122,22 +164,29 @@ function SignIn(props) {
                         // }else{
                         setisPasswordOk(function (isPasswordOk) { return true; });
                         // }
-                        return [3 /*break*/, 4];
-                    case 4:
-                        ;
-                        return [2 /*return*/];
+                        break;
+                    default:
                 }
+                ;
+                return [2 /*return*/];
             });
         });
     }
     function onChange(e, type) {
-        if (type === "log") {
-            setlogin(function (login) { return e.target.value; });
-            validateinput(e, "log");
-        }
-        else {
-            setpass(function (password) { return e.target.value; });
-            validateinput(e, "pass");
+        switch (type) {
+            case "username":
+                // console.log('targetvaue: ',e.target.value, " ." )
+                validateinput(e, type, setisLoginUnique);
+                setlogin(function (login) { return e.target.value; });
+                break;
+            case "password":
+                setpass(function (password) { return e.target.value; });
+                validateinput(e, type);
+                break;
+            case "email":
+                setEmail(function (email) { return e.target.value; });
+                validateinput(e, type, setisEmailUnique);
+                break;
         }
     }
     function onSubmit(e) {
@@ -149,8 +198,10 @@ function SignIn(props) {
         });
     }
     return (react_1["default"].createElement(react_1["default"].Fragment, null,
-        error,
-        react_1["default"].createElement(LogForm_1["default"], { name: "Singin as a new user", onSubmit: onSubmit, login: login2, password: password, onChange: onChange, error: error }),
+        react_1["default"].createElement(LogForm_1["default"], { name: "Singin as a new user", onSubmit: onSubmit, login: login2, password: password, onChange: onChange, error: error, label: "your username", additionalJSX: (react_1["default"].createElement("div", null,
+                react_1["default"].createElement("label", null, " e-mail: "),
+                " ",
+                react_1["default"].createElement("input", { value: email, onChange: function (e) { onChange(e, "email"); }, type: "text" }))) }),
         JSON.stringify(usersdata_json_1["default"]), login2 + "; password " + password,
         JSON.stringify([isLoginUnique, isPasswordOk]),
         JSON.stringify(/@|#|$|%|\^|&|\*|(|)|!|~/.test("%65"))

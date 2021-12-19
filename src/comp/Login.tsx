@@ -12,7 +12,7 @@ function Login(props: any ) {
   const [ login, setlogin ]= useState("");
   const [ password, setpass ]= useState("")
   const [ showAccountPage, setshowAccountPage ] = useState(false)
-  const [ error , setError] = useState("")
+  const [ error, setError ] = useState({"username": "", "password": ""})
   const changeuser:React.Dispatch<React.SetStateAction<typeuserdata>> = props.changeuser
   const { currentuser } = props.defaultuser;
   const newdefaultuser = [currentuser.pacientId, currentuser.pacientUsername, currentuser.isLogin, ""];
@@ -36,7 +36,8 @@ function Login(props: any ) {
       else{ 
         if(sth4[3]===pass){return sth4;}
         else{
-          setError(error=>"bad password")
+          const newErrors = {...error, "password":"bad password"};
+          setError(error=>newErrors)
           console.log(error)
           return newdefaultuser;
         }
@@ -52,7 +53,7 @@ function Login(props: any ) {
 
 
   function onChange(e:any, type: string){
-    if(type==="log") {setlogin(login=>e.target.value);
+    if(type==="username") {setlogin(login=>e.target.value);
     }
     else{setpass(password=>e.target.value)}
 
@@ -61,15 +62,17 @@ function Login(props: any ) {
 
   async function onSubmit(e:any){
     e.preventDefault();
-
+    let newErrors = error;
     if(login.length >0 && password.length >0){
-      setError(error => "");
+      newErrors = {"username": "", "password": ""};
+      setError(error => newErrors);
        
       const validation = validateWithDataFromServer(login, password);
       await console.log(validation)
 
       if (validation===newdefaultuser) {
-        setError(error=>"Wrong login or password.");
+        newErrors = {...error, "username": "Wrong login or password."};
+        setError(error=>newErrors);
         await console.log("error",error);
         return
       }
@@ -77,7 +80,8 @@ function Login(props: any ) {
         const newuser = {currentuser: {pacientId: validation[1],
           pacientUsername: validation[0],
           isLogin: validation[3]}}
-        await setError(error => "good login & password.");
+        newErrors = {...error, "username": "good login & password."};
+        await setError(error => newErrors);
         await console.log("error",error)
         handleChangeOfUser(validation[1], validation[0], validation[3], props.changeuser, props.userdata )
         changeuser(newuser)
@@ -114,6 +118,7 @@ function Login(props: any ) {
     password = {password}
     onChange = {onChange}
     error = {error}
+    label = {"username"}
     />
     {JSON.stringify(udata)}
     </> 
