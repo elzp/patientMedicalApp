@@ -50,7 +50,9 @@
      position: relative;
      grid-area: "bottom";
      grid-template-areas: "left right";
-     margin: 0 30px;
+     grid-template-columns: min-content auto;
+     max-width: 1100px;
+     margin: 0 auto;
    }
     
   .brand-nav {
@@ -161,6 +163,7 @@ color: white;
   font-size: 0.8em;
   display:flexbox;
   flex-direction: column;
+  width: 90%;
   min-width: 60vw; 
   min-height: 200px;
   border-left: 2px solid grey;
@@ -184,6 +187,8 @@ font-size: 80%;
   grid-area: "foot";
   font-size: 0.7em;
   width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
   min-height: max-content;
   padding: 10px 20%;
   display: block;
@@ -251,6 +256,8 @@ font-size: 80%;
     grid-area: "bottom";
     grid-auto-flow: column;
     grid-template-areas: "left" "right";
+    grid-template-columns: auto;
+    width: 90%;
   }
 
   .leftdiv {
