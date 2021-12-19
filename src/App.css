@@ -204,6 +204,18 @@ font-size: 80%;
 .right-start h3 {
   text-align: center;
 }
+.right-log-form div {
+  width: min-content;
+}
+.right-log-form label {
+  display: block;
+  width: 8em;
+}
+
+.right-log-form input {
+  display: block;
+  width: 10em;
+}
 
 span {
   text-transform: uppercase;
