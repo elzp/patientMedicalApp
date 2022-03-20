@@ -98,7 +98,7 @@ function onChange(e:any, type: string){
     
   }
 
-
+console.log(udata)
   return (
     <>
       {/* <h3>SignIn page</h3> */}
@@ -137,13 +137,13 @@ function onChange(e:any, type: string){
     onChange = {onChange}
     error = {error}
     />
-    {JSON.stringify(udata)}
-    {`${login2}; password ${password}`}
+    {/* {JSON.stringify(udata)} */}
+    {/* {`${login2}; password ${password}`} */}
   
-    {JSON.stringify([isLoginUnique, isPasswordOk])}
-    {JSON.stringify(/@|#|$|%|\^|&|\*|(|)|!|~/.test("%65"))
+    {/* {JSON.stringify([isLoginUnique, isPasswordOk])} */}
+    {/* {JSON.stringify(/@|#|$|%|\^|&|\*|(|)|!|~/.test("%65"))
     ///[@#$%^&*()!~]
-    }
+    } */}
 
 
     {/* <Route

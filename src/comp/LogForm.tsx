@@ -26,7 +26,7 @@ function LogForm(props: any ) {
       render={(props) =>   localStorage.getItem('isLogin')==="true" &&
       <Redirect to={{pathname: '/'} }/>}
     />
-    {JSON.stringify(udata)}
+    
     </div> 
   );
 }

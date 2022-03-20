@@ -85,7 +85,7 @@ function Login(props: any ) {
     }
   }
 
-
+  console.log(udata)
   return (
     <>
       {/* <h3>Login Page</h3>
@@ -115,7 +115,6 @@ function Login(props: any ) {
     onChange = {onChange}
     error = {error}
     />
-    {JSON.stringify(udata)}
     </> 
   );
 }
