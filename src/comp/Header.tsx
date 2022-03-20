@@ -1,11 +1,12 @@
 import React, {useState, useEffect, useRef} from 'react';
+import Buttons from './Leftboard';
 import './../App.css';
 import menuLogo from './../ic-menu.png';
 import logo from './../ic-logo.png';
 import data from './../somedata.json';
 import { BrowserRouter as Router, Link } from 'react-router-dom';
 
-function Header() {
+function Header(props: any) {
 const [menuVisible, setVisibility] = useState(false);
 const {menu}:{menu: Array<Array<string>>} = data;
 const newmenu = menu.slice(0,6);
@@ -46,8 +47,13 @@ const wrapperRef = useRef(null);
 useOutsideAlerter(wrapperRef);
 
   return (
-    <div className="App-header">
+    <> 
+    
       <div className="navbar-wrapper">
+      <Buttons 
+      currentuserdata={props.userdata} 
+      changeuser={props.setuserdata}
+      defaultuserdata = {props.defaultUser} /> 
         {/* in css this class has property to be hidden when screen is smaller than 1024px */}
           <div className="navbar-button">
             <button  onClick={changeMenuVisibility}><img src={menuLogo} alt="menu" className="button-img" /></button>
@@ -85,7 +91,7 @@ useOutsideAlerter(wrapperRef);
           </div>
       </div>
       
-    </div>
+    </>
   );
 }
 
