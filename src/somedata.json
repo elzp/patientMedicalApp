@@ -1,0 +1,51 @@
+{
+"menu": [["Start","" ],
+        ["New Appointment","new"],
+        ["Refferals","refferals"],
+        ["Result","result"],
+        ["Receipts","receipts"],
+        ["Account","account"],
+        ["Login","login"],
+        ["Signin","signin"]
+    ],
+"foot": {
+    "adress":{
+        "street-type": "Al.",
+        "street": "Kościuszki",
+        "buildingNr": 35,
+        "localNr": "50S",
+        "postCode": "15-753",
+        "city": "Wronówek"
+    },
+    "phone": "354 328 996",
+    "email": "somebrand@brand.com"
+    },
+"desc": {"visits": {
+            "instruction": "1.Choose type of specialist.\n 2.Choose specific doctor. \n 3. Choose date. \n 4. Click \"Submit\" button.",
+            "thanks": ""
+        }
+    },
+"doctors": [{"id": 0,
+            "option": "doc1",
+            "value": "Pediatrician",
+            "allDoctors": {
+                "0": "dr A Pediatrician",
+                "1": "dr B Pediatrician"
+            }},
+            {"id": 1,
+            "option": "doc2",
+            "value": "Gynecologist",
+            "allDoctors": {
+                "0":"dr A Gynecologist",
+                "1":"dr B Gynecologist"
+                }},
+            {"id": 2,
+            "option": "doc3",
+            "value": "Kardiologist",
+            "allDoctors": {
+                "0":"dr A Kardiologist",
+                "1": "dr B Kardiologist"
+            }}
+]
+
+}
