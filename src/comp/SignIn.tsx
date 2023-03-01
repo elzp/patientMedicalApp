@@ -148,7 +148,7 @@ function onChange(e:any, type: string){
     
   }
 
-
+console.log(udata)
   return (
     <>
       <LogForm 
@@ -169,10 +169,10 @@ function onChange(e:any, type: string){
     {JSON.stringify(udata)}
     {`${login2}; password ${password}`}
   
-    {JSON.stringify([isLoginUnique, isPasswordOk])}
-    {JSON.stringify(/@|#|$|%|\^|&|\*|(|)|!|~/.test("%65"))
+    {/* {JSON.stringify([isLoginUnique, isPasswordOk])} */}
+    {/* {JSON.stringify(/@|#|$|%|\^|&|\*|(|)|!|~/.test("%65"))
     ///[@#$%^&*()!~]
-    }
+    } */}
 
 
     {/* <Route

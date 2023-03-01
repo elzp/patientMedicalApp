@@ -29,7 +29,7 @@ function LogForm(props: any ) {
       
     }
 
-    {JSON.stringify(udata)}
+    
     </div> 
   );
 }

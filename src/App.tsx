@@ -27,13 +27,13 @@ function App(props: any) {
     <div className= "App">
       <userContext.Provider value={userdata}>
       <header data-testid="header">
-          <Header />
-      </header>
-      <main>
-          <Leftboard 
-          currentuserdata={userdata} 
+          <Header 
+          userdata={userdata} 
           changeuser={setuserdata}
           defaultuserdata = {defaultUser} /> 
+      </header>
+      <main>
+          
 
           <Router >
             <Switch>
