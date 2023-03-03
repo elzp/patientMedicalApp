@@ -1,7 +1,7 @@
 import React from 'react';
 import './../App.css';
 
-function Result(props: any ) {
+export function Result(props: any ) {
  const {value}: {value: number} = props;
  //const {appointment} : {appointment: object} = props.styles;
 
@@ -16,4 +16,4 @@ function Result(props: any ) {
   );
 }
 
-export default Result;
+// export default Result;

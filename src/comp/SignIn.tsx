@@ -1,26 +1,24 @@
 import React, { useState } from 'react';
-import LogForm from './LogForm';
+import {LogForm} from './LogForm';
 import './../App.css';
 import axios from 'axios';
 import udata from '../usersdata.json';
 
-function SignIn(props: any ) {
+export function SignIn(props: any ) {
   const [ login2, setlogin ]= useState("");
   const [ isLoginUnique, setisLoginUnique]= useState(false); 
   const [ password, setpass ]= useState("")
-  const [ isPasswordOk, setisPasswordOk]= useState(false);
-  const [ email, setEmail]= useState("");
-  const [ isEmailUnique, setisEmailUnique]= useState(false);
+  const [ isPasswordOk, setisPasswordOk]= useState(false); 
   const [ showAccountPage, setshowAccountPage ] = useState(false)
-  const [ error , setError] = useState({"login": "","email":""})
+  const [ error , setError] = useState("")
   // defaultuser={currentuser: {
                   //     pacientId: "-5",
                   //     pacientUsername: "",
                   //     isLogin: false
                   //   }
                   // }
-  // const { currentuser } = props.defaultuser;
-  // const newdefaultuser = [currentuser.pacientId, currentuser.pacientUsername, currentuser.isLogin, ""];
+  const { currentuser } = props.defaultuser;
+  const newdefaultuser = [currentuser.pacientId, currentuser.pacientUsername, currentuser.isLogin, ""];
   // preparing users data from json file to use for authorification
     const sth3:any = Object.entries(udata).map(it=>{
 
@@ -31,82 +29,43 @@ function SignIn(props: any ) {
                     ]
     return neww
     })
-  function changeofError(
-    errorStatus: boolean, 
-    indexOfMessage: number,
-    errorType: string,
-    ){
-    const textOfMessages = [
-      "Another user is using this name. Choose another username.",
-      "This e-mail adress was used before. ",      
-    ]
-  
-    if (errorStatus===true){
-      const newBadError = {...error, [errorType]: textOfMessages[indexOfMessage]};
-      setError(error => newBadError)
-      }else{
-        const newGoodError = {...error, [errorType]: "" };
-      setError(error => newGoodError)
+
+  function validateWithDataFromServer(log:string, pass:string){
+    // fn's which returns password for given login
+
+    const sth4 = sth3.find((it:any)=>it[1]===log)
+      if(sth4 === undefined || sth4 === null){
+    return newdefaultuser;}
+      else{ 
+        if(sth4[3]===pass){return sth4;}
+        else{
+          setError(error=>"bad password")
+          console.log(error)
+          return newdefaultuser;
+        }
       }
-    }
-  function handleChangeofError (errorStatus: boolean, errorType: string) {
-    
-    switch (errorType){
-      case "username":
-        changeofError(errorStatus, 0, errorType);
-        break;
-      case "email":
-        changeofError(errorStatus, 1, errorType);
-        break;
-    }
+      
   }
+
   
-  async function validateUniqueness (
-    valueFromInputToValidate: string,
-    previousValue: string,
-    APIstring: string,
-    // previousIsValueUnique: boolean,
-    typeOfValue: string,
-    isUniqueSetter: Function,
-    ) {
-    if(valueFromInputToValidate !== "" && valueFromInputToValidate !== previousValue) {//if something in login input has changed then...
-      //send to server new username to check if is unique
-      await axios
-        .post(`http://localhost:3001/${APIstring}`, {[typeOfValue]: valueFromInputToValidate})
-          .then((res:any) => {
-            //save in react getted response about if username was used in database is unique(=true)
-            isUniqueSetter(()=>JSON.parse(res.data))
-            handleChangeofError(JSON.parse(res.data), typeOfValue);
-          })
-          .catch((err: any) => {
-            console.error(err);
-          }); 
-      }
-  }
-  async function validateinput(e:any, type: string, setterOfIfIsUnique: Function = ()=>{}){
+  async function validateinput(e:any, type: string){//(e:any, type: string){
     e.preventDefault()
     switch (type){
-      case "username":
-        validateUniqueness(e.target.value, login2, `is${type}unique`, `${type}`, setterOfIfIsUnique)
-
-        // if(e.target.value !== "" && e.target.value !== login2) {//if something in login input has changed then...
-        // //send to server new username to check if is unique
-        // await axios
-        //   .post(`http://localhost:3001/isusernameunique`, {login2:e.target.value})
-        //     .then((res:any) => {
-        //       //save in react getted response about if username was used in database is unique(=true)
-        //       setisLoginUnique(isLoginUnique=>JSON.parse(res.data))
-        //       handleChangeofError(JSON.parse(res.data));
-        //     })
-        //     .catch((err: any) => {
-        //       console.error(err);
-        //     }); 
-        // }
+      case "log":
+        //send to server new username to check if is unique
+        await axios
+          .post(`http://localhost:3001/isusernameunique`, {login2:login2})
+            .then((res:any) => {
+              console.log(res.data,  'was send')
+              //save in react getted response about if username was used in database is unique(=true)
+              setisLoginUnique(isLoginUnique=>JSON.parse(res.data))//ERROR!!!problems with validating login and password in singin page
+            })
+            .catch((err: any) => {
+              console.error(err);
+            }); 
+        if (isLoginUnique===false){setError(error=>"Another user is using this name. Choose another username.")};
         break
-      case "email":
-        validateUniqueness(e.target.value, email, `is${type}unique`, `${type}`, setterOfIfIsUnique);
-        break
-      case "password":
+      case "pass":
         // validate prenounciation of password
         // if(/@|#|$|%|\^|&|\*|(|)|!|~/ig.test(password)){
         //   setError(error=>"Your password shouldn't have sighs like: @,#.")
@@ -121,53 +80,65 @@ function SignIn(props: any ) {
 }
   
 function onChange(e:any, type: string){
-  switch(type){
-  case "username":
-    // console.log('targetvaue: ',e.target.value, " ." )
-    validateinput(e, type, setisLoginUnique);
+  if(type==="log") {
     setlogin(login=>e.target.value);
-    break;
-  case "password":
+    validateinput(e, "log");
+  }
+  else{
     setpass(password=>e.target.value)
-    validateinput(e, type);
-    break;
-  case "email":
-    setEmail(email=>e.target.value)
-    validateinput(e, type, setisEmailUnique)
-    break;
+    validateinput(e,"pass");
   }
 }
 
   async function onSubmit(e:any){
     e.preventDefault();
-  //   const array= [isLoginUnique, isEmailUnique, isPasswordOk];
-  //   if (array === [true, true, true]) {
 
-  //   }
-  // // send new user login data to file/server
+  
+  // send new user login data to file/server
     
   }
 
 console.log(udata)
   return (
     <>
-      <LogForm 
-      name="Singin as a new user"
-      onSubmit = {onSubmit}
-      login = {login2}
-      password = {password}
-      onChange = {onChange}
-      error = {error}
-      label = {"your username"}
-      additionalJSX = {(
-      <div>
-        <label> e-mail: </label> <input value={email} onChange={(e)=>{onChange(e,"email")}}
-         type="text"/>
-      </div>
-         )}
+      {/* <h3>SignIn page</h3> */}
+      
+      
+   {/*<form //onSubmit={onSubmit} 
+    className="right-log-form"
+   >
+    <div>
+      <label>login:</label> <input onChange={(e)=>{
+        setlogin(login2=>e.target.value)
+        validateinput(e, "log");
+        }} />
+    </div> 
+
+
+    <div>
+      <label>Password: </label> <input onChange={(e)=>{
+        setpass(password=>e.target.value)
+        validateinput(e,"pass");
+      }} 
+      type="password"
       />
-    {JSON.stringify(udata)}
-    {`${login2}; password ${password}`}
+    </div> 
+    
+    <div id="button"> <button  
+   >Submit</button></div> 
+   </form> */}
+    
+    {error}
+    <LogForm 
+    name="Singin as a new user"
+    onSubmit = {onSubmit}
+    login = {login2}
+    password = {password}
+    onChange = {onChange}
+    error = {error}
+    />
+    {/* {JSON.stringify(udata)} */}
+    {/* {`${login2}; password ${password}`} */}
   
     {/* {JSON.stringify([isLoginUnique, isPasswordOk])} */}
     {/* {JSON.stringify(/@|#|$|%|\^|&|\*|(|)|!|~/.test("%65"))
@@ -189,4 +160,4 @@ console.log(udata)
   );
 }
 
-export default SignIn;
+// export default SignIn;

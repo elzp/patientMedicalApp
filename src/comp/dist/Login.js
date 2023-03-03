@@ -1,15 +1,4 @@
 "use strict";
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -47,6 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
+exports.Login = void 0;
 var react_1 = require("react");
 var LogForm_1 = require("./LogForm");
 require("./../App.css");
@@ -57,7 +47,7 @@ function Login(props) {
     var _a = react_1.useState(""), login = _a[0], setlogin = _a[1];
     var _b = react_1.useState(""), password = _b[0], setpass = _b[1];
     var _c = react_1.useState(false), showAccountPage = _c[0], setshowAccountPage = _c[1];
-    var _d = react_1.useState({ "username": "", "password": "" }), error = _d[0], setError = _d[1];
+    var _d = react_1.useState(""), error = _d[0], setError = _d[1];
     var changeuser = props.changeuser;
     var currentuser = props.defaultuser.currentuser;
     var newdefaultuser = [currentuser.pacientId, currentuser.pacientUsername, currentuser.isLogin, ""];
@@ -81,8 +71,7 @@ function Login(props) {
                 return sth4;
             }
             else {
-                var newErrors_1 = __assign(__assign({}, error), { "password": "bad password" });
-                setError(function (error) { return newErrors_1; });
+                setError(function (error) { return "bad password"; });
                 console.log(error);
                 return newdefaultuser;
             }
@@ -94,7 +83,7 @@ function Login(props) {
         // } 
     }
     function onChange(e, type) {
-        if (type === "username") {
+        if (type === "log") {
             setlogin(function (login) { return e.target.value; });
         }
         else {
@@ -103,22 +92,19 @@ function Login(props) {
     }
     function onSubmit(e) {
         return __awaiter(this, void 0, void 0, function () {
-            var newErrors, validation, newuser;
+            var validation, newuser;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         e.preventDefault();
-                        newErrors = error;
                         if (!(login.length > 0 && password.length > 0)) return [3 /*break*/, 6];
-                        newErrors = { "username": "", "password": "" };
-                        setError(function (error) { return newErrors; });
+                        setError(function (error) { return ""; });
                         validation = validateWithDataFromServer(login, password);
                         return [4 /*yield*/, console.log(validation)];
                     case 1:
                         _a.sent();
                         if (!(validation === newdefaultuser)) return [3 /*break*/, 3];
-                        newErrors = __assign(__assign({}, error), { "username": "Wrong login or password." });
-                        setError(function (error) { return newErrors; });
+                        setError(function (error) { return "Wrong login or password."; });
                         return [4 /*yield*/, console.log("error", error)];
                     case 2:
                         _a.sent();
@@ -127,8 +113,7 @@ function Login(props) {
                         newuser = { currentuser: { pacientId: validation[1],
                                 pacientUsername: validation[0],
                                 isLogin: validation[3] } };
-                        newErrors = __assign(__assign({}, error), { "username": "good login & password." });
-                        return [4 /*yield*/, setError(function (error) { return newErrors; })];
+                        return [4 /*yield*/, setError(function (error) { return "good login & password."; })];
                     case 4:
                         _a.sent();
                         return [4 /*yield*/, console.log("error", error)];
@@ -142,10 +127,14 @@ function Login(props) {
             });
         });
     }
-    return (react_1["default"].createElement(react_1["default"].Fragment, null,
-        react_1["default"].createElement(react_router_dom_1.Route, { render: function (props) { return localStorage.getItem('isLogin') === "true" &&
-                react_1["default"].createElement(react_router_dom_1.Redirect, { to: { pathname: '/' } }); } }),
-        react_1["default"].createElement(LogForm_1["default"], { name: "Login as user", onSubmit: onSubmit, login: login, password: password, onChange: onChange, error: error, label: "username" }),
-        JSON.stringify(usersdata_json_1["default"])));
+    if (localStorage.getItem('isLogin') === "true") {
+        react_router_dom_1.redirect("/");
+        return (react_1["default"].createElement(react_1["default"].Fragment, null));
+    }
+    else {
+        return (react_1["default"].createElement("div", null,
+            react_1["default"].createElement(LogForm_1.LogForm, { name: "Login as user", onSubmit: onSubmit, login: login, password: password, onChange: onChange, error: error })));
+    }
 }
-exports["default"] = Login;
+exports.Login = Login;
+// export default Login;

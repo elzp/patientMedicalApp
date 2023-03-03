@@ -2,19 +2,19 @@ import React from 'react';
 import { BrowserRouter as Router, Link } from 'react-router-dom';
 import './../App.css';
 import { handleLogout } from './srcfunctions';
-function Leftboard(props: any
+export  function Leftboard(props: any
   ) {
 
   return (
     <div className='leftdiv'>
      
 
-        <Router forceRefresh={true} > {/* forces refresh of page and loading nee type of content in rightboard */} 
+        <Router> 
          {localStorage.getItem('isLogin')==="true" ? <Link to="/login" 
           ><button onClick={()=>handleLogout(props.defaultuserdata, props.changeuser, props.currentuserdata)}>logout</button></Link> :
-          <Link to="/login" 
+          <Link reloadDocument to="/login" 
           ><button>login</button></Link>}
-         
+         {/*reloadDocument forces refresh of page and loading nee type of content in rightboard */} 
          {localStorage.getItem('isLogin')==="false" && <Link to="/signin" 
           ><button>Sign In</button></Link>}
        </Router> 
@@ -23,4 +23,4 @@ function Leftboard(props: any
   );
 }
 
-export default Leftboard;
+// export default Leftboard;

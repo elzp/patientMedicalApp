@@ -29,22 +29,22 @@
             "option": "doc1",
             "value": "Pediatrician",
             "allDoctors": {
-                "0": "dr Brown Pediatrician",
-                "1": "dr Grey Pediatrician"
+                "0": "dr A Pediatrician",
+                "1": "dr B Pediatrician"
             }},
             {"id": 1,
             "option": "doc2",
             "value": "Gynecologist",
             "allDoctors": {
-                "0":"dr yellow Gynecologist",
-                "1":"dr green Gynecologist"
+                "0":"dr A Gynecologist",
+                "1":"dr B Gynecologist"
                 }},
             {"id": 2,
             "option": "doc3",
             "value": "Kardiologist",
             "allDoctors": {
-                "0":"dr orange Kardiologist",
-                "1": "dr blue Kardiologist"
+                "0":"dr A Kardiologist",
+                "1": "dr B Kardiologist"
             }}
 ]
 

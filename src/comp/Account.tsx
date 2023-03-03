@@ -1,9 +1,8 @@
 import React, { useState, useMemo } from 'react';
-import Appointment from './Appointment';
 import './../App.css';
 import axios from 'axios';
 
-function Account(props: any ) {
+export function Account(props: any ) {
  const {value}: {value: number} = props;
  const { currentuser } = props.userdata;
  const { pacientId } = currentuser;
@@ -39,19 +38,7 @@ function Account(props: any ) {
   return (
     <div className="account">
       <h3>Welcome {localStorage.getItem('nameOfLogin')}.</h3>
-    {/* <button onClick={()=>handleRefreshingVisits()}>refresh</button>
-    <div>
-        {pacientVisitsData.visits.map( (it: visit) => (
-         <div><Appointment 
-             key = {it.vizId} 
-             dataAboutAppointment = {it} 
-             lengthofAllData ={pacientVisitsData.visits.length}
-             />
-         </div>)
-        )}
-     </div> */}
     </div>
   );
 }
 
-export default Account;

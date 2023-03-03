@@ -1,37 +1,33 @@
 import React from 'react';
 import './../App.css';
+import { BrowserRouter as Router, redirect, Route } from 'react-router-dom';
 import udata from '../usersdata.json';
 
-function LogForm(props: any ) {
-
+export function LogForm(props: any ) {
+  if (localStorage.getItem('isLogin')==="true") {
+    redirect("/start");
+    return (<></>)
+  } else {
   return (
-    <div >
+    <div>
       <h3>{props.name}</h3>
       
     <form onSubmit={props.onSubmit} 
    className="right-log-form">
     <div>
-      <label>{props.label}</label> <input value={props.login} onChange={(e)=>{props.onChange(e,"username")}}/>
+      <label>login:</label> <input value={props.login} onChange={(e)=>{props.onChange(e,"log")}}/>
     </div>
-    {props.additionalJSX}
     <div>
-     <label> Password: </label> <input value={props.password} onChange={(e)=>{props.onChange(e,"password")}}
+     <label> Password: </label> <input value={props.password} onChange={(e)=>{props.onChange(e,"pass")}}
       type="password"/>
       </div>
    <div id="button"> <button type="submit" >Submit</button></div> 
    </form>
-    {
-      Object.values(props.error).map((it:any, id: number)=>
-        (<div key={id} className = "error">
-          {it}
-        </div>       
-        ))
-      
-    }
+    {props.error}
 
-    
     </div> 
   );
+  }
 }
 
-export default LogForm;
+// export default LogForm;

@@ -1,15 +1,15 @@
-type Styletype = {
+export type Styletype = {
     [name: string]: object, //https://stackoverflow.com/questions/39207048/how-to-define-object-of-objects-type-in-typescript
  };
 
-interface Person {
+ export interface Person {
     firstName: string;
     lastName: string;
     age: number;
 }
 
 
-interface adressObj {
+export interface adressObj {
     'street-type': string,
     street: string,
     buildingNr: number,
@@ -18,19 +18,19 @@ interface adressObj {
     city: string,
 
 }
-interface footObj  {
+export interface footObj  {
     adress: adressObj,
     phone: string,
     email: string,
 }
  
 
-interface doctorsValue  {
+export interface doctorsValue  {
     value: string,
     label: string,
 }
 
-interface doctorsNameValue{
+export interface doctorsNameValue{
     id: number;
     option: string;
     value: string;
@@ -41,21 +41,20 @@ interface doctorsNameValue{
 }
 
 
-interface visit {
+export interface visit {
     "vizId": number,
     "type": string,
     "name": string,
     "time": Date | string
   }
-  interface pacient {
+  export  interface pacient {
     "id": number,
       "visits": Array<visit> | []
   }
   
-  interface typeuserdata {
+  export  interface typeuserdata {
       currentuser: {pacientId:  string,
         pacientUsername:string ,
         isLogin: boolean | string
     }
     }
-

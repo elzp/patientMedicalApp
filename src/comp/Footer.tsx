@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import './../App.css';
 import data from './../somedata.json';
+import {footObj} from './../../types/common/main.d'
 
 
 

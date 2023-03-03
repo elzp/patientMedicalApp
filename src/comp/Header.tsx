@@ -1,8 +1,7 @@
 import React, {useState, useEffect, useRef} from 'react';
-import Buttons from './Leftboard';
 import './../App.css';
-import menuLogo from './../ic-menu.png';
-import logo from './../ic-logo.png';
+import menuLogo from './../images/ic-menu.png';
+import logo from './../images/ic-logo.png';
 import data from './../somedata.json';
 import { BrowserRouter as Router, Link } from 'react-router-dom';
 
@@ -47,13 +46,8 @@ const wrapperRef = useRef(null);
 useOutsideAlerter(wrapperRef);
 
   return (
-    <> 
-    
+    <div className="App-header">
       <div className="navbar-wrapper">
-      <Buttons 
-      currentuserdata={props.userdata} 
-      changeuser={props.setuserdata}
-      defaultuserdata = {props.defaultUser} /> 
         {/* in css this class has property to be hidden when screen is smaller than 1024px */}
           <div className="navbar-button">
             <button  onClick={changeMenuVisibility}><img src={menuLogo} alt="menu" className="button-img" /></button>
@@ -67,8 +61,8 @@ useOutsideAlerter(wrapperRef);
           
             <div  className="menu-elements">
               {newmenu.map(item=>(
-              <Router forceRefresh={true} > {/* forces refresh of page and loading nee type of content in rightboard */} 
-                <Link to={`/${item[1]}`} className= "menu-a" key = {item[0]} onClick={changeMenuVisibility} >
+              <Router > {/* forces refresh of page and loading nee type of content in rightboard */} 
+                <Link reloadDocument to={`/${item[1]}`} className= "menu-a" key = {item[0]} onClick={changeMenuVisibility} >
                 <div  key={item[0]} className="menu-link">
                   {item[0]}
                 </div>
@@ -91,7 +85,7 @@ useOutsideAlerter(wrapperRef);
           </div>
       </div>
       
-    </>
+    </div>
   );
 }
 

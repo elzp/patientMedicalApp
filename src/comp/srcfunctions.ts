@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {typeuserdata} from './../../types/common/main.d'
 
 
 export function getdataFromFile(urlAPI:string, reactsetcallback:React.Dispatch<any>, parameter: any){
@@ -48,7 +49,7 @@ export function chooseChildComponent(
   pathname:string,
   data: Array<Array<string>>,
   compsForNotLogged: Array<string>,
-){
+): ((props: any) => JSX.Element) | ((props: any) => JSX.Element) | undefined {
   const arrayofNamesOfAllJsxMenuComponents = data.map(it=> {return it[0];}) 
 
   if(arrayofAllJsxComponents === undefined){return undefined}
@@ -58,11 +59,14 @@ export function chooseChildComponent(
       if(pathname === "/"+ data[i][1]) {
       if(localStorage.getItem('isLogin')===null || localStorage.getItem('isLogin')!="true"){
         //if user of application  is not logged in 
+        
         if(compsForNotLogged.some(it=>it===arrayofNamesOfAllJsxMenuComponents[i])){
-        return arrayofAllJsxComponents[i];
+          const chosenComponent = arrayofAllJsxComponents[i]
+        return chosenComponent;
       } 
       }else{
-        return arrayofAllJsxComponents[i];
+        const chosenComponent = arrayofAllJsxComponents[i]
+        return chosenComponent;
       } 
     }
   }

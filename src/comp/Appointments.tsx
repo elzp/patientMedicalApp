@@ -6,9 +6,10 @@ import './../App.css';
 import "react-datepicker/dist/react-datepicker.css";
 import data from './../somedata.json';
 import { getdataFromFile, onSubmitAppointmentForm } from './srcfunctions';
+import {visit} from './../../types/common/main.d'
 
 
-function Appointments(props: any ) {
+export  function Appointments(props: any ) {
  const {value}: {value: number} = props;
 const [selectedOption, setSelectedOption] = useState(["none"]);
 const [selectedOption2, setSelectedOption2]:[undefined|string[], any ] = useState(["none"]);
@@ -84,7 +85,7 @@ function handleRefreshingVisits(){
 const [visOfVisitsList, setVisOfVisitsList] = useState(false) 
 function handleVisOfVisitsList() { setVisOfVisitsList(!visOfVisitsList)}
 
-const listOfSavedAppointments = pacientVisitsData.visits === []? 
+const listOfSavedAppointments = pacientVisitsData.visits.length === 0 ? 
     "Missing some options. Please refill form above.":
            pacientVisitsData.visits.map( (it: visit) => (
             <div key = {it.vizId} ><Appointment 
@@ -126,7 +127,7 @@ const listOfSavedAppointments = pacientVisitsData.visits === []?
         value={newDoctors.find(function(option:any) {
           return option.value === selectedOption[0];
         })}
-        label="Single select"
+        // label="Single select"
         placeholder={placeholder}
       />
     </div>
@@ -139,7 +140,7 @@ const listOfSavedAppointments = pacientVisitsData.visits === []?
         value={namesOfDoctorsInGroup.find(function(option) {
           return option.value === selectedOption2[0];
         })}
-        label="Single select"
+        // label="Single select"
         placeholder={placeholder}
       />
      </div>
@@ -169,4 +170,4 @@ const listOfSavedAppointments = pacientVisitsData.visits === []?
   );
 }
 
-export default Appointments;
+// export default Appointments;

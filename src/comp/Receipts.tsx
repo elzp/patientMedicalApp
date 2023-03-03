@@ -1,7 +1,7 @@
 import React from 'react';
 import './../App.css';
 
-function Receipts(props: any ) {
+export function Receipts(props: any ) {
  const {value}: {value: number} = props;
 
   return (
@@ -16,4 +16,4 @@ function Receipts(props: any ) {
   );
 }
 
-export default Receipts;
+// export default Receipts;

@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Link } from 'react-router-dom';
 import data from './../somedata.json';
 
 
-function Start(props: any ) {
+export function Start(props: any ) {
 
 
   return (
@@ -17,7 +17,7 @@ function Start(props: any ) {
       <div>To change data about your account <Link to="/account" ><span>click here</span></Link>.</div>
       </>
       )
-      :<div> Welcome UNKNOWN, <Router forceRefresh={true} ><Link to="/login"  >login</Link> or <Link to="/signin" >Sign In</Link></Router>.
+      :<div> Welcome UNKNOWN, <Link to="/login" reloadDocument >login</Link> or <Link to="/signin" reloadDocument>Sign In</Link>.
       </div>
 }
     </div>
@@ -25,4 +25,4 @@ function Start(props: any ) {
   );
 }
 
-export default Start;
+// export default Start;

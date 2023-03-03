@@ -2,7 +2,7 @@ import React from 'react';
 // import Refferal from './Refferal';
 import './../App.css';
 
-function Refferals(props: any ) {
+export function Refferals(props: any ) {
  const {value}: {value: number} = props;
  //const {appointment} : {appointment: object} = props.styles;
 
@@ -19,4 +19,4 @@ function Refferals(props: any ) {
   );
 }
 
-export default Refferals;
+// export default Refferals;

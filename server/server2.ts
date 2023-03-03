@@ -34,13 +34,12 @@ async function hashAndSavePassword(data):Promise<void>{
         let data0 = JSON.parse(dataa)|| {}
         
         let data1 = Object.entries(data0).map(it=>it[1])
-        //console.log(data1, data.username)
-        let data2 = data1.filter(it =>data.username === it["username"])
+        let data2 = data1.filter((it:any) =>data.username === it["username"])
         // console.log('d2',data2)
          const indexOfuser = data1.indexOf(data2[0])
          //console.log(indexOfuser)
          let data3=data0;
-        if(data1 !==[]){
+        if(data1.length!==0){
          // console.log(data3,data2)
           data3[indexOfuser].password = hash//save new hased password
           // console.log(data3[indexOfuser].password)
@@ -104,39 +103,39 @@ let newuserData = {
 
 //https://auth0.com/blog/hashing-in-action-understanding-bcrypt/
 
-//  preparing data to search for user
-// testing data:
-const addedByuser1="wrong"
-const addedByuser2="p1"
-const userLogin = 'u1'
-const datadefault = [
-    [ 'id', '-5' ],
-    [ 'username', '' ],
-    [ 'password', '' ],
-    [ 'islogin', 'false' ]
-  ]
+// //  preparing data to search for user
+// // testing data:
+// const addedByuser1="wrong"
+// const addedByuser2="p1"
+// const userLogin = 'u1'
+// const datadefault = [
+//     [ 'id', '-5' ],
+//     [ 'username', '' ],
+//     [ 'password', '' ],
+//     [ 'islogin', 'false' ]
+//   ]
 
-// console.log("data1", data1)
-const data2 = Object.entries(data0).map(it=>{
-    const cos= Object.entries(it[1]).map(it2=>[it2[0],it2[1]])
-   return [["id",it[0]],...cos]
- })
+// // console.log("data1", data1)
+// const data2 = Object.entries(data0).map(it=>{
+//     const cos= Object.entries(it[1]).map(it2=>[it2[0],it2[1]])
+//    return [["id",it[0]],...cos]
+//  })
 
- //console.log("data2" ,data2)
- const c0 = data2.find(it=>it[1][1]===userLogin) || datadefault;
- // console.log("this data coresponds to login is in DB",c0) 
+//  //console.log("data2" ,data2)
+//  const c0 = data2.find(it=>it[1][1]===userLogin) || datadefault;
+//  // console.log("this data coresponds to login is in DB",c0) 
 
-// //check if finding works - OK
-//  const c1 = data2.find(it=>it[1][1]==="u") || datadefault;
-//  console.log("login is in DB",c1) 
+// // //check if finding works - OK
+// //  const c1 = data2.find(it=>it[1][1]==="u") || datadefault;
+// //  console.log("login is in DB",c1) 
 
-////validatepassword(addedByuser1,c0[2][1], "should be false")//works
+// ////validatepassword(addedByuser1,c0[2][1], "should be false")//works
 
 
 
-// validatepassword(addedByuser2,c0[2][1], "should be true")//works
+// // validatepassword(addedByuser2,c0[2][1], "should be true")//works
 
-// validatepassword(plainTextPassword1,saved, "should be true")//works
-// validatepassword(plainTextPassword2,saved, "should be true")//works
+// // validatepassword(plainTextPassword1,saved, "should be true")//works
+// // validatepassword(plainTextPassword2,saved, "should be true")//works
 
 
