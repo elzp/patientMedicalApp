@@ -136,3 +136,9 @@ function stdTimezoneOffset(date: Date) {
   )
   
 ////////////////////////////////  
+
+export function logout(): void {
+  localStorage.setItem('isLogin', 'false')
+  localStorage.setItem('id', '')
+  localStorage.setItem('nameOfLogin', '')
+}
