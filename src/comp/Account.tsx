@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { Link } from 'react-router-dom';
 import {logout} from './srcfunctions';
 import './../App.css';
 import axios from 'axios';
@@ -40,7 +41,9 @@ export function Account(props: any ) {
     <div className="account">
       <h3>Welcome {localStorage.getItem('nameOfLogin')}.</h3>
       <div>
-        <button onClick={()=>{logout()}}>LOGOUT</button>
+        <Link reloadDocument to={'/'}>
+          <button onClick={()=>{logout()}}>LOGOUT</button>
+        </Link>
       </div>
     </div>
   );
