@@ -38,6 +38,9 @@ export function Account(props: any ) {
   return (
     <div className="account">
       <h3>Welcome {localStorage.getItem('nameOfLogin')}.</h3>
+      <div>
+        <button onClick={()=>{}}>LOGOUT</button>
+      </div>
     </div>
   );
 }
