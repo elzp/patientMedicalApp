@@ -1,12 +1,11 @@
 import React from 'react';
 import './../App.css';
-import { BrowserRouter as Router, redirect, Route } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import udata from '../usersdata.json';
 
 export function LogForm(props: any ) {
   if (localStorage.getItem('isLogin')==="true") {
-    redirect("/start");
-    return (<></>)
+    return <Navigate replace to="/" />;
   } else {
   return (
     <div>
@@ -30,4 +29,3 @@ export function LogForm(props: any ) {
   }
 }
 
-// export default LogForm;

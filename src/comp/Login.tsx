@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {LogForm} from './LogForm';
 import './../App.css';
 import {handleChangeOfUser} from './srcfunctions'
-import { BrowserRouter as Router, redirect, Route } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import axios from 'axios';
 import udata from '../usersdata.json';
 import useEffect from 'react';
@@ -88,8 +88,7 @@ export  function Login(props: any ) {
 
 
   if (localStorage.getItem('isLogin')==="true") {
-     redirect("/");
-     return (<></>)
+    return <Navigate replace to="/" />;
   } else {
   return (
     <div>
@@ -107,5 +106,3 @@ export  function Login(props: any ) {
   );
   }
 }
-
-// export default Login;
