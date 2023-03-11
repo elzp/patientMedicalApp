@@ -210,6 +210,8 @@ font-size: 80%;
   width: fit-content;
   padding: auto;
   font-size: 1.5em;
+  text-align: center;
+  margin: 5px auto;
 }
 
 .right-start h3 {
@@ -229,7 +231,7 @@ font-size: 80%;
 }
 
 span {
-  text-transform: uppercase;
+  font-weight: bold;
   letter-spacing: 1px;
   color: black;
   /* padding: 10px;
