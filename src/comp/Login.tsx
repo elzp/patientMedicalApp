@@ -91,7 +91,7 @@ export  function Login(props: any ) {
     return <Navigate replace to="/" />;
   } else {
   return (
-    <div>
+    <div className='log-sign-in'>
       <LogForm 
     name="Login as user"
     onSubmit = {onSubmit}

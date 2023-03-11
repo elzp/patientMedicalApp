@@ -17,7 +17,7 @@ export function Start(props: any ) {
       <div>To change data about your account <Link to="/account" ><span>click here</span></Link>.</div>
       </>
       )
-      :<div> Welcome UNKNOWN, <Link to="/login" reloadDocument >login</Link> or <Link to="/signin" reloadDocument>Sign In</Link>.
+      :<div> Welcome <span>unknown</span>, <span><Link to="/login" reloadDocument >login</Link></span> or <span><Link to="/signin" reloadDocument>sign in</Link></span>.
       </div>
 }
     </div>

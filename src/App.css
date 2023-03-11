@@ -162,7 +162,7 @@ a {
   border: 1px solid #474747;
   background-color: white;
   padding: 4px 6px;
-  margin: 10px 5px;
+  margin: 10px auto;
 }
 
 main button:hover {
@@ -173,9 +173,9 @@ color: white;
 .rightdiv {
     /* background-image: linear-gradient(to left, lightgrey 95%, white); */
   font-size: 0.8em;
-  display:flexbox;
+  /* display:flexbox; */
   flex-direction: column;
-  width: 90%;
+  /* width: 90%; */
   min-width: 60vw; 
   min-height: 200px;
   padding: 15px 25px;
@@ -183,7 +183,18 @@ color: white;
   grid-area: "right";
 }
 
+.log-sign-in {
+  width: min-content;
+  margin: 10px auto;
+  text-align: center;
+  border: 2px solid grey;
+  padding: 10px;
+}
 
+form label {
+  text-align: left;
+  margin: 5px auto 5px 0;
+}
 .appointment {
 background-color: white;
 border-bottom: 0.7px dotted grey;
@@ -192,7 +203,22 @@ margin: 15px;
 font-size: 80%;
 }
 
+ #welcome-section-title >h1  {
+  text-align: center;
+  margin: 15px;
+  font-size: 1.2rem;
+}
 
+#description {
+  text-align: left;
+  margin: 10px auto;
+  font-size: 1em;
+}
+.form-section {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: 50% 50%;
+}
 
 .App-footer {
   grid-area: "foot";
@@ -210,10 +236,14 @@ font-size: 80%;
   width: fit-content;
   padding: auto;
   font-size: 1.5em;
+  /* text-align: center; */
+  margin: 5px auto;
 }
 
 .right-start h3 {
   text-align: center;
+  margin: 5px auto;
+  font-size: 1.2em;
 }
 .right-log-form div {
   width: min-content;
@@ -229,7 +259,7 @@ font-size: 80%;
 }
 
 span {
-  text-transform: uppercase;
+  font-weight: bold;
   letter-spacing: 1px;
   color: black;
   /* padding: 10px;
@@ -311,7 +341,7 @@ span {
   
 
 .rightdiv {
-    flex-direction: row;
+    /* flex-direction: row; */
     min-width: 0; 
     padding: 15px 25px 15px 25px;
     margin-left: 0px;

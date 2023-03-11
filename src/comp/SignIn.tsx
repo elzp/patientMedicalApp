@@ -100,7 +100,7 @@ function onChange(e:any, type: string){
 
 console.log(udata)
   return (
-    <>
+    <div className='log-sign-in'>
       {/* <h3>SignIn page</h3> */}
       
       
@@ -154,7 +154,7 @@ console.log(udata)
         {/* {JSON.stringify( sth3.find((it:any)=>it[1]===login)
     )} */}
 
-    </> 
+</div> 
     
    
   );
