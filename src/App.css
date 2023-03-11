@@ -162,7 +162,7 @@ a {
   border: 1px solid #474747;
   background-color: white;
   padding: 4px 6px;
-  margin: 10px 5px;
+  margin: 10px auto;
 }
 
 main button:hover {
@@ -173,9 +173,9 @@ color: white;
 .rightdiv {
     /* background-image: linear-gradient(to left, lightgrey 95%, white); */
   font-size: 0.8em;
-  display:flexbox;
+  /* display:flexbox; */
   flex-direction: column;
-  width: 90%;
+  /* width: 90%; */
   min-width: 60vw; 
   min-height: 200px;
   padding: 15px 25px;
@@ -183,7 +183,18 @@ color: white;
   grid-area: "right";
 }
 
+.log-sign-in {
+  width: min-content;
+  margin: 10px auto;
+  text-align: center;
+  border: 2px solid grey;
+  padding: 10px;
+}
 
+form label {
+  text-align: left;
+  margin: 5px auto 5px 0;
+}
 .appointment {
 background-color: white;
 border-bottom: 0.7px dotted grey;
@@ -313,7 +324,7 @@ span {
   
 
 .rightdiv {
-    flex-direction: row;
+    /* flex-direction: row; */
     min-width: 0; 
     padding: 15px 25px 15px 25px;
     margin-left: 0px;
