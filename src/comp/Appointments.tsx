@@ -99,12 +99,8 @@ const listOfSavedAppointments = pacientVisitsData.visits.length === 0 ?
 
   return (
     <div className="appointment">
-    <div id="welcome-section">
-        <div><h1 id="title">Add new Visit to your account (id:{pacientId}).</h1></div>
-        <h4 id="description">
-          {data.desc.visits.instruction}       
-        </h4>
-    </div>
+    <div id='welcome-section-title'><h1 id="title">Add new Visit to your account (id:{pacientId}).</h1></div>
+    <div className="form-section">
       <form id="survey-form" onSubmit={(event)=>{
       (()=>{onSubmitAppointmentForm(event, postFormUrl, postDataFromForm, 'data from form was send'); 
       handleRefreshingVisits()//submitStatus()
@@ -158,6 +154,10 @@ const listOfSavedAppointments = pacientVisitsData.visits.length === 0 ?
           
           <div id="button"> <button  id="submit" type="submit">Submit</button></div> 
       </form>
+      <div id="description">
+          {data.desc.visits.instruction.map((item, index)=>(<div>{index + 1}. {item}</div>))}       
+      </div>
+      </div>
       <button data-testid="buttonToShowAppointment" onClick={()=>handleVisOfVisitsList()}>Show My Appointments</button>
       <div 
           data-testid="list of saved apponntments">

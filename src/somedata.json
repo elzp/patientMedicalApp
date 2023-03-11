@@ -21,7 +21,7 @@
     "email": "somebrand@brand.com"
     },
 "desc": {"visits": {
-            "instruction": "1.Choose type of specialist.\n 2.Choose specific doctor. \n 3. Choose date. \n 4. Click \"Submit\" button.",
+            "instruction": ["Choose type of specialist.", "Choose specific doctor.", "Choose date.", "Click \"Submit\" button."],
             "thanks": ""
         }
     },
