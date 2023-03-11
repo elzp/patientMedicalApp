@@ -221,12 +221,14 @@ font-size: 80%;
   width: fit-content;
   padding: auto;
   font-size: 1.5em;
-  text-align: center;
+  /* text-align: center; */
   margin: 5px auto;
 }
 
 .right-start h3 {
   text-align: center;
+  margin: 5px auto;
+  font-size: 1.2em;
 }
 .right-log-form div {
   width: min-content;
