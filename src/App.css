@@ -230,7 +230,6 @@ width: 95%;
   max-width: 1100px;
   margin: 0 auto;
   min-height: max-content;
-  padding: 10px 20%;
   display: block;
   background-color: lightgray;
 }
@@ -268,6 +267,11 @@ span {
   /* padding: 10px;
   background-color: red; */
 }
+
+footer {
+  text-align: center;
+}
+
 @media (max-width: 800px) {
 
   .brand-nav {
