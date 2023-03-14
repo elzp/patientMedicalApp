@@ -14,7 +14,8 @@
     "react-select": "^5.7.0"
   },
   "scripts": {
-    "start": "parcel ./src/index.html"
+    "start": "parcel ./src/index.html",
+    "run-server": "tsc ./server/server.ts && node ./server/server.js"
   },
   "devDependencies": {
     "@parcel/packager-raw-url": "2.8.3",
@@ -30,6 +31,7 @@
     "buffer": "^5.5.0",
     "cors": "^2.8.5",
     "express": "^4.18.2",
+    "nodemon": "^2.0.21",
     "parcel": "^2.8.3",
     "process": "^0.11.10"
   },
