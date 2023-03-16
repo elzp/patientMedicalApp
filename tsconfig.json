@@ -25,9 +25,8 @@
     "jsx": "react-jsx"
   },
   "include": [
-    "src"    
-, "/server/functions.ts"  ],
+    "src"],
   "exclude": [
-    "/server"
+    "server"
   ]
 }
