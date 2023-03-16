@@ -1,7 +1,4 @@
-//import { writeFile, readFileSync } from 'fs';
 import * as fs from 'fs';
-//import {writeFile} fs = require("fs")//.promises;
-// const { readFile, writeFile } = require('fs').promises;
 
 interface in0{
     vizId: number,
@@ -10,7 +7,7 @@ interface in0{
     time:Date
 }
 interface in1{
-    id: number, visits: Array<in0>
+    id: string, visits: Array<in0>
 }
 
 
@@ -20,10 +17,12 @@ function modify (obj:{pacient_id: number,type: string; name: string; time: Date;
     let copyOfData =[...data];
     let data3;
     console.log(copyOfData)
-    const filteredData = copyOfData.filter(it=> it.id == pacient_id)[0];
+
+    const filteredData = copyOfData.filter(it=> it.id == `${pacient_id}`)[0];
     console.log('id_pacient type of data:', typeof filteredData,"; filteredData :", filteredData)
     if(filteredData === undefined) {
-        data3 = {id: `${pacient_id}`, visits: [{vizId: 0, type: type, name: name, time: time}]};
+        const madeId: string = `${pacient_id}`;
+        data3 = {id: madeId, visits: [{vizId: 0, type: type, name: name, time: time}]};
         copyOfData.push(data3);
         }
     if (filteredData !== undefined) {
@@ -61,7 +60,7 @@ https://stackoverflow.com/questions/45466848/fs-readfilesync-is-not-a-function-m
 //         .catch((error:any) => console.warn(error))
 // }
 
- export function updateAppoinments(path:string, pacient_id:number, type: string, name: string, time: Date) {
+ export default function updateAppoinments(path:string, pacient_id:number, type: string, name: string, time: Date) {
      let obj = { pacient_id, type, name, time};
      console.log('path:', path)
     //read file
@@ -82,7 +81,6 @@ https://stackoverflow.com/questions/45466848/fs-readfilesync-is-not-a-function-m
 // updateAppoinments2(1,'type', 'name', new Date);
 //updateAppoinments(2,'type', 'name', new Date);
 
-module.exports = {updateAppoinments};
 // [
 //     { "id": 0,
 //      "visits": [
