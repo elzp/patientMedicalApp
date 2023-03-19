@@ -1,4 +1,5 @@
 import * as fs from 'fs';
+import { __dirname } from './configuration.js';
 function modify(obj, data) {
     const { pacient_id, type, name, time } = obj;
     console.log(pacient_id);

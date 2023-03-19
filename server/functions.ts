@@ -1,4 +1,5 @@
 import * as fs from 'fs';
+import { __dirname } from './configuration.js';
 
 interface in0{
     vizId: number,
