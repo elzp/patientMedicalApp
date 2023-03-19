@@ -3,11 +3,12 @@ import express  from 'express';
 import updateAppoinments from './functions.js';
 import fs from 'fs';
 import cors from 'cors';
+import { __dirname } from './configuration.js';
 
 const app = express()
 const port = 3001
-const path = "appointByUser.json";
-const path2 = "./../src/usersdata.json";
+const path = "./../appointByUser.json";
+const path2 = "./../../src/usersdata.json";
 
 app.use(
     cors({
@@ -42,7 +43,7 @@ app.post(   '/newVisit', (req:any, res: any) => {
      //getting data from file json
       let data0 =fs.readFileSync(__dirname +`/${path}`,'utf8');
       const data1 = JSON.parse(data0).filter((it: any)=> it.id == req.params.id)[0];
-      console.log(JSON.stringify(data1))
+      console.log('data1 in :id', JSON.stringify(data1))
       //sending to react
       if (data1.length===0) {res.status(200).json(
         //sending default data
@@ -58,9 +59,9 @@ app.post(   '/newVisit', (req:any, res: any) => {
    const data1 = Object.entries(JSON.parse(data0))
           .map((it:[string,any])=>{return {...it[1],id: it[0]}})
           .filter(it=> it.username === req.body.login2);
-          console.log(data1)
+          console.log('data1 in isusernameunique',data1)
  //sending to react
-if(data1.length===0){
+ if(data1.length===0){
   res.status(200).json("true")
 }
 else{
