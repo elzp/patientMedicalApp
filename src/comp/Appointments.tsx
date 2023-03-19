@@ -15,6 +15,7 @@ const [selectedOption, setSelectedOption] = useState(["none"]);
 const [selectedOption2, setSelectedOption2]:[undefined|string[], any ] = useState(["none"]);
 const [startDate, setStartDate] = useState(new Date());
 const [selectNameofDocVis, setVisNameOfDoc] = useState(false);
+const [submitError, setSubmitError] = useState('');
 const placeholder = "choose option";
 const { currentuser } = props.userdata;
 const pacientId  = props.userdata.currentuser.pacientId === "-5"? localStorage.getItem('id'): props.userdata.currentuser.pacientId;
@@ -101,11 +102,14 @@ const listOfSavedAppointments = pacientVisitsData.visits.length === 0 ?
     <div className="appointment">
     <div id='welcome-section-title'><h1 id="title">Add new Visit to your account (id:{pacientId}).</h1></div>
     <div className="form-section">
-      <form id="survey-form" onSubmit={(event)=>{
-      (()=>{onSubmitAppointmentForm(event, postFormUrl, postDataFromForm, 'data from form was send'); 
+    <form id="survey-form" onSubmit={(event)=>{
+        event.preventDefault();
+      (()=>{
+        const cos = onSubmitAppointmentForm(postFormUrl, postDataFromForm, 'data from form was send'); 
+        setSubmitError(cos)
       handleRefreshingVisits()//submitStatus()
       setSelectedOption([""]);
-      setSelectedOption2([""]);});  
+      setSelectedOption2([""]);})();
     }}>   
     {/* wybrana opcja w 1: {JSON.stringify(selectedOption)} ------  <br /> 
          grupa lekarzy: {JSON.stringify(namesOfDoctorsInGroup)} -----<br /> 
@@ -158,6 +162,7 @@ const listOfSavedAppointments = pacientVisitsData.visits.length === 0 ?
         {data.desc.visits.instruction.map((item, index)=>(<div key={item}>{index + 1}. {item}</div>))}       
       </div>
       </div>
+      <div id="error">{submitError}</div>
       <button data-testid="buttonToShowAppointment" onClick={()=>handleVisOfVisitsList()}>Show My Appointments</button>
       <div 
           data-testid="list of saved apponntments">

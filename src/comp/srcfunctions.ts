@@ -73,16 +73,15 @@ export function chooseChildComponent(
 }
 
 
-export  function onSubmitAppointmentForm(e: any| null | void, 
+export  function onSubmitAppointmentForm( 
   urlPath: string, 
   dataToPost:any, 
   consoleLogInfoIferroNotAccured:string
   ) {
-  e.preventDefault();
-   // checking if data isn't empty
-
-   
-  //  if()
+   // checking if data isn't empty   
+   if(dataToPost.type === "" ||  dataToPost.name === "" || dataToPost.name === "none"){
+    return "data about doctor not complite";
+  } else {
    // saving data from form to .json file
       axios
       .post(`${urlPath}`, dataToPost)
@@ -90,7 +89,8 @@ export  function onSubmitAppointmentForm(e: any| null | void,
       .catch((err: any) => {
         console.error(err);
       });
-
+      return "complete data was send"
+  }
 }
 
 ////for displaying good hour of appoinments

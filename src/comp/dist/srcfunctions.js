@@ -65,16 +65,20 @@ function chooseChildComponent(arrayofAllJsxComponents, pathname, data, compsForN
     }
 }
 exports.chooseChildComponent = chooseChildComponent;
-function onSubmitAppointmentForm(e, urlPath, dataToPost, consoleLogInfoIferroNotAccured) {
-    e.preventDefault();
-    // checking if data isn't empty
-    //  if()
-    // saving data from form to .json file
-    axios_1["default"]
-        .post("" + urlPath, dataToPost)
-        .then(function (res) { return console.log("" + consoleLogInfoIferroNotAccured, res); })["catch"](function (err) {
-        console.error(err);
-    });
+function onSubmitAppointmentForm(urlPath, dataToPost, consoleLogInfoIferroNotAccured) {
+    // checking if data isn't empty   
+    if (dataToPost.type === "" || dataToPost.name === "" || dataToPost.name === "none") {
+        return "data about doctor not complite";
+    }
+    else {
+        // saving data from form to .json file
+        axios_1["default"]
+            .post("" + urlPath, dataToPost)
+            .then(function (res) { return console.log("" + consoleLogInfoIferroNotAccured, res); })["catch"](function (err) {
+            console.error(err);
+        });
+        return "complete data was send";
+    }
 }
 exports.onSubmitAppointmentForm = onSubmitAppointmentForm;
 ////for displaying good hour of appoinments

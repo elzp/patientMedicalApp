@@ -15,6 +15,7 @@ function Appointments(props) {
     var _b = react_1.useState(["none"]), selectedOption2 = _b[0], setSelectedOption2 = _b[1];
     var _c = react_1.useState(new Date()), startDate = _c[0], setStartDate = _c[1];
     var _d = react_1.useState(false), selectNameofDocVis = _d[0], setVisNameOfDoc = _d[1];
+    var _e = react_1.useState(''), submitError = _e[0], setSubmitError = _e[1];
     var placeholder = "choose option";
     var currentuser = props.userdata.currentuser;
     var pacientId = props.userdata.currentuser.pacientId === "-5" ? localStorage.getItem('id') : props.userdata.currentuser.pacientId;
@@ -37,7 +38,7 @@ function Appointments(props) {
         return { value: value, label: label };
     });
     var defaultValueDoctorsGroup = [{ value: "choose Type of doctor", label: "choose Type of doctor2" }];
-    var _e = react_1.useState(defaultValueDoctorsGroup), namesOfDoctorsInGroup = _e[0], setNamesOfDoctorsInGroup = _e[1];
+    var _f = react_1.useState(defaultValueDoctorsGroup), namesOfDoctorsInGroup = _f[0], setNamesOfDoctorsInGroup = _f[1];
     function handleTypeDoctorSelect(e) {
         var idOfChoosenDoctorType = typesOfDoctors.indexOf(e === null || e === void 0 ? void 0 : e.label);
         var NamesOfDocsInTypeOf = DataAboutDoctors[idOfChoosenDoctorType];
@@ -56,17 +57,17 @@ function Appointments(props) {
     var postDataFromForm = { id: pacientId, type: selectedOption[0], name: selectedOption2[0], time: startDate };
     // function onSubmitAppointmentForm  was moved to srcfunctions.ts.
     //set default value of variable pacientVisitsData
-    var _f = react_1.useState({ "id": pacientId, "visits": [] }), pacientVisitsData = _f[0], setpacientVisitsData = _f[1];
+    var _g = react_1.useState({ "id": pacientId, "visits": [] }), pacientVisitsData = _g[0], setpacientVisitsData = _g[1];
     // set current data in pacientVisitsData from json file send from server
     // function getdataFromFile was moved to srcfunctions.ts.
     // refresh list of visits
-    var _g = react_1.useState(false), ifRefresh = _g[0], setStatusIfRefresh = _g[1];
+    var _h = react_1.useState(false), ifRefresh = _h[0], setStatusIfRefresh = _h[1];
     react_1.useMemo(function () { srcfunctions_1.getdataFromFile(idUserAPI, setpacientVisitsData, pacientVisitsData); }, [ifRefresh]);
     function handleRefreshingVisits() {
         setStatusIfRefresh(!ifRefresh);
     }
     //  visibility list's of visits
-    var _h = react_1.useState(false), visOfVisitsList = _h[0], setVisOfVisitsList = _h[1];
+    var _j = react_1.useState(false), visOfVisitsList = _j[0], setVisOfVisitsList = _j[1];
     function handleVisOfVisitsList() { setVisOfVisitsList(!visOfVisitsList); }
     var listOfSavedAppointments = pacientVisitsData.visits.length === 0 ?
         "Missing some options. Please refill form above." :
@@ -80,12 +81,14 @@ function Appointments(props) {
                 ").")),
         react_1["default"].createElement("div", { className: "form-section" },
             react_1["default"].createElement("form", { id: "survey-form", onSubmit: function (event) {
+                    event.preventDefault();
                     (function () {
-                        srcfunctions_1.onSubmitAppointmentForm(event, postFormUrl, postDataFromForm, 'data from form was send');
+                        var cos = srcfunctions_1.onSubmitAppointmentForm(postFormUrl, postDataFromForm, 'data from form was send');
+                        setSubmitError(cos);
                         handleRefreshingVisits(); //submitStatus()
                         setSelectedOption([""]);
                         setSelectedOption2([""]);
-                    });
+                    })();
                 } },
                 react_1["default"].createElement("div", { className: "div" }, "Choose type of doctor:"),
                 react_1["default"].createElement("div", null,
@@ -114,6 +117,7 @@ function Appointments(props) {
                 index + 1,
                 ". ",
                 item)); }))),
+        react_1["default"].createElement("div", { id: "error" }, submitError),
         react_1["default"].createElement("button", { "data-testid": "buttonToShowAppointment", onClick: function () { return handleVisOfVisitsList(); } }, "Show My Appointments"),
         react_1["default"].createElement("div", { "data-testid": "list of saved apponntments" }, visOfVisitsList && listOfSavedAppointments),
         react_1["default"].createElement("div", { "data-testid": "error" })));
