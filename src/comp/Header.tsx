@@ -61,7 +61,7 @@ useOutsideAlerter(wrapperRef);
           
             <div  className="menu-elements">
               {newmenu.map(item=>(
-              <Router > {/* forces refresh of page and loading nee type of content in rightboard */} 
+              <Router key={item[0]}> {/* forces refresh of page and loading nee type of content in rightboard */} 
                 <Link reloadDocument to={`/${item[1]}`} className= "menu-a" key = {item[0]} onClick={changeMenuVisibility} >
                 <div  key={item[0]} className="menu-link">
                   {item[0]}

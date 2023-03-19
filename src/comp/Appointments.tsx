@@ -105,7 +105,7 @@ const listOfSavedAppointments = pacientVisitsData.visits.length === 0 ?
       (()=>{onSubmitAppointmentForm(event, postFormUrl, postDataFromForm, 'data from form was send'); 
       handleRefreshingVisits()//submitStatus()
       setSelectedOption([""]);
-      setSelectedOption2([""]);});
+      setSelectedOption2([""]);});  
     }}>   
     {/* wybrana opcja w 1: {JSON.stringify(selectedOption)} ------  <br /> 
          grupa lekarzy: {JSON.stringify(namesOfDoctorsInGroup)} -----<br /> 
@@ -155,7 +155,7 @@ const listOfSavedAppointments = pacientVisitsData.visits.length === 0 ?
           <div id="button"> <button  id="submit" type="submit">Submit</button></div> 
       </form>
       <div id="description">
-          {data.desc.visits.instruction.map((item, index)=>(<div>{index + 1}. {item}</div>))}       
+        {data.desc.visits.instruction.map((item, index)=>(<div key={item}>{index + 1}. {item}</div>))}       
       </div>
       </div>
       <button data-testid="buttonToShowAppointment" onClick={()=>handleVisOfVisitsList()}>Show My Appointments</button>

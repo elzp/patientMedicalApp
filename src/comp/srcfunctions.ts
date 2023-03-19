@@ -111,15 +111,15 @@ function stdTimezoneOffset(date: Date) {
       
   //-------------- code to check if above functions works
   const date = new Date() //generate actual date
-  console.log("date", date
-  , "hours", date.getHours()
-  , "offset", date.getTimezoneOffset(), stdTimezoneOffset(date)
-  // , "actual hour", date.getHours() //- date.getTimezoneOffset()/60)
-  // , "isDstObserved", date.isDstObserved()
-  // ,"utc time", date.getUTCHours()
-  // , date.toUTCString()
-  , DSTshiftedHour(date)
-  )
+  // console.log("date", date
+  // , "hours", date.getHours()
+  // , "offset", date.getTimezoneOffset(), stdTimezoneOffset(date)
+  // // , "actual hour", date.getHours() //- date.getTimezoneOffset()/60)
+  // // , "isDstObserved", date.isDstObserved()
+  // // ,"utc time", date.getUTCHours()
+  // // , date.toUTCString()
+  // , DSTshiftedHour(date)
+  // )
   const date2 = date;
   // date2.setHours
   const date3 = new Date("2021-04-12T09:15:04.919Z")

@@ -110,7 +110,7 @@ function Appointments(props) {
                 react_1["default"].createElement("div", { id: "button" },
                     " ",
                     react_1["default"].createElement("button", { id: "submit", type: "submit" }, "Submit"))),
-            react_1["default"].createElement("div", { id: "description" }, somedata_json_1["default"].desc.visits.instruction.map(function (item, index) { return (react_1["default"].createElement("div", null,
+            react_1["default"].createElement("div", { id: "description" }, somedata_json_1["default"].desc.visits.instruction.map(function (item, index) { return (react_1["default"].createElement("div", { key: item },
                 index + 1,
                 ". ",
                 item)); }))),
