@@ -17,7 +17,7 @@
   "scripts": {
     "start": "parcel ./src/index.html",
     "compile-server": "npx tsc -p ./server && node ./server/dist/server.js",
-    "dev-server": "nodemon -e ts  --exec \"npm run compile\""
+    "dev-server": "nodemon -e ts  --exec \"npm run compile-server\""
   },
   "devDependencies": {
     "@parcel/packager-raw-url": "2.8.3",
