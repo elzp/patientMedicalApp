@@ -45,7 +45,7 @@ app.post(   '/newVisit', (req:any, res: any) => {
       const data1 = JSON.parse(data0).filter((it: any)=> it.id == req.params.id)[0];
       console.log('data1 in :id', JSON.stringify(data1))
       //sending to react
-      if (data1.length===0) {res.status(200).json(
+      if (data1 === undefined || data1.length===0) {res.status(200).json(
         //sending default data
          { "id": req.params.id, "visits": []})}
       else {//sending real data
@@ -61,7 +61,7 @@ app.post(   '/newVisit', (req:any, res: any) => {
           .filter(it=> it.username === req.body.login2);
           console.log('data1 in isusernameunique',data1)
  //sending to react
- if(data1.length===0){
+ if(data1 === undefined || data1.length===0){
   res.status(200).json("true")
 }
 else{

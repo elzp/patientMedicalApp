@@ -33,7 +33,7 @@ app.get('/:id', (req, res) => {
     const data1 = JSON.parse(data0).filter((it) => it.id == req.params.id)[0];
     console.log('data1 in :id', JSON.stringify(data1));
     //sending to react
-    if (data1.length === 0) {
+    if (data1 === undefined || data1.length === 0) {
         res.status(200).json(
         //sending default data
         { "id": req.params.id, "visits": [] });
@@ -51,7 +51,7 @@ app.post('/isusernameunique', (req, res) => {
         .filter(it => it.username === req.body.login2);
     console.log('data1 in isusernameunique', data1);
     //sending to react
-    if (data1.length === 0) {
+    if (data1 === undefined || data1.length === 0) {
         res.status(200).json("true");
     }
     else {
