@@ -5,6 +5,7 @@ import {Rightboard} from './comp/Rightboard';
 import Header from './comp/Header';
 import Footer from './comp/Footer';
 import {userContext} from './context/userContext';
+import {ErrorBoundary} from './comp/ErrorBoundary';
 import data from './somedata.json';
 // import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; /* zainstaluj: npm i --save-dev @types/react-router-dom */
 import {typeuserdata} from './../types/common/main.d'
@@ -12,7 +13,8 @@ import {
   createBrowserRouter,
   RouterProvider,
   createRoutesFromElements,
-  Route
+  Route,
+  RouteObject
 } from "react-router-dom";
  const defaultUser:typeuserdata = {
     currentuser: {pacientId: "-5",
@@ -41,7 +43,7 @@ import {
   // here was function handleChangeOfUser, now it is in srcfunctons.ts.
   // here was function handleLogout, now it is in srcfunctons.ts
 
-  const routes = menu.map(item=>( 
+  const routes: RouteObject[]= menu.map(item=>( 
 //     <Route path=//"/:pathType"
 //      {`/${item[1]}`}
 //      key={item[0]}
@@ -55,6 +57,7 @@ import {
   path:     `/${item[1]}`,
   element:  <Rightboard changeuser={setuserdata} 
             defaultuser={defaultUser}/>,   
+  errorElement: <ErrorBoundary />
 }
 
 )
