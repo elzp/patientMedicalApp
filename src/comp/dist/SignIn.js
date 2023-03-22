@@ -39,6 +39,7 @@ exports.__esModule = true;
 exports.SignIn = void 0;
 var react_1 = require("react");
 var LogForm_1 = require("./LogForm");
+var srcfunctions_1 = require("./srcfunctions");
 require("./../App.css");
 var axios_1 = require("axios");
 var usersdata_json_1 = require("../usersdata.json");
@@ -102,7 +103,6 @@ function SignIn(props) {
                         return [4 /*yield*/, axios_1["default"]
                                 .post("http://localhost:3001/isusernameunique", { login2: value })
                                 .then(function (res) {
-                                console.log(res.data, 'was send');
                                 //save in react getted response about if username was used in database is unique(=true)
                                 if (login2 !== "") {
                                     if (JSON.parse(res.data) === false) {
@@ -149,13 +149,19 @@ function SignIn(props) {
     }
     function onSubmit(e) {
         return __awaiter(this, void 0, void 0, function () {
+            var postUrl, NewUserData, goodError;
             return __generator(this, function (_a) {
                 e.preventDefault();
+                postUrl = "http://localhost:3001/newUser";
+                NewUserData = { login: login2, password: password };
+                goodError = 'New user added.';
+                if (NewUserData.login !== "" && NewUserData.password !== "" && isLoginUnique && isPasswordOk) {
+                    srcfunctions_1.postNewUser(postUrl, NewUserData);
+                }
                 return [2 /*return*/];
             });
         });
     }
-    console.log(usersdata_json_1["default"]);
     return (react_1["default"].createElement("div", { className: 'log-sign-in' },
         react_1["default"].createElement(LogForm_1.LogForm, { name: "Singin as a new user", onSubmit: onSubmit, login: login2, password: password, onChange: onChange, error: error })));
 }

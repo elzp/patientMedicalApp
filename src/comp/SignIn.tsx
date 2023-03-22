@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import {LogForm} from './LogForm';
+import {postNewUser} from './srcfunctions';
 import './../App.css';
 import axios from 'axios';
 import udata from '../usersdata.json';
@@ -57,7 +58,6 @@ export function SignIn(props: any ) {
         await axios
           .post(`http://localhost:3001/isusernameunique`, {login2:value})
             .then((res:any) => {
-              console.log(res.data,  'was send')
               //save in react getted response about if username was used in database is unique(=true)
               if (login2 !== ""){
                 if (JSON.parse(res.data)===false){
@@ -101,42 +101,17 @@ function onChange(e:any, type: string){
 async function onSubmit(e:any){
   e.preventDefault();
 
-
 // send new user login data to file/server
-  
+  const postUrl = "http://localhost:3001/newUser";
+  const NewUserData = {login: login2, password};
+  const goodError =  'New user added.';
+  if(NewUserData.login !== "" &&  NewUserData.password !== "" && isLoginUnique && isPasswordOk){
+    postNewUser(postUrl, NewUserData)
+  }
 }
 
-console.log(udata)
   return (
     <div className='log-sign-in'>
-      {/* <h3>SignIn page</h3> */}
-      
-      
-   {/*<form //onSubmit={onSubmit} 
-    className="right-log-form"
-   >
-    <div>
-      <label>login:</label> <input onChange={(e)=>{
-        setlogin(login2=>e.target.value)
-        validateinput(e, "log");
-        }} />
-    </div> 
-
-
-    <div>
-      <label>Password: </label> <input onChange={(e)=>{
-        setpass(password=>e.target.value)
-        validateinput(e,"pass");
-      }} 
-      type="password"
-      />
-    </div> 
-    
-    <div id="button"> <button  
-   >Submit</button></div> 
-   </form> */}
-    
-
     <LogForm 
     name="Singin as a new user"
     onSubmit = {onSubmit}
@@ -145,23 +120,6 @@ console.log(udata)
     onChange = {onChange}
     error = {error}
     />
-    {/* {JSON.stringify(udata)} */}
-    {/* {`${login2}; password ${password}`} */}
-  
-    {/* {JSON.stringify([isLoginUnique, isPasswordOk])} */}
-    {/* {JSON.stringify(/@|#|$|%|\^|&|\*|(|)|!|~/.test("%65"))
-    ///[@#$%^&*()!~]
-    } */}
-
-
-    {/* <Route
-      render={(props) =>   localStorage.getItem('isLogin')==="true" &&
-      <Redirect to={{pathname: '/'} }/>}
-    /> */}
-    
-        {/* {JSON.stringify( sth3.find((it:any)=>it[1]===login)
-    )} */}
-
 </div> 
     
    
