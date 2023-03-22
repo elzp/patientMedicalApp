@@ -48,22 +48,31 @@ export function SignIn(props: any ) {
   }
 
   
-  async function validateinput(e:any, type: string){//(e:any, type: string){
+  async function validateinput(e:any, type: string, value: string){//(e:any, type: string){
     e.preventDefault()
     switch (type){
       case "log":
         //send to server new username to check if is unique
+        setlogin(login=>e.target.value);
         await axios
-          .post(`http://localhost:3001/isusernameunique`, {login2:login2})
+          .post(`http://localhost:3001/isusernameunique`, {login2:value})
             .then((res:any) => {
               console.log(res.data,  'was send')
               //save in react getted response about if username was used in database is unique(=true)
-              setisLoginUnique(isLoginUnique=>JSON.parse(res.data))//ERROR!!!problems with validating login and password in singin page
+              if (login2 !== ""){
+                if (JSON.parse(res.data)===false){
+                  setError(error=>"Another user is using this name. Choose another username.");
+                  setisLoginUnique(isLoginUnique=>JSON.parse(res.data))
+                }
+                else {
+                  setError(error=>"")
+                };
+              };
+              setisLoginUnique(isLoginUnique=>JSON.parse(res.data))
             })
             .catch((err: any) => {
               console.error(err);
             }); 
-        if (isLoginUnique===false){setError(error=>"Another user is using this name. Choose another username.")};
         break
       case "pass":
         // validate prenounciation of password
@@ -73,6 +82,7 @@ export function SignIn(props: any ) {
         // }else{
           
           setisPasswordOk(isPasswordOk=>true)
+          setpass(password=>e.target.value)
         // }
         break;
      default:   
@@ -81,22 +91,20 @@ export function SignIn(props: any ) {
   
 function onChange(e:any, type: string){
   if(type==="log") {
-    setlogin(login=>e.target.value);
-    validateinput(e, "log");
+    validateinput(e, "log", e.target.value);
   }
   else{
-    setpass(password=>e.target.value)
-    validateinput(e,"pass");
+    validateinput(e,"pass", e.target.value);
   }
 }
 
-  async function onSubmit(e:any){
-    e.preventDefault();
+async function onSubmit(e:any){
+  e.preventDefault();
 
+
+// send new user login data to file/server
   
-  // send new user login data to file/server
-    
-  }
+}
 
 console.log(udata)
   return (
@@ -128,7 +136,7 @@ console.log(udata)
    >Submit</button></div> 
    </form> */}
     
-    {error}
+
     <LogForm 
     name="Singin as a new user"
     onSubmit = {onSubmit}

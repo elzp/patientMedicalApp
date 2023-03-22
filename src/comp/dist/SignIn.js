@@ -83,7 +83,7 @@ function SignIn(props) {
             }
         }
     }
-    function validateinput(e, type) {
+    function validateinput(e, type, value) {
         return __awaiter(this, void 0, void 0, function () {
             var _a;
             return __generator(this, function (_b) {
@@ -96,24 +96,31 @@ function SignIn(props) {
                             case "pass": return [3 /*break*/, 3];
                         }
                         return [3 /*break*/, 4];
-                    case 1: 
-                    //send to server new username to check if is unique
-                    return [4 /*yield*/, axios_1["default"]
-                            .post("http://localhost:3001/isusernameunique", { login2: login2 })
-                            .then(function (res) {
-                            console.log(res.data, 'was send');
-                            //save in react getted response about if username was used in database is unique(=true)
-                            setisLoginUnique(function (isLoginUnique) { return JSON.parse(res.data); }); //ERROR!!!problems with validating login and password in singin page
-                        })["catch"](function (err) {
-                            console.error(err);
-                        })];
-                    case 2:
+                    case 1:
                         //send to server new username to check if is unique
+                        setlogin(function (login) { return e.target.value; });
+                        return [4 /*yield*/, axios_1["default"]
+                                .post("http://localhost:3001/isusernameunique", { login2: value })
+                                .then(function (res) {
+                                console.log(res.data, 'was send');
+                                //save in react getted response about if username was used in database is unique(=true)
+                                if (login2 !== "") {
+                                    if (JSON.parse(res.data) === false) {
+                                        setError(function (error) { return "Another user is using this name. Choose another username."; });
+                                        setisLoginUnique(function (isLoginUnique) { return JSON.parse(res.data); });
+                                    }
+                                    else {
+                                        setError(function (error) { return ""; });
+                                    }
+                                    ;
+                                }
+                                ;
+                                setisLoginUnique(function (isLoginUnique) { return JSON.parse(res.data); });
+                            })["catch"](function (err) {
+                                console.error(err);
+                            })];
+                    case 2:
                         _b.sent();
-                        if (isLoginUnique === false) {
-                            setError(function (error) { return "Another user is using this name. Choose another username."; });
-                        }
-                        ;
                         return [3 /*break*/, 4];
                     case 3:
                         // validate prenounciation of password
@@ -122,6 +129,7 @@ function SignIn(props) {
                         //   setisPasswordOk(isPasswordOk=>false)
                         // }else{
                         setisPasswordOk(function (isPasswordOk) { return true; });
+                        setpass(function (password) { return e.target.value; });
                         // }
                         return [3 /*break*/, 4];
                     case 4:
@@ -133,12 +141,10 @@ function SignIn(props) {
     }
     function onChange(e, type) {
         if (type === "log") {
-            setlogin(function (login) { return e.target.value; });
-            validateinput(e, "log");
+            validateinput(e, "log", e.target.value);
         }
         else {
-            setpass(function (password) { return e.target.value; });
-            validateinput(e, "pass");
+            validateinput(e, "pass", e.target.value);
         }
     }
     function onSubmit(e) {
@@ -151,7 +157,6 @@ function SignIn(props) {
     }
     console.log(usersdata_json_1["default"]);
     return (react_1["default"].createElement("div", { className: 'log-sign-in' },
-        error,
         react_1["default"].createElement(LogForm_1.LogForm, { name: "Singin as a new user", onSubmit: onSubmit, login: login2, password: password, onChange: onChange, error: error })));
 }
 exports.SignIn = SignIn;
