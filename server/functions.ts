@@ -34,7 +34,7 @@ function modify (obj:{pacient_id: number,type: string; name: string; time: Date;
  return copyOfData;
 }
 
-function write (JSONData: string, path:string){
+export function write (JSONData: string, path:string){
     fs.writeFile(path, JSONData, function(err: any) {
         if(err) {
             return console.log("problems with write json text with new data");
@@ -61,7 +61,7 @@ https://stackoverflow.com/questions/45466848/fs-readfilesync-is-not-a-function-m
 //         .catch((error:any) => console.warn(error))
 // }
 
- export default function updateAppoinments(path:string, pacient_id:number, type: string, name: string, time: Date) {
+ export function updateAppoinments(path:string, pacient_id:number, type: string, name: string, time: Date) {
      let obj = { pacient_id, type, name, time};
      console.log('path:', path)
     //read file
