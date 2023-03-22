@@ -1,6 +1,6 @@
 // tslint:disable-next-line: no-var-requires
 import express  from 'express';
-import updateAppoinments from './functions.js';
+import {updateAppoinments, write} from './functions.js';
 import fs from 'fs';
 import cors from 'cors';
 import { __dirname } from './configuration.js';
@@ -69,6 +69,34 @@ else{
 }
 })
 
+app.post('/newUser', (req:any, res: any) => {
+  
+  const {login, password} = req.body;
+  try{
+    /// getting users' data from file json
+    console.log(['newUser:  ',req.body])
+    let data0 =fs.readFileSync(__dirname +`/${path2}`,'utf8');
+
+    //// preparing users' data to save in json file
+    const data1 = Object.keys(JSON.parse(data0))
+    const newId: number = Number(data1[data1.length - 1]) + 1;
+    const userDataToSave = JSON.parse(data0);
+    userDataToSave[`${newId}`] = { username: login, password: password, islogin: 'false' };
+    write(JSON.stringify(userDataToSave), __dirname +`/${path2}`)
+
+    let data01 =fs.readFileSync(__dirname +`/${path}`,'utf8');
+    const UsersDataOfVisits = {
+      "id": `${newId}`,
+      "visits": []
+    };
+    let visitsDataToSave = JSON.parse(data01);
+    visitsDataToSave.push(UsersDataOfVisits)
+    write(JSON.stringify(visitsDataToSave), __dirname +`/${path}`)
+    res.status(200).json("ok")
+  } catch(error){
+    res.status(200).json("nok")
+  }
+})
 
 app.listen(port, () => {
     // tslint:disable-next-line: no-console
