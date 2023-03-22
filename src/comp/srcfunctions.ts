@@ -92,6 +92,24 @@ export  function onSubmitAppointmentForm(
       return "complete data was send"
   }
 }
+//////
+
+export async function postNewUser( 
+  urlPath: string, 
+  dataToPost:any, 
+  ) {
+   // saving data from form to .json file
+  let response:  string ="";
+   await axios
+    .post(`${urlPath}`, dataToPost)
+    .then((res:any): void =>{
+      response = JSON.parse(res.body);
+    })
+    .catch((err: any) => {
+      console.error(err);
+    });
+    //problem: posts even when login is in database!!!!!
+}
 
 ////for displaying good hour of appoinments
 
