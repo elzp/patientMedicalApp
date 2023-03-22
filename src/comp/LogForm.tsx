@@ -14,10 +14,10 @@ export function LogForm(props: any ) {
     <form onSubmit={props.onSubmit} 
    className="right-log-form">
     <div>
-      <label>login:</label> <input value={props.login} onChange={(e)=>{props.onChange(e,"log")}}/>
+      <label>login:</label> <input value={props.login} onInput={(e)=>{props.onChange(e,"log")}}/>
     </div>
     <div>
-     <label> Password: </label> <input value={props.password} onChange={(e)=>{props.onChange(e,"pass")}}
+     <label> Password: </label> <input value={props.password} onInput={(e)=>{props.onChange(e,"pass")}}
       type="password"/>
       </div>
    <div id="button"> <button type="submit" >Submit</button></div> 
