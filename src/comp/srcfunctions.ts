@@ -92,24 +92,7 @@ export  function onSubmitAppointmentForm(
       return "complete data was send"
   }
 }
-//////
 
-export async function postNewUser( 
-  urlPath: string, 
-  dataToPost:any, 
-  ) {
-   // saving data from form to .json file
-  let response:  string ="";
-   await axios
-    .post(`${urlPath}`, dataToPost)
-    .then((res:any): void =>{
-      response = JSON.parse(res.body);
-    })
-    .catch((err: any) => {
-      console.error(err);
-    });
-    //problem: posts even when login is in database!!!!!
-}
 
 ////for displaying good hour of appoinments
 
@@ -143,15 +126,15 @@ function stdTimezoneOffset(date: Date) {
   const date3 = new Date("2021-04-12T09:15:04.919Z")
   date3.setHours(date.getHours())
   // console.log("wiosenna data", date3, date3.getHours(), date3.getTimezoneOffset(), date3.stdTimezoneOffset(), date3.isDstObserved())
-  console.log("date", date3
-  , "hours", date3.getHours()
-  , "offset", date3.getTimezoneOffset(), stdTimezoneOffset(date3)
-  // , "actual hour", date3.getHours() //- date.getTimezoneOffset()/60)
-  // , "isDstObserved", date3.isDstObserved()
-  // ,"utc time", date3.getUTCHours()
-  // , date3.toUTCString()
-  , DSTshiftedHour(date3)
-  )
+  // console.log("date", date3
+  // , "hours", date3.getHours()
+  // , "offset", date3.getTimezoneOffset(), stdTimezoneOffset(date3)
+  // // , "actual hour", date3.getHours() //- date.getTimezoneOffset()/60)
+  // // , "isDstObserved", date3.isDstObserved()
+  // // ,"utc time", date3.getUTCHours()
+  // // , date3.toUTCString()
+  // , DSTshiftedHour(date3)
+  // )
   
 ////////////////////////////////  
 

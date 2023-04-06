@@ -38,11 +38,10 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 exports.__esModule = true;
 exports.SignIn = void 0;
 var react_1 = require("react");
+var react_router_dom_1 = require("react-router-dom");
 var LogForm_1 = require("./LogForm");
-var srcfunctions_1 = require("./srcfunctions");
 require("./../App.css");
 var axios_1 = require("axios");
-var usersdata_json_1 = require("../usersdata.json");
 function SignIn(props) {
     var _a = react_1.useState(""), login2 = _a[0], setlogin = _a[1];
     var _b = react_1.useState(false), isLoginUnique = _b[0], setisLoginUnique = _b[1];
@@ -50,47 +49,16 @@ function SignIn(props) {
     var _d = react_1.useState(false), isPasswordOk = _d[0], setisPasswordOk = _d[1];
     var _e = react_1.useState(false), showAccountPage = _e[0], setshowAccountPage = _e[1];
     var _f = react_1.useState(""), error = _f[0], setError = _f[1];
-    // defaultuser={currentuser: {
-    //     pacientId: "-5",
-    //     pacientUsername: "",
-    //     isLogin: false
-    //   }
-    // }
+    var _g = react_1.useState(''), response = _g[0], setResponse = _g[1];
+    var _h = react_1.useState(false), refresh = _h[0], setRefresh = _h[1];
     var currentuser = props.defaultuser.currentuser;
     var newdefaultuser = [currentuser.pacientId, currentuser.pacientUsername, currentuser.isLogin, ""];
-    // preparing users data from json file to use for authorification
-    var sth3 = Object.entries(usersdata_json_1["default"]).map(function (it) {
-        var neww = [it[0],
-            Object.entries(it[1])[0][1],
-            Object.entries(it[1])[2][1],
-            Object.entries(it[1])[1][1] //password
-        ];
-        return neww;
-    });
-    function validateWithDataFromServer(log, pass) {
-        // fn's which returns password for given login
-        var sth4 = sth3.find(function (it) { return it[1] === log; });
-        if (sth4 === undefined || sth4 === null) {
-            return newdefaultuser;
-        }
-        else {
-            if (sth4[3] === pass) {
-                return sth4;
-            }
-            else {
-                setError(function (error) { return "bad password"; });
-                console.log(error);
-                return newdefaultuser;
-            }
-        }
-    }
     function validateinput(e, type, value) {
         return __awaiter(this, void 0, void 0, function () {
             var _a;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
-                        e.preventDefault();
                         _a = type;
                         switch (_a) {
                             case "log": return [3 /*break*/, 1];
@@ -140,30 +108,88 @@ function SignIn(props) {
         });
     }
     function onChange(e, type) {
-        if (type === "log") {
-            validateinput(e, "log", e.target.value);
-        }
-        else {
-            validateinput(e, "pass", e.target.value);
-        }
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        e.preventDefault();
+                        if (!(type === "log")) return [3 /*break*/, 2];
+                        console.log('validateinput', 'log');
+                        return [4 /*yield*/, validateinput(e, "log", e.target.value)];
+                    case 1:
+                        _a.sent();
+                        return [3 /*break*/, 4];
+                    case 2: return [4 /*yield*/, validateinput(e, "pass", e.target.value)];
+                    case 3:
+                        _a.sent();
+                        _a.label = 4;
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    }
+    function postNewUser(urlPath, dataToPost, fnToSaveResponse) {
+        return __awaiter(this, void 0, void 0, function () {
+            var response;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        response = '';
+                        return [4 /*yield*/, axios_1["default"]
+                                .post("" + urlPath, dataToPost)
+                                .then(function (res) {
+                                response = JSON.stringify(res.data);
+                                fnToSaveResponse(res.data);
+                                console.log('JSON.stringify(res.data)', JSON.stringify(res.data));
+                            })["catch"](function (err) {
+                                console.error(err);
+                                response = JSON.stringify(err);
+                            })];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/, response];
+                }
+            });
+        });
     }
     function onSubmit(e) {
         return __awaiter(this, void 0, void 0, function () {
             var postUrl, NewUserData, goodError;
             return __generator(this, function (_a) {
-                e.preventDefault();
-                postUrl = "http://localhost:3001/newUser";
-                NewUserData = { login: login2, password: password };
-                goodError = 'New user added.';
-                if (NewUserData.login !== "" && NewUserData.password !== "" && isLoginUnique && isPasswordOk) {
-                    srcfunctions_1.postNewUser(postUrl, NewUserData);
+                switch (_a.label) {
+                    case 0:
+                        e.preventDefault();
+                        return [4 /*yield*/, validateinput(e, "log", login2)];
+                    case 1:
+                        _a.sent();
+                        postUrl = "http://localhost:3001/newUser";
+                        NewUserData = { login: login2, password: password };
+                        goodError = 'New user added.';
+                        if (!(NewUserData.login !== "" && NewUserData.password !== "" && isLoginUnique && isPasswordOk)) return [3 /*break*/, 3];
+                        return [4 /*yield*/, postNewUser(postUrl, NewUserData, setResponse)];
+                    case 2:
+                        _a.sent();
+                        console.log(response);
+                        setlogin("");
+                        setpass("");
+                        setisLoginUnique(false);
+                        setisPasswordOk(false);
+                        setRefresh(true);
+                        return [3 /*break*/, 4];
+                    case 3:
+                        setResponse('undefined');
+                        _a.label = 4;
+                    case 4: return [2 /*return*/];
                 }
-                return [2 /*return*/];
             });
         });
     }
-    return (react_1["default"].createElement("div", { className: 'log-sign-in' },
-        react_1["default"].createElement(LogForm_1.LogForm, { name: "Singin as a new user", onSubmit: onSubmit, login: login2, password: password, onChange: onChange, error: error })));
+    if (refresh) {
+        return react_1["default"].createElement(react_router_dom_1.Navigate, { replace: true, to: "/" });
+    }
+    else {
+        return (react_1["default"].createElement("div", { className: 'log-sign-in' },
+            react_1["default"].createElement(LogForm_1.LogForm, { name: "Singin as a new user", onSubmit: onSubmit, login: login2, password: password, onChange: onChange, error: error })));
+    }
 }
 exports.SignIn = SignIn;
-// export default SignIn;

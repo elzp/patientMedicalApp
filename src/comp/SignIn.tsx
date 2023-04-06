@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
+import { Navigate } from 'react-router-dom';
 import {LogForm} from './LogForm';
-import {postNewUser} from './srcfunctions';
 import './../App.css';
 import axios from 'axios';
 import udata from '../usersdata.json';
+import useEffect from 'react';
 
 export function SignIn(props: any ) {
   const [ login2, setlogin ]= useState("");
@@ -12,45 +13,13 @@ export function SignIn(props: any ) {
   const [ isPasswordOk, setisPasswordOk]= useState(false); 
   const [ showAccountPage, setshowAccountPage ] = useState(false)
   const [ error , setError] = useState("")
-  // defaultuser={currentuser: {
-                  //     pacientId: "-5",
-                  //     pacientUsername: "",
-                  //     isLogin: false
-                  //   }
-                  // }
+  const [response, setResponse] =useState('')
+  const [refresh, setRefresh] =useState(false)
+
   const { currentuser } = props.defaultuser;
   const newdefaultuser = [currentuser.pacientId, currentuser.pacientUsername, currentuser.isLogin, ""];
-  // preparing users data from json file to use for authorification
-    const sth3:any = Object.entries(udata).map(it=>{
-
-      const neww:any = [it[0], //pacientId
-                      Object.entries(it[1])[0][1],//pacientUsername
-                      Object.entries(it[1])[2][1],//isLogin
-                      Object.entries(it[1])[1][1]//password
-                    ]
-    return neww
-    })
-
-  function validateWithDataFromServer(log:string, pass:string){
-    // fn's which returns password for given login
-
-    const sth4 = sth3.find((it:any)=>it[1]===log)
-      if(sth4 === undefined || sth4 === null){
-    return newdefaultuser;}
-      else{ 
-        if(sth4[3]===pass){return sth4;}
-        else{
-          setError(error=>"bad password")
-          console.log(error)
-          return newdefaultuser;
-        }
-      }
-      
-  }
-
   
-  async function validateinput(e:any, type: string, value: string){//(e:any, type: string){
-    e.preventDefault()
+  async function validateinput(e:any, type: string, value: string){
     switch (type){
       case "log":
         //send to server new username to check if is unique
@@ -89,27 +58,62 @@ export function SignIn(props: any ) {
   };
 }
   
-function onChange(e:any, type: string){
+async function onChange(e:any, type: string){
+  e.preventDefault();
   if(type==="log") {
-    validateinput(e, "log", e.target.value);
+    console.log('validateinput', 'log')
+
+    await validateinput(e, "log", e.target.value);
   }
   else{
-    validateinput(e,"pass", e.target.value);
+    await validateinput(e,"pass", e.target.value);
   }
 }
+async function postNewUser( 
+    urlPath: string, 
+    dataToPost:any, 
+    fnToSaveResponse: Function
+    ) {
+     // saving data from form to .json file
+    let response: string = '';
+    await axios
+      .post(`${urlPath}`, dataToPost)
+      .then((res:any): void =>{
+        response = JSON.stringify(res.data)
+        fnToSaveResponse(res.data)
+        console.log('JSON.stringify(res.data)',JSON.stringify(res.data))
+      })
+      .catch((err: any) => {
+        console.error(err);
+        response = JSON.stringify(err)
+      });
+    return response;
+  }
 
 async function onSubmit(e:any){
   e.preventDefault();
+  await validateinput(e, "log", login2);
 
 // send new user login data to file/server
   const postUrl = "http://localhost:3001/newUser";
   const NewUserData = {login: login2, password};
   const goodError =  'New user added.';
   if(NewUserData.login !== "" &&  NewUserData.password !== "" && isLoginUnique && isPasswordOk){
-    postNewUser(postUrl, NewUserData)
+    await postNewUser(postUrl, NewUserData, setResponse)
+    console.log(response)
+        setlogin("");
+    setpass("");
+    setisLoginUnique(false)
+    setisPasswordOk(false)
+    setRefresh(true);
+  } else {
+    setResponse('undefined')
   }
 }
 
+if(refresh){
+  return <Navigate replace to="/" />;
+}else{
   return (
     <div className='log-sign-in'>
     <LogForm 
@@ -120,10 +124,7 @@ async function onSubmit(e:any){
     onChange = {onChange}
     error = {error}
     />
-</div> 
-    
-   
+  </div>     
   );
 }
-
-// export default SignIn;
+}
