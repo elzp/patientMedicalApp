@@ -9,6 +9,11 @@ const app = express()
 const port = 3001
 const path = "./../appointByUser.json";
 const path2 = "./../../src/usersdata.json";
+interface userDataType { 
+  username: string, 
+  password: string, 
+  islogin: string
+ }
 
 app.use(
     cors({
@@ -97,6 +102,40 @@ app.post('/newUser', (req:any, res: any) => {
     res.status(200).json("nok")
   }
 })
+
+app.post('/user-validation', (req:any, res: any) => {
+
+  const {login, password}:{login: string, password: string} = req.body;
+  try{
+    /// getting users' data from file json
+    console.log(['newUser:  ',req.body])
+    let data0 =fs.readFileSync(__dirname +`/${path2}`,'utf8');
+    let data0AsJS = JSON.parse(data0);
+    //// preparing users' data to save in json file
+    const data1:Array<userDataType> = Object.values(JSON.parse(data0))
+    const data2 = data1.map((item,index)=>{return {...item, userId: index}})
+
+    const data3 = data2?.filter(value => login===value.username && password === value.password)
+    if(data3.length === 0){
+      res.status(200).json("{isValid: false}")
+    } else {
+      const userId = data3[0].userId;
+      // save in json file that user is logged
+      data0AsJS[`${userId}`].islogin ='true';
+      write(JSON.stringify(data0AsJS),__dirname +`/${path2}`)
+
+      res.status(200).json(`{"isValid": "true", "userId": "${userId}"}`)
+      console.log(data3[0], userId, data0AsJS)
+    }
+  } catch(error){
+    res.status(200).json("{isValid: false}")
+  }
+
+
+  // newlogin: string, newid: string, status: boolean,
+  // callbackdispatchingFnc: React.Dispatch<React.SetStateAction<typeuserdata>>, stateOfActualVar: any
+}
+)
 
 app.listen(port, () => {
     // tslint:disable-next-line: no-console

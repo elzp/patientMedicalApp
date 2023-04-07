@@ -84,6 +84,35 @@ app.post('/newUser', (req, res) => {
         res.status(200).json("nok");
     }
 });
+app.post('/user-validation', (req, res) => {
+    const { login, password } = req.body;
+    try {
+        /// getting users' data from file json
+        console.log(['newUser:  ', req.body]);
+        let data0 = fs.readFileSync(__dirname + `/${path2}`, 'utf8');
+        let data0AsJS = JSON.parse(data0);
+        //// preparing users' data to save in json file
+        const data1 = Object.values(JSON.parse(data0));
+        const data2 = data1.map((item, index) => { return Object.assign(Object.assign({}, item), { userId: index }); });
+        const data3 = data2 === null || data2 === void 0 ? void 0 : data2.filter(value => login === value.username && password === value.password);
+        if (data3.length === 0) {
+            res.status(200).json("{isValid: false}");
+        }
+        else {
+            const userId = data3[0].userId;
+            // save in json file that user is logged
+            data0AsJS[`${userId}`].islogin = 'true';
+            write(JSON.stringify(data0AsJS), __dirname + `/${path2}`);
+            res.status(200).json(`{"isValid": "true", "userId": "${userId}"}`);
+            console.log(data3[0], userId, data0AsJS);
+        }
+    }
+    catch (error) {
+        res.status(200).json("{isValid: false}");
+    }
+    // newlogin: string, newid: string, status: boolean,
+    // callbackdispatchingFnc: React.Dispatch<React.SetStateAction<typeuserdata>>, stateOfActualVar: any
+});
 app.listen(port, () => {
     // tslint:disable-next-line: no-console
     console.log(`Example app listening at http://localhost:${port}`);
