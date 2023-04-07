@@ -42,7 +42,7 @@ var LogForm_1 = require("./LogForm");
 require("./../App.css");
 var srcfunctions_1 = require("./srcfunctions");
 var react_router_dom_1 = require("react-router-dom");
-var usersdata_json_1 = require("../usersdata.json");
+var axios_1 = require("axios");
 function Login(props) {
     var _a = react_1.useState(""), login = _a[0], setlogin = _a[1];
     var _b = react_1.useState(""), password = _b[0], setpass = _b[1];
@@ -51,36 +51,42 @@ function Login(props) {
     var changeuser = props.changeuser;
     var currentuser = props.defaultuser.currentuser;
     var newdefaultuser = [currentuser.pacientId, currentuser.pacientUsername, currentuser.isLogin, ""];
-    // preparing users data from json file to use for authorification
-    var sth3 = Object.entries(usersdata_json_1["default"]).map(function (it) {
-        var neww = [it[0],
-            Object.entries(it[1])[0][1],
-            Object.entries(it[1])[2][1],
-            Object.entries(it[1])[1][1] //password
-        ];
-        return neww;
-    });
-    function validateWithDataFromServer(log, pass) {
-        // fn's which returns password for given login
-        var sth4 = sth3.find(function (it) { return it[1] === log; });
-        if (sth4 === undefined || sth4 === null) {
-            return newdefaultuser;
-        }
-        else {
-            if (sth4[3] === pass) {
-                return sth4;
-            }
-            else {
-                setError(function (error) { return "bad password"; });
-                console.log(error);
-                return newdefaultuser;
-            }
-        }
-        // if(goodlogin===login && goodpassword === pass){
-        //   return true;
-        // }else {
-        //   return false;
-        // } 
+    function validateLogin(login, password) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, axios_1["default"]
+                            .post("http://localhost:3001/user-validation", { login: login, password: password })
+                            .then(function (res) {
+                            console.log('checkUser', res.data);
+                            var _a = JSON.parse(res.data), isValid = _a.isValid, userId = _a.userId;
+                            console.log(typeof JSON.parse(isValid));
+                            if (JSON.parse(isValid)) {
+                                // const userId = res.data.userId;
+                                var newuser = {
+                                    currentuser: {
+                                        pacientId: userId,
+                                        pacientUsername: login,
+                                        isLogin: 'true'
+                                    }
+                                };
+                                setError(function (error) { return "good login & password."; });
+                                // await console.log("error",error)
+                                srcfunctions_1.handleChangeOfUser(login, userId, true, props.changeuser, props.userdata);
+                                changeuser(newuser);
+                            }
+                            else {
+                                setError(function (error) { return "Check if login or password is correct."; });
+                            }
+                        })["catch"](function (err) {
+                            console.error(err);
+                        })];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
     }
     function onChange(e, type) {
         if (type === "log") {
@@ -92,37 +98,17 @@ function Login(props) {
     }
     function onSubmit(e) {
         return __awaiter(this, void 0, void 0, function () {
-            var validation, newuser;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         e.preventDefault();
-                        if (!(login.length > 0 && password.length > 0)) return [3 /*break*/, 6];
+                        if (!(login.length > 0 && password.length > 0)) return [3 /*break*/, 2];
                         setError(function (error) { return ""; });
-                        validation = validateWithDataFromServer(login, password);
-                        return [4 /*yield*/, console.log(validation)];
+                        return [4 /*yield*/, validateLogin(login, password)];
                     case 1:
                         _a.sent();
-                        if (!(validation === newdefaultuser)) return [3 /*break*/, 3];
-                        setError(function (error) { return "Wrong login or password."; });
-                        return [4 /*yield*/, console.log("error", error)];
-                    case 2:
-                        _a.sent();
-                        return [2 /*return*/];
-                    case 3:
-                        newuser = { currentuser: { pacientId: validation[1],
-                                pacientUsername: validation[0],
-                                isLogin: validation[3] } };
-                        return [4 /*yield*/, setError(function (error) { return "good login & password."; })];
-                    case 4:
-                        _a.sent();
-                        return [4 /*yield*/, console.log("error", error)];
-                    case 5:
-                        _a.sent();
-                        srcfunctions_1.handleChangeOfUser(validation[1], validation[0], validation[3], props.changeuser, props.userdata);
-                        changeuser(newuser);
-                        _a.label = 6;
-                    case 6: return [2 /*return*/];
+                        _a.label = 2;
+                    case 2: return [2 /*return*/];
                 }
             });
         });
