@@ -62,8 +62,8 @@ function handleVisOfDocSel (){
 
 // server API code
 const visitApiAdress ="http://localhost:3001";
-const idUserAPI = `${visitApiAdress}/${pacientId}`
-const postFormUrl = `${visitApiAdress}/newVisit`
+const idUserAPI = `${visitApiAdress}/${Number(JSON.parse(pacientId))}`
+const postFormUrl = `${visitApiAdress}/user/newVisit/${Number(JSON.parse(pacientId))}`
 const postDataFromForm = {id:pacientId, type: selectedOption[0],name: selectedOption2[0], time:startDate}
 // function onSubmitAppointmentForm  was moved to srcfunctions.ts.
 

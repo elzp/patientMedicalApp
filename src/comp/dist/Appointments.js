@@ -52,8 +52,8 @@ function Appointments(props) {
     }
     // server API code
     var visitApiAdress = "http://localhost:3001";
-    var idUserAPI = visitApiAdress + "/" + pacientId;
-    var postFormUrl = visitApiAdress + "/newVisit";
+    var idUserAPI = visitApiAdress + "/" + Number(JSON.parse(pacientId));
+    var postFormUrl = visitApiAdress + "/user/newVisit/" + Number(JSON.parse(pacientId));
     var postDataFromForm = { id: pacientId, type: selectedOption[0], name: selectedOption2[0], time: startDate };
     // function onSubmitAppointmentForm  was moved to srcfunctions.ts.
     //set default value of variable pacientVisitsData

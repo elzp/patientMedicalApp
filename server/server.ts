@@ -32,17 +32,13 @@ app.get('/', (req:any, res:any) => {
 
 app.get('/', (req:any, res:any) => {})
 
-app.post(   '/newVisit', (req:any, res: any) => {
+app.post('/user/newVisit/:id', (req:any, res: any) => {
 
-        const {id, type, name, time } = req.body;
-
-          console.log(req.body, 'posted on newvisit');
-          if (typeof id !==undefined) updateAppoinments(path, req.body.id, req.body.type, req.body.name, req.body.time) // function not saving data to file
-          console.log('updated appointments througt post');
-          let data0 =fs.readFileSync(__dirname +`/${path}`,'utf8');
-         
-          console.log('updated data',data0)
-  });
+  console.log(req.body,'start to post new visit for ',req.params.id);
+  if (typeof req.params.id !==undefined) updateAppoinments(path, Number(JSON.parse(req.body.id)), req.body.type, req.body.name, req.body.time) // function not saving data to file
+  console.log('updated appointments througt post');
+  let data0 =fs.readFileSync(__dirname +`/${path}`,'utf8');
+});
 
   app.get('/:id', (req: any, res: any) => {
       //getting data from file json
