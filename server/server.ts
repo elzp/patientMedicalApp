@@ -45,7 +45,7 @@ app.post(   '/newVisit', (req:any, res: any) => {
   });
 
   app.get('/:id', (req: any, res: any) => {
-     //getting data from file json
+      //getting data from file json
       let data0 =fs.readFileSync(__dirname +`/${path}`,'utf8');
       const data1 = JSON.parse(data0).filter((it: any)=> it.id == req.params.id)[0];
       console.log('data1 in :id', JSON.stringify(data1))
@@ -117,25 +117,22 @@ app.post('/user-validation', (req:any, res: any) => {
 
     const data3 = data2?.filter(value => login===value.username && password === value.password)
     if(data3.length === 0){
-      res.status(200).json("{isValid: false}")
+      res.status(200).json(JSON.stringify({"isValid": "false"}))
     } else {
       const userId = data3[0].userId;
       // save in json file that user is logged
       data0AsJS[`${userId}`].islogin ='true';
       write(JSON.stringify(data0AsJS),__dirname +`/${path2}`)
-
-      res.status(200).json(`{"isValid": "true", "userId": "${userId}"}`)
-      console.log(data3[0], userId, data0AsJS)
+      const response = JSON.stringify({"isValid": "true", "userId": `"${userId}"`});
+      res.status(200).json(response)
     }
   } catch(error){
-    res.status(200).json("{isValid: false}")
+    res.status(200).json(JSON.stringify({"isValid": "false"}))
+
   }
+})
 
 
-  // newlogin: string, newid: string, status: boolean,
-  // callbackdispatchingFnc: React.Dispatch<React.SetStateAction<typeuserdata>>, stateOfActualVar: any
-}
-)
 
 app.listen(port, () => {
     // tslint:disable-next-line: no-console

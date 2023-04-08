@@ -58,9 +58,7 @@ function Login(props) {
                     case 0: return [4 /*yield*/, axios_1["default"]
                             .post("http://localhost:3001/user-validation", { login: login, password: password })
                             .then(function (res) {
-                            console.log('checkUser', res.data);
                             var _a = JSON.parse(res.data), isValid = _a.isValid, userId = _a.userId;
-                            console.log(typeof JSON.parse(isValid));
                             if (JSON.parse(isValid)) {
                                 // const userId = res.data.userId;
                                 var newuser = {

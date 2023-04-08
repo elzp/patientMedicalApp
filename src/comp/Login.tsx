@@ -23,9 +23,7 @@ export  function Login(props: any ) {
         await axios
           .post(`http://localhost:3001/user-validation`, {login, password})
             .then((res:any) => {
-              console.log('checkUser',res.data)
               const { isValid, userId } = JSON.parse(res.data);
-              console.log(typeof JSON.parse(isValid) )
               if(JSON.parse(isValid)) {
                 // const userId = res.data.userId;
                 const newuser = {
