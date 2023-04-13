@@ -40,6 +40,22 @@ app.post('/user/newVisit/:id', (req:any, res: any) => {
   let data0 =fs.readFileSync(__dirname +`/${path}`,'utf8');
 });
 
+app.post('/user/logout/:id', (req:any, res: any) => {
+
+  try{
+    /// getting users' data from file json
+    let data0 =fs.readFileSync(__dirname +`/${path2}`,'utf8');
+    let data0AsJS = JSON.parse(data0);
+    let userId = Number(req.params.id)
+    console.log('data from json', data0AsJS[userId])
+    data0AsJS[userId].islogin = 'false';
+    write(JSON.stringify(data0AsJS), __dirname +`/${path2}`)
+    console.log('\'login\' status of user with id ', userId, ' is ', data0AsJS[userId].islogin)
+    res.status(200).json("true")
+  } catch(error){
+    res.status(500).json("false")
+  }
+})
 
 //get data from server for signin and send to react response with info if usersname exist
  app.post('/isusernameunique', (req:any, res: any) => {
