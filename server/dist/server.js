@@ -25,21 +25,6 @@ app.post('/user/newVisit/:id', (req, res) => {
     console.log('updated appointments througt post');
     let data0 = fs.readFileSync(__dirname + `/${path}`, 'utf8');
 });
-app.get('/:id', (req, res) => {
-    //getting data from file json
-    let data0 = fs.readFileSync(__dirname + `/${path}`, 'utf8');
-    const data1 = JSON.parse(data0).filter((it) => it.id == req.params.id)[0];
-    console.log('data1 in :id', JSON.stringify(data1));
-    //sending to react
-    if (data1 === undefined || data1.length === 0) {
-        res.status(200).json(
-        //sending default data
-        { "id": req.params.id, "visits": [] });
-    }
-    else { //sending real data
-        res.status(200).json(JSON.stringify(data1));
-    }
-});
 //get data from server for signin and send to react response with info if usersname exist
 app.post('/isusernameunique', (req, res) => {
     //getting data from file json
@@ -60,7 +45,6 @@ app.post('/newUser', (req, res) => {
     const { login, password } = req.body;
     try {
         /// getting users' data from file json
-        console.log(['newUser:  ', req.body]);
         let data0 = fs.readFileSync(__dirname + `/${path2}`, 'utf8');
         //// preparing users' data to save in json file
         const data1 = Object.keys(JSON.parse(data0));
@@ -107,6 +91,21 @@ app.post('/user-validation', (req, res) => {
     }
     catch (error) {
         res.status(200).json(JSON.stringify({ "isValid": "false" }));
+    }
+});
+app.get('/:id', (req, res) => {
+    //getting data from file json
+    let data0 = fs.readFileSync(__dirname + `/${path}`, 'utf8');
+    const data1 = JSON.parse(data0).filter((it) => it.id == req.params.id)[0];
+    console.log('data1 in :id', JSON.stringify(data1));
+    //sending to react
+    if (data1 === undefined || data1.length === 0) {
+        res.status(200).json(
+        //sending default data
+        { "id": req.params.id, "visits": [] });
+    }
+    else { //sending real data
+        res.status(200).json(JSON.stringify(data1));
     }
 });
 app.listen(port, () => {
