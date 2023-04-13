@@ -40,18 +40,22 @@ app.post('/user/newVisit/:id', (req:any, res: any) => {
   let data0 =fs.readFileSync(__dirname +`/${path}`,'utf8');
 });
 
-  app.get('/:id', (req: any, res: any) => {
-      //getting data from file json
-      let data0 =fs.readFileSync(__dirname +`/${path}`,'utf8');
-      const data1 = JSON.parse(data0).filter((it: any)=> it.id == req.params.id)[0];
-      console.log('data1 in :id', JSON.stringify(data1))
-      //sending to react
-      if (data1 === undefined || data1.length===0) {res.status(200).json(
-        //sending default data
-         { "id": req.params.id, "visits": []})}
-      else {//sending real data
-        res.status(200).json(JSON.stringify(data1))}
- }) 
+app.post('/user/logout/:id', (req:any, res: any) => {
+
+  try{
+    /// getting users' data from file json
+    let data0 =fs.readFileSync(__dirname +`/${path2}`,'utf8');
+    let data0AsJS = JSON.parse(data0);
+    let userId = Number(req.params.id)
+    console.log('data from json', data0AsJS[userId])
+    data0AsJS[userId].islogin = 'false';
+    write(JSON.stringify(data0AsJS), __dirname +`/${path2}`)
+    console.log('\'login\' status of user with id ', userId, ' is ', data0AsJS[userId].islogin)
+    res.status(200).json("true")
+  } catch(error){
+    res.status(500).json("false")
+  }
+})
 
 //get data from server for signin and send to react response with info if usersname exist
  app.post('/isusernameunique', (req:any, res: any) => {
@@ -75,7 +79,6 @@ app.post('/newUser', (req:any, res: any) => {
   const {login, password} = req.body;
   try{
     /// getting users' data from file json
-    console.log(['newUser:  ',req.body])
     let data0 =fs.readFileSync(__dirname +`/${path2}`,'utf8');
 
     //// preparing users' data to save in json file
@@ -129,6 +132,18 @@ app.post('/user-validation', (req:any, res: any) => {
 })
 
 
+app.get('/:id', (req: any, res: any) => {
+  //getting data from file json
+  let data0 =fs.readFileSync(__dirname +`/${path}`,'utf8');
+  const data1 = JSON.parse(data0).filter((it: any)=> it.id == req.params.id)[0];
+  console.log('data1 in :id', JSON.stringify(data1))
+  //sending to react
+  if (data1 === undefined || data1.length===0) {res.status(200).json(
+    //sending default data
+     { "id": req.params.id, "visits": []})}
+  else {//sending real data
+    res.status(200).json(JSON.stringify(data1))}
+}) 
 
 app.listen(port, () => {
     // tslint:disable-next-line: no-console
