@@ -35,7 +35,7 @@ export  function Login(props: any ) {
                 }
                 setError(error => "good login & password.");
                 // await console.log("error",error)
-                handleChangeOfUser(login, userId, true, props.changeuser, props.userdata )
+                handleChangeOfUser(login, userId, true, props.changeuser)
                 changeuser(newuser)
               } else {
                 setError(error => "Check if login or password is correct.");
@@ -46,7 +46,7 @@ export  function Login(props: any ) {
             }); 
 }
 
-  function onChange(e:any, type: string){
+function onChange(e:any, type: string){
     if(type==="log") {setlogin(login=>e.target.value);
     }
     else{setpass(password=>e.target.value)}

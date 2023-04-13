@@ -21,7 +21,7 @@ export function getdataFromFile(urlAPI:string, reactsetcallback:React.Dispatch<a
 
   //MAKE REDIRECTING only to start, login and sing up when user is not login. <- VI.2021 - works.   
 export function handleChangeOfUser(newlogin: string, newid: string, status: boolean,
-  callbackdispatchingFnc: React.Dispatch<React.SetStateAction<typeuserdata>>, stateOfActualVar: any){
+  callbackdispatchingFnc: React.Dispatch<React.SetStateAction<typeuserdata>>){
   const newuser = {
     currentuser: {pacientId: newid,
                 pacientUsername: newlogin,
@@ -30,18 +30,17 @@ export function handleChangeOfUser(newlogin: string, newid: string, status: bool
   localStorage.setItem('nameOfLogin', `${newuser.currentuser.pacientUsername}`);
   localStorage.setItem('isLogin', `${newuser.currentuser.isLogin}`);
   localStorage.setItem('id', `${newuser.currentuser.pacientId}`);
-  callbackdispatchingFnc(stateOfActualVar=>newuser)
   
   console.log(`handleChangeOfUser was used and updated ${newlogin} `)
 }
 
-export function handleLogout(defaultUser:typeuserdata,callbackdispatchingFnc: React.Dispatch<React.SetStateAction<typeuserdata>>,userdata:any){//NOT WORKING <- 26-06-2021 it's working now.
+export async function handleLogout(defaultUser:typeuserdata,callbackdispatchingFnc: React.Dispatch<React.SetStateAction<typeuserdata>>,userdata:any){//NOT WORKING <- 26-06-2021 it's working now.
 
   callbackdispatchingFnc(userdata=>defaultUser)
   localStorage.setItem('nameOfLogin', `${defaultUser.currentuser.pacientUsername}`);
   localStorage.setItem('isLogin', `${defaultUser.currentuser.isLogin}`);
   localStorage.setItem('id', `${defaultUser.currentuser.pacientId}`);
-  console.log("User was log out.")
+
 }
 
 export function chooseChildComponent(
@@ -136,10 +135,3 @@ function stdTimezoneOffset(date: Date) {
   // , DSTshiftedHour(date3)
   // )
   
-////////////////////////////////  
-
-export function logout(): void {
-  localStorage.setItem('isLogin', 'false')
-  localStorage.setItem('id', '')
-  localStorage.setItem('nameOfLogin', '')
-}

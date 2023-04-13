@@ -70,7 +70,7 @@ function Login(props) {
                                 };
                                 setError(function (error) { return "good login & password."; });
                                 // await console.log("error",error)
-                                srcfunctions_1.handleChangeOfUser(login, userId, true, props.changeuser, props.userdata);
+                                srcfunctions_1.handleChangeOfUser(login, userId, true, props.changeuser);
                                 changeuser(newuser);
                             }
                             else {
@@ -112,7 +112,7 @@ function Login(props) {
         });
     }
     if (localStorage.getItem('isLogin') === "true") {
-        return react_1["default"].createElement(react_router_dom_1.Navigate, { replace: true, to: "/" });
+        return react_1["default"].createElement(react_router_dom_1.Navigate, { replace: true, to: "/account" });
     }
     else {
         return (react_1["default"].createElement("div", { className: 'log-sign-in' },
