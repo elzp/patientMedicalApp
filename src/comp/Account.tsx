@@ -12,25 +12,25 @@ export function Account(props: any ) {
 //  //const {appointment} : {appointment: object} = props.styles;
  // server API code
  const visitApiAdress ="http://localhost:3001";
-
+ const [redirect, setRedirect] = useState(false)
 
  const handleClick = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>)=>{
   e.preventDefault(); 
 const url = `${visitApiAdress}/user/logout/${pacientId}`.replace(/\"/g,'')
 await axios
-  .post(url, JSON.stringify({id: pacientId}))
-  .then((res:any) => {
-    console.log(JSON.parse(res.data))
-
+  .post(url, {})
+  .then((res:any) => {    
     handleLogout(props.defaultuser, 
     props.changeuser, 
     props.userdata);
+
+    setRedirect(JSON.parse(res.data))
   })
   .catch((err: any) => {
     console.error(err);
 });
 }
-if (localStorage.getItem('isLogin')==="false") {
+if (redirect) {
   return <Navigate replace to="/" />;
 } else {
   return (

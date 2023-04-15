@@ -50,6 +50,7 @@ function Account(props) {
     //  //const {appointment} : {appointment: object} = props.styles;
     // server API code
     var visitApiAdress = "http://localhost:3001";
+    var _a = react_1.useState(false), redirect = _a[0], setRedirect = _a[1];
     var handleClick = function (e) { return __awaiter(_this, void 0, void 0, function () {
         var url;
         return __generator(this, function (_a) {
@@ -58,10 +59,10 @@ function Account(props) {
                     e.preventDefault();
                     url = (visitApiAdress + "/user/logout/" + pacientId).replace(/\"/g, '');
                     return [4 /*yield*/, axios_1["default"]
-                            .post(url, JSON.stringify({ id: pacientId }))
+                            .post(url, {})
                             .then(function (res) {
-                            console.log(JSON.parse(res.data));
                             srcfunctions_1.handleLogout(props.defaultuser, props.changeuser, props.userdata);
+                            setRedirect(JSON.parse(res.data));
                         })["catch"](function (err) {
                             console.error(err);
                         })];
@@ -71,7 +72,7 @@ function Account(props) {
             }
         });
     }); };
-    if (localStorage.getItem('isLogin') === "false") {
+    if (redirect) {
         return react_1["default"].createElement(react_router_dom_1.Navigate, { replace: true, to: "/" });
     }
     else {
