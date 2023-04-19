@@ -39,16 +39,25 @@ exports.__esModule = true;
 exports.DSTshiftedHour = exports.onSubmitAppointmentForm = exports.chooseChildComponent = exports.handleLogout = exports.handleChangeOfUser = exports.getdataFromFile = void 0;
 var axios_1 = require("axios");
 function getdataFromFile(urlAPI, reactsetcallback, parameter) {
-    axios_1["default"]
-        .get("" + urlAPI)
-        .then(function (res) {
-        //log in browser
-        console.log('data was received', JSON.parse(res.data));
-        var data = JSON.parse(res.data);
-        reactsetcallback(function (parameter) { return data; });
-        //setpacientVisitsData(pacientVisitsData => data)
-    })["catch"](function (err) {
-        console.error(err);
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, axios_1["default"]
+                        .get("" + urlAPI)
+                        .then(function (res) {
+                        //log in browser
+                        console.log('data was received', JSON.parse(res.data));
+                        var data = JSON.parse(res.data);
+                        reactsetcallback(function (parameter) { return data; });
+                        //setpacientVisitsData(pacientVisitsData => data)
+                    })["catch"](function (err) {
+                        console.error(err);
+                    })];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/];
+            }
+        });
     });
 }
 exports.getdataFromFile = getdataFromFile;

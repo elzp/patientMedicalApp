@@ -2,8 +2,8 @@ import axios from 'axios';
 import {typeuserdata} from './../../types/common/main.d'
 
 
-export function getdataFromFile(urlAPI:string, reactsetcallback:React.Dispatch<any>, parameter: any){
-    axios
+export async function getdataFromFile(urlAPI:string, reactsetcallback:React.Dispatch<any>, parameter: any){
+    await axios
     .get(`${urlAPI}`)
     .then((res:any) => {
     //log in browser
