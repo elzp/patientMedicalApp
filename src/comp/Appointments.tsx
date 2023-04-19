@@ -1,5 +1,6 @@
 import React, {useState, useMemo} from 'react';
 import Appointment from './Appointment';
+import AppointmentsViewer from './AppointmentsViewer';
 import Select from 'react-select';//npm install --save @types/react-select
 import DatePicker from "react-datepicker";// npm i react-datepicker  ;  npm i @types/react-datepicker
 import './../App.css';
@@ -7,7 +8,6 @@ import "react-datepicker/dist/react-datepicker.css";
 import data from './../somedata.json';
 import { getdataFromFile, onSubmitAppointmentForm } from './srcfunctions';
 import {visit} from './../../types/common/main.d'
-
 
 export  function Appointments(props: any ) {
  const {value}: {value: number} = props;
@@ -76,15 +76,19 @@ const [pacientVisitsData, setpacientVisitsData] =useState({ "id": pacientId, "vi
 
 // refresh list of visits
 const [ifRefresh, setStatusIfRefresh] = useState(false)
-useMemo(()=> {getdataFromFile(idUserAPI, setpacientVisitsData,pacientVisitsData ); }, [ifRefresh])
+React.useEffect(()=> {
+  getdataFromFile(idUserAPI, setpacientVisitsData,pacientVisitsData ); 
+}, [ifRefresh])
+
+
+React.useEffect(()=>{
+
+},[pacientVisitsData])
 
 function handleRefreshingVisits(){
   setStatusIfRefresh(!ifRefresh);
 }
 
-//  visibility list's of visits
-const [visOfVisitsList, setVisOfVisitsList] = useState(false) 
-function handleVisOfVisitsList() { setVisOfVisitsList(!visOfVisitsList)}
 
 const listOfSavedAppointments = pacientVisitsData.visits.length === 0 ? 
     "Missing some options. Please refill form above.":
@@ -163,14 +167,10 @@ const listOfSavedAppointments = pacientVisitsData.visits.length === 0 ?
       </div>
       </div>
       <div id="error">{submitError}</div>
-      <button data-testid="buttonToShowAppointment" onClick={()=>handleVisOfVisitsList()}>Show My Appointments</button>
-      <div 
-          data-testid="list of saved apponntments">
-            {visOfVisitsList && listOfSavedAppointments}
-            </div>
-        <div data-testid="error">
-        {/* Missing some options. Please refill form above. */}
-        </div>
+      <AppointmentsViewer 
+        pacientVisitsData={pacientVisitsData} 
+        listOfSavedAppointments={listOfSavedAppointments}
+      />
     </div>
   );
 }

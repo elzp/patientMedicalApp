@@ -3,6 +3,7 @@ exports.__esModule = true;
 exports.Appointments = void 0;
 var react_1 = require("react");
 var Appointment_1 = require("./Appointment");
+var AppointmentsViewer_1 = require("./AppointmentsViewer");
 var react_select_1 = require("react-select"); //npm install --save @types/react-select
 var react_datepicker_1 = require("react-datepicker"); // npm i react-datepicker  ;  npm i @types/react-datepicker
 require("./../App.css");
@@ -62,13 +63,14 @@ function Appointments(props) {
     // function getdataFromFile was moved to srcfunctions.ts.
     // refresh list of visits
     var _h = react_1.useState(false), ifRefresh = _h[0], setStatusIfRefresh = _h[1];
-    react_1.useMemo(function () { srcfunctions_1.getdataFromFile(idUserAPI, setpacientVisitsData, pacientVisitsData); }, [ifRefresh]);
+    react_1["default"].useEffect(function () {
+        srcfunctions_1.getdataFromFile(idUserAPI, setpacientVisitsData, pacientVisitsData);
+    }, [ifRefresh]);
+    react_1["default"].useEffect(function () {
+    }, [pacientVisitsData]);
     function handleRefreshingVisits() {
         setStatusIfRefresh(!ifRefresh);
     }
-    //  visibility list's of visits
-    var _j = react_1.useState(false), visOfVisitsList = _j[0], setVisOfVisitsList = _j[1];
-    function handleVisOfVisitsList() { setVisOfVisitsList(!visOfVisitsList); }
     var listOfSavedAppointments = pacientVisitsData.visits.length === 0 ?
         "Missing some options. Please refill form above." :
         pacientVisitsData.visits.map(function (it) { return (react_1["default"].createElement("div", { key: it.vizId },
@@ -118,9 +120,7 @@ function Appointments(props) {
                 ". ",
                 item)); }))),
         react_1["default"].createElement("div", { id: "error" }, submitError),
-        react_1["default"].createElement("button", { "data-testid": "buttonToShowAppointment", onClick: function () { return handleVisOfVisitsList(); } }, "Show My Appointments"),
-        react_1["default"].createElement("div", { "data-testid": "list of saved apponntments" }, visOfVisitsList && listOfSavedAppointments),
-        react_1["default"].createElement("div", { "data-testid": "error" })));
+        react_1["default"].createElement(AppointmentsViewer_1["default"], { pacientVisitsData: pacientVisitsData, listOfSavedAppointments: listOfSavedAppointments })));
 }
 exports.Appointments = Appointments;
 // export default Appointments;
