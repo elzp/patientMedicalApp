@@ -1,6 +1,10 @@
 import React, { useState, useMemo } from 'react';
 import { Link, Navigate} from 'react-router-dom';
 import {handleLogout} from './srcfunctions';
+import { getdataFromFile } from './srcfunctions';
+import {visit} from './../../types/common/main.d'
+import Appointment from './Appointment';
+import AppointmentsViewer from './AppointmentsViewer';
 import './../App.css';
 import axios from 'axios';
 import { registerLocale } from 'react-datepicker';
@@ -30,6 +34,27 @@ await axios
     console.error(err);
 });
 }
+
+const [pacientVisitsData, setpacientVisitsData] =useState({ "id": pacientId, "visits": []});
+
+const listOfSavedAppointments = pacientVisitsData.visits.length === 0 ? 
+    "Missing some options. Please refill form above.":
+           pacientVisitsData.visits.map( (it: visit) => (
+            <div key = {it.vizId} ><Appointment 
+                key = {it.vizId} 
+                dataAboutAppointment = {it} 
+                lengthofAllData ={pacientVisitsData.visits.length}
+                />
+            </div>)
+           )
+
+  const idUserAPI = `${visitApiAdress}/${Number(JSON.parse(`${pacientId}`.replace(/\"/g,'')))}`
+           
+
+React.useEffect(()=> {
+  getdataFromFile(idUserAPI, setpacientVisitsData,pacientVisitsData ); 
+}, [])
+
 if (redirect) {
   return <Navigate replace to="/" />;
 } else {
@@ -41,6 +66,10 @@ if (redirect) {
           <button onClick={(e)=>handleClick(e)}>LOGOUT</button>
         </Link>
       </div>
+      <AppointmentsViewer 
+        pacientVisitsData={pacientVisitsData} 
+        listOfSavedAppointments={listOfSavedAppointments}
+      />
     </div>
   );
 }}

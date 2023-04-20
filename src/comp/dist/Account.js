@@ -40,6 +40,9 @@ exports.Account = void 0;
 var react_1 = require("react");
 var react_router_dom_1 = require("react-router-dom");
 var srcfunctions_1 = require("./srcfunctions");
+var srcfunctions_2 = require("./srcfunctions");
+var Appointment_1 = require("./Appointment");
+var AppointmentsViewer_1 = require("./AppointmentsViewer");
 require("./../App.css");
 var axios_1 = require("axios");
 function Account(props) {
@@ -72,6 +75,15 @@ function Account(props) {
             }
         });
     }); };
+    var _b = react_1.useState({ "id": pacientId, "visits": [] }), pacientVisitsData = _b[0], setpacientVisitsData = _b[1];
+    var listOfSavedAppointments = pacientVisitsData.visits.length === 0 ?
+        "Missing some options. Please refill form above." :
+        pacientVisitsData.visits.map(function (it) { return (react_1["default"].createElement("div", { key: it.vizId },
+            react_1["default"].createElement(Appointment_1["default"], { key: it.vizId, dataAboutAppointment: it, lengthofAllData: pacientVisitsData.visits.length }))); });
+    var idUserAPI = visitApiAdress + "/" + Number(JSON.parse(("" + pacientId).replace(/\"/g, '')));
+    react_1["default"].useEffect(function () {
+        srcfunctions_2.getdataFromFile(idUserAPI, setpacientVisitsData, pacientVisitsData);
+    }, []);
     if (redirect) {
         return react_1["default"].createElement(react_router_dom_1.Navigate, { replace: true, to: "/" });
     }
@@ -83,7 +95,8 @@ function Account(props) {
                 "."),
             react_1["default"].createElement("div", null,
                 react_1["default"].createElement(react_router_dom_1.Link, { reloadDocument: true, to: '/' },
-                    react_1["default"].createElement("button", { onClick: function (e) { return handleClick(e); } }, "LOGOUT")))));
+                    react_1["default"].createElement("button", { onClick: function (e) { return handleClick(e); } }, "LOGOUT"))),
+            react_1["default"].createElement(AppointmentsViewer_1["default"], { pacientVisitsData: pacientVisitsData, listOfSavedAppointments: listOfSavedAppointments })));
     }
 }
 exports.Account = Account;
