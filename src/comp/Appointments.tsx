@@ -81,10 +81,6 @@ React.useEffect(()=> {
 }, [ifRefresh])
 
 
-React.useEffect(()=>{
-
-},[pacientVisitsData])
-
 function handleRefreshingVisits(){
   setStatusIfRefresh(!ifRefresh);
 }

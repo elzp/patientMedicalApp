@@ -66,8 +66,6 @@ function Appointments(props) {
     react_1["default"].useEffect(function () {
         srcfunctions_1.getdataFromFile(idUserAPI, setpacientVisitsData, pacientVisitsData);
     }, [ifRefresh]);
-    react_1["default"].useEffect(function () {
-    }, [pacientVisitsData]);
     function handleRefreshingVisits() {
         setStatusIfRefresh(!ifRefresh);
     }
