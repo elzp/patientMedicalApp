@@ -1,13 +1,13 @@
-import {} from '../server1'
+// import {} from '../server1'
 import { writeFile } from 'fs';
 // npm install bcrypt
 // npm install --save @types/bcrypt
 const bcrypt = require('bcrypt')
+const bbcrypt = require('bcryptjs');
 const functions = require('./functions');
 const fs = require('fs');
 const path= "../../src/usersdata.json"
 
-​
 const saltRounds = 10;
 
 function checkIfUserIsInDataBase(data){
@@ -17,48 +17,102 @@ function checkIfUserIsInDataBase(data){
 //
 async function hashAndSavePassword(data):Promise<void>{ 
 
-  const u = await bcrypt
-  .hash(data.password, saltRounds)//hashed password
-  .then(hash => {
-    console.log(`Hash: ${hash}`);
-    return hash;})
-  .then( (hash)=>{
+  // const u = await bcrypt
+  // .hash(data.password, saltRounds)//hashed password
+  // .then(hash => {
+  //   console.log(`Hash: ${hash}`);
+  //   return hash;})
+  // .then( (hash)=>{
   
-    let data00 = fs.readFile(`${__dirname}${path}`,'utf8',(err, dataa)=> {
-      if (err) {
-        console.error('read err', err)
-        return}
-        console.log('was read')
-        //modify text
-        //console.log(typeof dataa, typeof JSON.parse(dataa))
-        let data0 = JSON.parse(dataa)|| {}
+  //   let data00 = fs.readFile(`${__dirname}${path}`,'utf8',(err, dataa)=> {
+  //     if (err) {
+  //       console.error('read err', err)
+  //       return}
+  //       console.log('was read')
+  //       //modify text
+  //       //console.log(typeof dataa, typeof JSON.parse(dataa))
+  //       let data0 = JSON.parse(dataa)|| {}
         
-        let data1 = Object.entries(data0).map(it=>it[1])
-        let data2 = data1.filter((it:any) =>data.username === it["username"])
-        // console.log('d2',data2)
-         const indexOfuser = data1.indexOf(data2[0])
-         //console.log(indexOfuser)
-         let data3=data0;
-        if(data1.length!==0){
-         // console.log(data3,data2)
-          data3[indexOfuser].password = hash//save new hased password
-          // console.log(data3[indexOfuser].password)
-           // write all data to file
-            //console.log("d3",data3)
+  //       let data1 = Object.entries(data0).map(it=>it[1])
+  //       let data2 = data1.filter((it:any) =>data.username === it["username"])
+  //       // console.log('d2',data2)
+  //        const indexOfuser = data1.indexOf(data2[0])
+  //        //console.log(indexOfuser)
+  //        let data3=data0;
+  //       if(data1.length!==0){
+  //        // console.log(data3,data2)
+  //         data3[indexOfuser].password = hash//save new hased password
+  //         // console.log(data3[indexOfuser].password)
+  //          // write all data to file
+  //           //console.log("d3",data3)
             
-          fs.writeFile(__dirname+`${path}`,JSON.stringify(data3), err => {
-            if (err) {
-              console.error('write err', err)
-              return}
-            })
-        }
+  //         fs.writeFile(__dirname+`${path}`,JSON.stringify(data3), err => {
+  //           if (err) {
+  //             console.error('write err', err)
+  //             return}
+  //           })
+  //       }
     
-      }
-    )
+  //     }
+  //   )
     
-  })
-  .catch(err => console.error(err.message));
+  // })
+  // .catch(err => console.error(err.message));
+
+  bbcrypt.genSalt(saltRounds, function(err, salt) {
+    try {
+      bcrypt.hash(data.password, salt, (err, hash) => {
+        // Store hash in your password DB.
+        let data00 = fs.readFile(`${__dirname}${path}`,'utf8',(err, dataa)=> {
+          if (err) {
+            console.error('read err', err)
+            return}
+            console.log('was read')
+            //modify text
+            //console.log(typeof dataa, typeof JSON.parse(dataa))
+            let data0 = JSON.parse(dataa)|| {}
+            
+            let data1 = Object.entries(data0).map(it=>it[1])
+            let data2 = data1.filter((it:any) =>data.username === it["username"])
+            // console.log('d2',data2)
+             const indexOfuser = data1.indexOf(data2[0])
+             //console.log(indexOfuser)
+             let data3=data0;
+            if(data1.length!==0){
+             // console.log(data3,data2)
+              data3[indexOfuser].password = hash//save new hased password
+              // console.log(data3[indexOfuser].password)
+               // write all data to file
+                //console.log("d3",data3)
+                
+              fs.writeFile(__dirname+`${path}`,JSON.stringify(data3), err => {
+                if (err) {
+                  console.error('write err', err)
+                  return}
+                })
+            }
+        
+          }
+        )
+        
+    });
+  } catch (err){
+    err => console.error(err.message)
+  }
+});
+
 }
+//   const u = await bcrypt
+//   .hash(data.password, saltRounds)//hashed password
+//   .then(hash => {
+//     console.log(`Hash: ${hash}`);
+//     return hash;})
+//   .then( (hash)=>{
+  
+    
+//   })
+//   .catch(err => console.error(err.message));
+// }
 let newuserData0 = {
   "username": "q1",
   "password": "q2",
@@ -77,10 +131,12 @@ const uu=hashAndSavePassword(newuserData1)
  console.log(' password after', uu ,newuserData1.password )
 
 
-
+//  bbcrypt.compare("B4c0/\/", hash).then((res) => {
+//   // res === true
+// });
 
  function validatepassword(passFromLoging:string, passFromServer:string, text:string){
-     const u= bcrypt
+     const u= bbcrypt
     .compare(passFromLoging, passFromServer)
     .then(res => {
       console.log("1", res);
