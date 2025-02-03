@@ -15,6 +15,8 @@
     "typescript": "^4.9.5"
   },
   "scripts": {
+    "prebuild": "rm -rf ./dist",
+    "build": "parcel build ./src/index.html",
     "start": "parcel ./src/index.html",
     "compile-server": "npx tsc -p ./server && node ./server/dist/server.js",
     "dev-server": "nodemon -e ts  --exec \"npm run compile-server\""
