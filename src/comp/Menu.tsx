@@ -1,10 +1,10 @@
 import React, {useState, useEffect, useRef} from 'react';
 import './../App.css';
 import menuLogo from './../images/ic-menu.png';
-import data from './../somedata.json';
+import data from '../somedata.json';
 import { BrowserRouter as Router, Link } from 'react-router-dom';
 
-function Header(props: any) {
+function Menu(props: any) {
 const [menuVisible, setVisibility] = useState(false);
 const {menu}:{menu: Array<Array<string>>} = data;
 const newmenu = menu.slice(0,6);
@@ -79,4 +79,4 @@ useOutsideAlerter(wrapperRef);
   );
 }
 
-export default Header;
+export default Menu;

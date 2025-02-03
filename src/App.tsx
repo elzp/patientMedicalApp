@@ -3,7 +3,7 @@ import './App.css';
 import logo from './images/ic-logo.png';
 import {Leftboard} from './comp/Leftboard';
 import {Rightboard} from './comp/Rightboard';
-import Header from './comp/Header';
+import Menu from './comp/Menu';
 import Footer from './comp/Footer';
 import {userContext} from './context/userContext';
 import {ErrorBoundary} from './comp/ErrorBoundary';
@@ -77,7 +77,7 @@ import {
               <h3>Patient-doctor App</h3>
             </div>
           </div>
-          <Header 
+          <Menu 
           userdata={userdata} 
           changeuser={setuserdata}
           defaultuserdata = {defaultUser} /> 
