@@ -1,7 +1,6 @@
 import React, {useState, useEffect, useRef} from 'react';
 import './../App.css';
 import menuLogo from './../images/ic-menu.png';
-import logo from './../images/ic-logo.png';
 import data from './../somedata.json';
 import { BrowserRouter as Router, Link } from 'react-router-dom';
 
@@ -73,15 +72,6 @@ useOutsideAlerter(wrapperRef);
               
             </div>
           )}
-          </div>
-
-          <div className="brand-nav">
-            <div className="App-logo">        
-              <img src={logo} alt="logoOfApp"  className="img-logo"/>
-            </div>
-            <div className="title"> 
-              <h3>Patient-doctor App</h3>
-            </div>
           </div>
       </div>
       

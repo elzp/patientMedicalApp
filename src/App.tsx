@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import './App.css';
+import logo from './images/ic-logo.png';
 import {Leftboard} from './comp/Leftboard';
 import {Rightboard} from './comp/Rightboard';
 import Header from './comp/Header';
@@ -68,6 +69,14 @@ import {
     <div className= "App">
       <userContext.Provider value={userdata}>
       <header data-testid="header">
+          <div className="brand-nav">
+            <div className="App-logo">        
+              <img src={logo} alt="logoOfApp"  className="img-logo"/>
+            </div>
+            <div className="title"> 
+              <h3>Patient-doctor App</h3>
+            </div>
+          </div>
           <Header 
           userdata={userdata} 
           changeuser={setuserdata}
