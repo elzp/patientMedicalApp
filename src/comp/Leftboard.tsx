@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Link } from 'react-router';
 import './../App.css';
 import { handleLogout } from './srcfunctions';
 export  function Leftboard(props: any

@@ -2,7 +2,7 @@ import React, {useState, useEffect, useRef} from 'react';
 import './../App.css';
 import menuLogo from './../images/ic-menu.png';
 import data from '../somedata.json';
-import { BrowserRouter as Router, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Link } from 'react-router';
 
 function Menu(props: any) {
 const [menuVisible, setVisibility] = useState(false);

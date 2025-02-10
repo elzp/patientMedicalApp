@@ -8,7 +8,7 @@ import Footer from './comp/Footer';
 import {userContext} from './context/userContext';
 import {ErrorBoundary} from './comp/ErrorBoundary';
 import data from './somedata.json';
-// import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; /* zainstaluj: npm i --save-dev @types/react-router-dom */
+// import { BrowserRouter as Router, Routes, Route } from 'react-router'; /* zainstaluj: npm i --save-dev @types/react-router-dom */
 import {typeuserdata} from './../types/common/main.d'
 import {
   createBrowserRouter,
@@ -16,7 +16,7 @@ import {
   createRoutesFromElements,
   Route,
   RouteObject
-} from "react-router-dom";
+} from "react-router";
  const defaultUser:typeuserdata = {
     currentuser: {pacientId: "-5",
                   pacientUsername: "",

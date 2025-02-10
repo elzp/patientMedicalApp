@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Link, Navigate} from 'react-router-dom';
+import { Link, Navigate} from 'react-router';
 import {handleLogout} from './srcfunctions';
 import { getdataFromFile } from './srcfunctions';
 import {visit} from './../../types/common/main.d'

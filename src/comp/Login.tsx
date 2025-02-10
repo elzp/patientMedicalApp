@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {LogForm} from './LogForm';
 import './../App.css';
 import {handleChangeOfUser} from './srcfunctions'
-import { Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router';
 import axios from 'axios';
 import udata from '../usersdata.json';
 import useEffect from 'react';

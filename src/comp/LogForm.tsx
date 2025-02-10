@@ -1,6 +1,6 @@
 import React from 'react';
 import './../App.css';
-import { Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router';
 import udata from '../usersdata.json';
 
 export function LogForm(props: any ) {

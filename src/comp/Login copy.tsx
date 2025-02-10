@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import './../App.css';
-import { BrowserRouter as Router, Link, Redirect, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Link, 
+  // Redirect, 
+  Route } from 'react-router';
 import axios from 'axios';
 import udata from '../usersdata.json';
 import useEffect from 'react';
@@ -106,10 +108,10 @@ function Login(props: any ) {
     
 
 
-    <Route
+    {/* <Route
       render={(props) =>   localStorage.getItem('isLogin')==="true" &&
       <Redirect to={{pathname: '/'} }/>}
-    />
+    /> */}
     
         {/* {JSON.stringify( sth3.find((it:any)=>it[1]===login)
     )} */}

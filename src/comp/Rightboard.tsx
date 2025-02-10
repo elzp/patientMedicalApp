@@ -12,7 +12,7 @@ import './../App.css';
 import data from './../somedata.json';
 import { chooseChildComponent } from './srcfunctions';
 
-import { useLocation, useParams } from 'react-router-dom'; 
+import { useLocation, useParams } from 'react-router'; 
 import {typeuserdata} from './../../types/common/main.d'
 
 export function Rightboard(props: any) {
